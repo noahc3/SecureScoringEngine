@@ -33,29 +33,35 @@ namespace SSEConfigurationTool {
             DialogResult result = ofd.ShowDialog();
             if (result == DialogResult.OK) // Test result.
             {
-                string file = ofd.FileName;
-                rtxtReadme.LoadFile(file);
+                txtReadmeFile.Text = ofd.FileName;
             }
         }
 
         private void btnExportRuntime_Click(object sender, EventArgs e) {
             CreateOutputFolderLayout();
 
+            //create runtime folder
+            string outputFolder = Environment.CurrentDirectory + "\\output\\server\\config\\runtimes\\" + txtRuntimeId.Text + "\\";
+            Directory.CreateDirectory(outputFolder);
+
             //save readme
-            Directory.CreateDirectory(Environment.CurrentDirectory + "\\output\\server\\config\\runtimes\\" + txtRuntimeId.Text);
-            rtxtReadme.SaveFile(Environment.CurrentDirectory + "\\output\\server\\config\\runtimes\\" + txtRuntimeId.Text + "\\readme.rtf");
+            File.Copy(txtReadmeFile.Text, outputFolder +  "\\readme.bin");
 
             //save general runtime infos
             Runtime runtime = new Runtime();
+
             runtime.ID = txtRuntimeId.Text;
 
             if (rbWindows.Checked) runtime.Type = RuntimeType.Windows;
             else if (rbLinux.Checked) runtime.Type = RuntimeType.Linux;
 
+            runtime.readmeLocation = txtReadmeVmLocation.Text;
+
+            //save runtime general conf
             File.WriteAllText(Environment.CurrentDirectory + "\\output\\server\\config\\runtimes\\" + txtRuntimeId.Text + "\\runtime.conf", JsonConvert.SerializeObject(runtime, Formatting.Indented));
 
-
-            Process.Start(Environment.CurrentDirectory + "\\output");
+            //open output dir
+            if (chkShowOutputDirectoryRuntime.Checked) Process.Start(Environment.CurrentDirectory + "\\output");
 
         }
     }

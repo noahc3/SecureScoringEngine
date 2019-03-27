@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.IO;
 using System.Text;
-using System.Threading.Tasks;
+
 using Newtonsoft.Json;
 
-namespace SSEFrontend.Types {
+namespace SSEService.Types {
     class SessionConfig {
         public string TeamUUID;
         public string RuntimeID;

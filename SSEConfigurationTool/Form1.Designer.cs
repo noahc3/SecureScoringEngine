@@ -23,7 +23,6 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            this.rtxtReadme = new System.Windows.Forms.RichTextBox();
             this.tabControlGlobal = new System.Windows.Forms.TabControl();
             this.tabRuntime = new System.Windows.Forms.TabPage();
             this.tabControlRuntime = new System.Windows.Forms.TabControl();
@@ -40,6 +39,13 @@
             this.lblRuntimeSummary = new System.Windows.Forms.Label();
             this.btnExportRuntime = new System.Windows.Forms.Button();
             this.tabServer = new System.Windows.Forms.TabPage();
+            this.txtReadmeFile = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtReadmeVmLocation = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.chkShowOutputDirectoryRuntime = new System.Windows.Forms.CheckBox();
             this.tabControlGlobal.SuspendLayout();
             this.tabRuntime.SuspendLayout();
             this.tabControlRuntime.SuspendLayout();
@@ -48,21 +54,6 @@
             this.tabReadme.SuspendLayout();
             this.tabExportRuntime.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // rtxtReadme
-            // 
-            this.rtxtReadme.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.rtxtReadme.BackColor = System.Drawing.SystemColors.Control;
-            this.rtxtReadme.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtxtReadme.Location = new System.Drawing.Point(13, 13);
-            this.rtxtReadme.Margin = new System.Windows.Forms.Padding(10);
-            this.rtxtReadme.Name = "rtxtReadme";
-            this.rtxtReadme.ReadOnly = true;
-            this.rtxtReadme.Size = new System.Drawing.Size(914, 437);
-            this.rtxtReadme.TabIndex = 0;
-            this.rtxtReadme.Text = "";
             // 
             // tabControlGlobal
             // 
@@ -171,33 +162,39 @@
             // 
             // tabReadme
             // 
+            this.tabReadme.Controls.Add(this.label6);
+            this.tabReadme.Controls.Add(this.label5);
+            this.tabReadme.Controls.Add(this.label4);
+            this.tabReadme.Controls.Add(this.txtReadmeVmLocation);
+            this.tabReadme.Controls.Add(this.label3);
+            this.tabReadme.Controls.Add(this.txtReadmeFile);
             this.tabReadme.Controls.Add(this.btnImportReadme);
-            this.tabReadme.Controls.Add(this.rtxtReadme);
             this.tabReadme.Location = new System.Drawing.Point(4, 22);
             this.tabReadme.Name = "tabReadme";
             this.tabReadme.Padding = new System.Windows.Forms.Padding(3);
-            this.tabReadme.Size = new System.Drawing.Size(944, 527);
+            this.tabReadme.Size = new System.Drawing.Size(967, 527);
             this.tabReadme.TabIndex = 0;
             this.tabReadme.Text = "README";
             this.tabReadme.UseVisualStyleBackColor = true;
             // 
             // btnImportReadme
             // 
-            this.btnImportReadme.Location = new System.Drawing.Point(701, 498);
+            this.btnImportReadme.Location = new System.Drawing.Point(372, 16);
             this.btnImportReadme.Name = "btnImportReadme";
-            this.btnImportReadme.Size = new System.Drawing.Size(233, 23);
+            this.btnImportReadme.Size = new System.Drawing.Size(81, 23);
             this.btnImportReadme.TabIndex = 1;
-            this.btnImportReadme.Text = "Import README (.rtf)";
+            this.btnImportReadme.Text = "Browse...";
             this.btnImportReadme.UseVisualStyleBackColor = true;
             this.btnImportReadme.Click += new System.EventHandler(this.btnImportReadme_Click);
             // 
             // tabExportRuntime
             // 
+            this.tabExportRuntime.Controls.Add(this.chkShowOutputDirectoryRuntime);
             this.tabExportRuntime.Controls.Add(this.lblRuntimeSummary);
             this.tabExportRuntime.Controls.Add(this.btnExportRuntime);
             this.tabExportRuntime.Location = new System.Drawing.Point(4, 22);
             this.tabExportRuntime.Name = "tabExportRuntime";
-            this.tabExportRuntime.Size = new System.Drawing.Size(944, 527);
+            this.tabExportRuntime.Size = new System.Drawing.Size(967, 527);
             this.tabExportRuntime.TabIndex = 2;
             this.tabExportRuntime.Text = "Export";
             this.tabExportRuntime.UseVisualStyleBackColor = true;
@@ -215,7 +212,7 @@
             // 
             this.btnExportRuntime.Location = new System.Drawing.Point(4, 495);
             this.btnExportRuntime.Name = "btnExportRuntime";
-            this.btnExportRuntime.Size = new System.Drawing.Size(930, 23);
+            this.btnExportRuntime.Size = new System.Drawing.Size(960, 23);
             this.btnExportRuntime.TabIndex = 0;
             this.btnExportRuntime.Text = "EXPORT";
             this.btnExportRuntime.UseVisualStyleBackColor = true;
@@ -226,10 +223,70 @@
             this.tabServer.Location = new System.Drawing.Point(4, 22);
             this.tabServer.Name = "tabServer";
             this.tabServer.Padding = new System.Windows.Forms.Padding(3);
-            this.tabServer.Size = new System.Drawing.Size(948, 549);
+            this.tabServer.Size = new System.Drawing.Size(978, 556);
             this.tabServer.TabIndex = 1;
             this.tabServer.Text = "Server Config Generator";
             this.tabServer.UseVisualStyleBackColor = true;
+            // 
+            // txtReadmeFile
+            // 
+            this.txtReadmeFile.Location = new System.Drawing.Point(6, 19);
+            this.txtReadmeFile.Name = "txtReadmeFile";
+            this.txtReadmeFile.Size = new System.Drawing.Size(360, 20);
+            this.txtReadmeFile.TabIndex = 2;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(3, 3);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(69, 13);
+            this.label3.TabIndex = 3;
+            this.label3.Text = "README file";
+            // 
+            // txtReadmeVmLocation
+            // 
+            this.txtReadmeVmLocation.Location = new System.Drawing.Point(6, 96);
+            this.txtReadmeVmLocation.Name = "txtReadmeVmLocation";
+            this.txtReadmeVmLocation.Size = new System.Drawing.Size(447, 20);
+            this.txtReadmeVmLocation.TabIndex = 4;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(3, 54);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(164, 13);
+            this.label4.TabIndex = 5;
+            this.label4.Text = "Where README is stored on VM";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(3, 67);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(235, 13);
+            this.label5.TabIndex = 6;
+            this.label5.Text = "(ex. C:/Users/Trudeau/Desktop/README.html)";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(3, 80);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(220, 13);
+            this.label6.TabIndex = 7;
+            this.label6.Text = "(ex. /home/trudeau/Desktop/README.html)";
+            // 
+            // chkShowOutputDirectoryRuntime
+            // 
+            this.chkShowOutputDirectoryRuntime.AutoSize = true;
+            this.chkShowOutputDirectoryRuntime.Location = new System.Drawing.Point(7, 472);
+            this.chkShowOutputDirectoryRuntime.Name = "chkShowOutputDirectoryRuntime";
+            this.chkShowOutputDirectoryRuntime.Size = new System.Drawing.Size(133, 17);
+            this.chkShowOutputDirectoryRuntime.TabIndex = 2;
+            this.chkShowOutputDirectoryRuntime.Text = "Show Output Directory";
+            this.chkShowOutputDirectoryRuntime.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -249,6 +306,7 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.tabReadme.ResumeLayout(false);
+            this.tabReadme.PerformLayout();
             this.tabExportRuntime.ResumeLayout(false);
             this.tabExportRuntime.PerformLayout();
             this.ResumeLayout(false);
@@ -256,8 +314,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.RichTextBox rtxtReadme;
         private System.Windows.Forms.TabControl tabControlGlobal;
         private System.Windows.Forms.TabPage tabRuntime;
         private System.Windows.Forms.TabControl tabControlRuntime;
@@ -274,6 +330,13 @@
         private System.Windows.Forms.TabPage tabExportRuntime;
         private System.Windows.Forms.Label lblRuntimeSummary;
         private System.Windows.Forms.Button btnExportRuntime;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox txtReadmeVmLocation;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox txtReadmeFile;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.CheckBox chkShowOutputDirectoryRuntime;
     }
 }
 

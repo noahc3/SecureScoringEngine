@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 
@@ -12,6 +13,8 @@ using SSECommon;
 using SSECommon.Types;
 using SSEBackend.Types;
 using SSEBackend.Security;
+
+using Newtonsoft.Json;
 
 namespace SSEBackend.Controllers
 {
@@ -21,10 +24,17 @@ namespace SSEBackend.Controllers
     {
         [HttpGet("isteamuuidvalid")]
         public ActionResult IsTeamUUIDValid([FromHeader] IsTeamUUIDValidInputModel model) {
-            //STUB: Implement proper checking for valid team UUIDs
-            return new StatusCodeResult(StatusCodes.Status200OK);
+            if (Globals.VerifyTeamAuthenticity(model.TeamUUID, model.RuntimeID)) {
+                return new StatusCodeResult(StatusCodes.Status200OK);
+            } else {
+                return new StatusCodeResult(StatusCodes.Status401Unauthorized);
+            }
+            
         }
 
+        //Currently only works on Windows servers!!!
+        //(supports windows AND linux clients)
+        //TODO: Implement Linux server support
         [HttpGet("keyexchange")]
         public ActionResult KeyExchange([FromHeader] KeyExchangeInputModel model) {
 
@@ -47,16 +57,42 @@ namespace SSEBackend.Controllers
 
                 //try to read clients's public keyblob into DHKE and derive the key material
                 try {
-                    Encryption.SetRuntimeKeySlot(teamUuid, runtimeId, exchange.DeriveKeyMaterial(CngKey.Import(theirPublicKey, CngKeyBlobFormat.EccPublicBlob)));
+                    //client is windows, provided CNG key
+                    if (model.CryptoAPI == Constants.CRYPTO_API_WINDOWS) {
+                        Encryption.SetRuntimeKeySlot(teamUuid, runtimeId, exchange.DeriveKeyMaterial(CngKey.Import(theirPublicKey, CngKeyBlobFormat.GenericPublicBlob)));
+                    }
+                    //client is unix, provided OpenSSL key
+                    else if (model.CryptoAPI == Constants.CRYPTO_API_UNIX) {
+                        int read;
+                        ECDiffieHellman ecdh = ECDiffieHellman.Create();
+                        ecdh.ImportSubjectPublicKeyInfo(model.DHKEPublicKey.FromHexToByteArray(), out read);
+                        Encryption.SetRuntimeKeySlot(teamUuid, runtimeId, exchange.DeriveKeyMaterial(ecdh.PublicKey));
+                    }
+                    //unknown crypto provider
+                    else {
+                        return new StatusCodeResult(StatusCodes.Status400BadRequest);
+                    }
                 } catch (Exception e) {
                     //if this fails the public key sent by the client was either invalid or could not be parsed.
                     return new StatusCodeResult(StatusCodes.Status400BadRequest);
                 }
 
+
                 //key exchange was successful! send back the server's public key with a sanity check
                 byte[] iv;
                 byte[] sanityCheck = Encryption.EncryptMessage(Constants.KEY_EXCHANGE_SANITY_CHECK, out iv, teamUuid, runtimeId);
-                return new ObjectResult(new GenericEncryptedMessage(sanityCheck, iv, exchange.PublicKey.ToByteArray().ToHex(), teamUuid, runtimeId).ToJson());
+
+                //client is windows, expects CNG key
+                if (model.CryptoAPI == Constants.CRYPTO_API_WINDOWS) {
+                    return new ObjectResult(new GenericEncryptedMessage(sanityCheck, iv, exchange.PublicKey.ToByteArray().ToHex(), teamUuid, runtimeId).ToJson());
+                }
+                //client is unix, expects OpenSSL key
+                else if (model.CryptoAPI == Constants.CRYPTO_API_UNIX) {
+                    return new ObjectResult(new GenericEncryptedMessage(sanityCheck, iv, exchange.ExportSubjectPublicKeyInfo().ToHex(), teamUuid, runtimeId).ToJson());
+                }
+
+                //shouldnt get here but compiler says otherwise /shrug
+                return new StatusCodeResult(StatusCodes.Status400BadRequest);
             }
         }
 
@@ -65,6 +101,7 @@ namespace SSEBackend.Controllers
         //TODO: implement /api/generic/ping
         //this endpoint WILL invalidate the key! it should only be used to verify the key exchange is working, not to verify keys!
         [HttpPost("ping")]
+        
         public ActionResult Ping([FromBody] GenericEncryptedMessage message) {
 
             //make sure the team requesting a key is legitimate with a legitimate RID
@@ -95,6 +132,10 @@ namespace SSEBackend.Controllers
         [FromHeader(Name = "TEAM-UUID")]
         [Required]
         public string TeamUUID { get; set; }
+
+        [FromHeader(Name = "RUNTIME-ID")]
+        [Required]
+        public string RuntimeID { get; set;  }
     }
 
     public class KeyExchangeInputModel {
@@ -109,5 +150,9 @@ namespace SSEBackend.Controllers
         [FromHeader(Name = "DHKE-PUBLIC-KEY")]
         [Required]
         public string DHKEPublicKey { get; set; }
+
+        [FromHeader(Name = "CRYPTO-API")]
+        [Required]
+        public string CryptoAPI { get; set; }
     }
 }

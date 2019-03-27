@@ -76,10 +76,16 @@ namespace SSEBackend {
             return (RUNTIME_CONFIG_DIRECTORY + "\\" + runtime.ID + "\\").AsPath();
         }
 
-        public static byte[] GetReadme(string teamUuid, string runtimeId) {
+        public static FileTransferWrapper GetReadme(string teamUuid, string runtimeId) {
             Runtime runtime = GetRuntime(teamUuid, runtimeId);
             string confdir = GetRuntimeConfigDirectory(runtime);
-            return File.ReadAllBytes((confdir + "\\readme.rtf").AsPath());
+
+            FileTransferWrapper ftw = new FileTransferWrapper();
+
+            ftw.Blob = File.ReadAllBytes((confdir + "\\readme.bin").AsPath());
+            ftw.Path = runtime.readmeLocation;
+
+            return ftw;
         }
     }
 }
