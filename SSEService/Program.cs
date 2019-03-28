@@ -25,31 +25,6 @@ namespace SSEService {
             Console.WriteLine("--------------------------------------------------");
             Console.WriteLine("");
 
-            
-
-            /*
-            //fancy format stuff
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.BackgroundColor = ConsoleColor.DarkCyan;
-
-            Console.WriteLine("                                                  ");
-            Console.WriteLine("         Secure Scoring Engine (Service)          ");
-            Console.WriteLine("                 made by noahc3                   ");
-            Console.WriteLine("                                                  ");
-            Console.WriteLine("");
-
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.BackgroundColor = ConsoleColor.DarkRed;
-
-            Console.WriteLine("                                                  ");
-            Console.WriteLine("                     WARNING!                     ");
-            Console.WriteLine("              THIS IS A DEBUG BUILD!              ");
-            Console.WriteLine("   DO NOT USE THIS BUILD IN A REAL COMPETITION!   ");
-            Console.WriteLine("                                                  ");
-            Console.WriteLine("");
-
-            */
-
             Console.ResetColor();
 
             //end fancy format stuff
@@ -66,12 +41,17 @@ namespace SSEService {
 
             ClientServerComms.GetReadme();
 
-            Console.ReadKey();
+            //main logic loop
+            while (true) {
+                if (ClientServerComms.RequestStartScoringProcess()) {
+                    ClientServerComms.ScoringProcess();
+                    ClientServerComms.GetScoringReport();
+                }
+                break;
+            }
 
-            //byte[] readmeBlob = ClientServerComms.GetReadme();
-            //File.WriteAllBytes(Globals.README_LOCATION, readmeBlob);
-            //rtxtReadme.LoadFile(Globals.README_LOCATION);
-            //File.Delete(Globals.README_LOCATION);
+            Console.WriteLine("-- Exited logic loop --");
+            Console.ReadKey();
         }
     }
 }

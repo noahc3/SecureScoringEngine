@@ -7,9 +7,10 @@ using SSECommon;
 using SSECommon.Types;
 using SSEBackend.Types;
 
-namespace SSEBackend.Security {
-    public class Encryption {
-
+namespace SSEBackend.Security
+{
+    public class Encryption
+    {
         public static byte[] EncryptMessage(string plaintext, out byte[] iv, string teamUuid, string runtimeId) {
             byte[] key = GetRuntimeEncKey(teamUuid, runtimeId);
             return Cryptography.Encrypt(plaintext, key, out iv);

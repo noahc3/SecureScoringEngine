@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
@@ -29,7 +30,7 @@ namespace SSEBackend.Controllers
             } else {
                 return new StatusCodeResult(StatusCodes.Status401Unauthorized);
             }
-            
+
         }
 
         //Currently only works on Windows servers!!!
@@ -101,7 +102,7 @@ namespace SSEBackend.Controllers
         //TODO: implement /api/generic/ping
         //this endpoint WILL invalidate the key! it should only be used to verify the key exchange is working, not to verify keys!
         [HttpPost("ping")]
-        
+
         public ActionResult Ping([FromBody] GenericEncryptedMessage message) {
 
             //make sure the team requesting a key is legitimate with a legitimate RID
@@ -128,17 +129,19 @@ namespace SSEBackend.Controllers
         }
     }
 
-    public class IsTeamUUIDValidInputModel {
+    public class IsTeamUUIDValidInputModel
+    {
         [FromHeader(Name = "TEAM-UUID")]
         [Required]
         public string TeamUUID { get; set; }
 
         [FromHeader(Name = "RUNTIME-ID")]
         [Required]
-        public string RuntimeID { get; set;  }
+        public string RuntimeID { get; set; }
     }
 
-    public class KeyExchangeInputModel {
+    public class KeyExchangeInputModel
+    {
         [FromHeader(Name = "TEAM-UUID")]
         [Required]
         public string TeamUUID { get; set; }

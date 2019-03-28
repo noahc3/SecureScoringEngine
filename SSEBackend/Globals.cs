@@ -8,8 +8,10 @@ using SSEBackend.Types;
 using SSECommon;
 using SSECommon.Types;
 
-namespace SSEBackend {
-    public static class Globals {
+namespace SSEBackend
+{
+    public static class Globals
+    {
 
         public static string CONFIG_DIRECTORY = (AppContext.BaseDirectory + "\\config").AsPath();
         public static string RUNTIME_CONFIG_DIRECTORY = (CONFIG_DIRECTORY + "\\runtimes\\").AsPath();
@@ -18,10 +20,22 @@ namespace SSEBackend {
 
         public static void LoadData() {
             data = new Data();
-            
+
+            //load all of the runtimes
             foreach (string k in Directory.EnumerateDirectories(RUNTIME_CONFIG_DIRECTORY)) {
                 string runtimeJson = File.ReadAllText((k + "\\runtime.conf").AsPath());
                 Runtime runtime = Runtime.FromJson(runtimeJson);
+
+                runtime.scoredItems = new List<ScoringPayloadMetadata>();
+
+                //load all of the scored item payloads into the runtime object
+                foreach (string p in Directory.EnumerateDirectories((k + "\\scoring\\").AsPath())) {
+                    ScoringPayloadMetadata meta = ScoringPayloadMetadata.FromJson(File.ReadAllText((p + "\\metadata.json").AsPath()));
+                    meta.ClientPayload = File.ReadAllText((p + "\\client.cs").AsPath());
+                    meta.ServerPayload = File.ReadAllText((p + "\\server.cs").AsPath());
+                    runtime.scoredItems.Add(meta);
+                }
+
                 data.runtimes[runtime.ID] = runtime;
             }
         }
@@ -36,7 +50,7 @@ namespace SSEBackend {
 
             bool validRuntimeId = false;
 
-            foreach(string k in team.ValidRuntimeIDs) {
+            foreach (string k in team.ValidRuntimeIDs) {
                 if (runtimeId.StartsWith(k)) {
                     validRuntimeId = true;
                     break;
@@ -59,7 +73,7 @@ namespace SSEBackend {
 
             //TODO: since runtimes can share id's, verify which one is intended using teamUuid
             Runtime runtime = null;
-            foreach(string k in data.runtimes.Keys) {
+            foreach (string k in data.runtimes.Keys) {
                 if (runtimeId.StartsWith(k)) {
                     runtime = data.runtimes[k];
                     break;
@@ -79,7 +93,7 @@ namespace SSEBackend {
         public static FileTransferWrapper GetReadme(string teamUuid, string runtimeId) {
             Runtime runtime = GetRuntime(teamUuid, runtimeId);
             string confdir = GetRuntimeConfigDirectory(runtime);
-
+            Console.WriteLine((confdir + "\\readme.bin").AsPath());
             FileTransferWrapper ftw = new FileTransferWrapper();
 
             ftw.Blob = File.ReadAllBytes((confdir + "\\readme.bin").AsPath());

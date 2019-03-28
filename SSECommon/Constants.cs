@@ -8,5 +8,10 @@ namespace SSECommon {
 
         public const string CRYPTO_API_WINDOWS = "CNG";
         public const string CRYPTO_API_UNIX = "OPENSSL";
+
+        public const string SCORING_PROCESS_START = "START SCORING PROCESS";
+        public const string SCORING_PROCESS_CONTINUE = "CONTINUE SCORING PROCESS";
+        public const string SCORING_PROCESS_EXECUTE_PAYLOAD = "SCORING PROCESS EXECUTE PAYLOAD";
+        public const string SCORING_PROCESS_FINISHED = "SCORING PROCESS FINISHED";
     }
 }

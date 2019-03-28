@@ -17,15 +17,32 @@ namespace SSEService {
         //file locations
 
         //base address
-        public static string ENDPOINT_BASE_ADDRESS = "http://192.168.0.10:59137";
+        public static string ENDPOINT_BASE_ADDRESS = "http://localhost:5002";
 
-        //plaintext endpoints
+        //-------------------------------//
+        //----- plaintext endpoints -----//
+        //-------------------------------//
+
+        // various startup/initial config endpoints
         public static Uri ENDPOINT_VERIFY_TEAM_UUID = new Uri(ENDPOINT_BASE_ADDRESS + "/api/auth/isteamuuidvalid");
         public static Uri ENDPOINT_KEY_EXCHANGE = new Uri(ENDPOINT_BASE_ADDRESS + "/api/auth/keyexchange");
 
-        //ciphertext endpoints
+        //--------------------------------//
+        //----- ciphertext endpoints -----//
+        //--------------------------------//
+
+        // various startup/initial config endpoints
         public static Uri ENDPOINT_PING_CIPHERTEXT = new Uri(ENDPOINT_BASE_ADDRESS + "/api/auth/ping");
+
+        // general file request endpoints (readme, scoring report, forensics?)
         public static Uri ENDPOINT_README = new Uri(ENDPOINT_BASE_ADDRESS + "/api/fetch/readme");
+
+        // actual logic endpoints (scoring)
+        public static Uri ENDPOINT_START_SCORING_PROCESS = new Uri(ENDPOINT_BASE_ADDRESS + "/api/scoring/start");
+        public static Uri ENDPOINT_CONTINUE_SCORING_PROCESS = new Uri(ENDPOINT_BASE_ADDRESS + "/api/scoring/continuescoringprocess");
+
+        // information endpoints (reports, notices, etc)
+        public static Uri ENDPOINT_SCORING_REPORT = new Uri(ENDPOINT_BASE_ADDRESS + "/api/scoring/getscoringreport");
 
         public static SessionConfig SessionConfig;
 
