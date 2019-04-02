@@ -90,6 +90,7 @@ These are the additional dependencies not present on default operating system in
 
 **Linux**
 * None
+
 Note: PsExec64 can easily be seen as a vulnerable application by competitors. You should convey that it is required by the scoring engine to function so they do not remove it, or put it in the scoring engine install directory.
 
 <sup>[.net] - .NET Core 3.0 requirement | [sse] - SSE requirement</sup>
