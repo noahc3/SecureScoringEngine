@@ -69,7 +69,9 @@ namespace SSEService.Security {
                     string sanityCheck = Cryptography.Decrypt(resp.Ciphertext, EncKeyBlob, resp.IV);
 
                     if (sanityCheck != Constants.KEY_EXCHANGE_SANITY_CHECK) {
+#if (DEBUG)
                         Console.WriteLine("Key exchange sanity check failed! " + EncKeyBlob.ToHex());
+#endif
                         Environment.Exit(0);
                         return;
                     }
@@ -123,15 +125,17 @@ namespace SSEService.Security {
                     string sanityCheck = Cryptography.Decrypt(resp.Ciphertext, EncKeyBlob, resp.IV);
 
                     if (sanityCheck != Constants.KEY_EXCHANGE_SANITY_CHECK) {
+#if (DEBUG)
                         Console.WriteLine("Key exchange sanity check failed! " + EncKeyBlob.ToHex());
+#endif
                         Environment.Exit(0);
                         return;
                     }
                 }
             }
-            
-
+#if (DEBUG)
             Console.WriteLine("Key Exchange Success! " + EncKeyBlob.ToHex());
+#endif
             return;
         }
 

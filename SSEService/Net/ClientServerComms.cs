@@ -173,7 +173,7 @@ namespace SSEService.Net {
         //Needs a lot of cleanup.
         public static bool ScoringProcess() {
 
-            Console.WriteLine("requesting scoring payload from server");
+            Console.WriteLine("Starting scoring process");
 
             byte[] iv;
             byte[] ciphertext = Encryption.EncryptMessage(Constants.KEY_EXCHANGE_SANITY_CHECK, out iv);
@@ -203,7 +203,9 @@ namespace SSEService.Net {
 
             string clientPayloadOutput = payload.ExecuteAsCode<string>();
 
+#if (DEBUG)
             Console.WriteLine(clientPayloadOutput);
+#endif
 
             iv = null;
             ciphertext = Encryption.EncryptMessage(clientPayloadOutput, out iv);
@@ -239,9 +241,9 @@ namespace SSEService.Net {
                     payload = Encryption.DecryptMessage(ciphertext, iv);
 
                     clientPayloadOutput = payload.ExecuteAsCode<string>();
-
+#if (DEBUG)
                     Console.WriteLine(clientPayloadOutput);
-
+#endif
                     iv = null;
                     ciphertext = Encryption.EncryptMessage(clientPayloadOutput, out iv);
                 } else {
@@ -290,5 +292,51 @@ namespace SSEService.Net {
 
             return true;
         }
+
+#if (DEBUG)
+        // DEBUG SERVICES //
+        public static void CheckDebugSvcStatus() {
+
+            byte[] iv;
+            byte[] ciphertext = Encryption.EncryptMessage(Constants.KEY_EXCHANGE_SANITY_CHECK, out iv);
+
+            GenericEncryptedMessage message = new GenericEncryptedMessage(ciphertext, iv, "", Globals.SessionConfig.TeamUUID, Globals.SessionConfig.RuntimeID);
+            GenericEncryptedMessage resp;
+
+
+
+            using (HttpClient http = new HttpClient()) {
+                StringContent content = new StringContent(message.ToJson());
+                content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                HttpResponseMessage response = http.PostAsync(Globals.ENDPOINT_DEBUG_CHECK_SVC_STATUS, content).Result;
+
+                if (response.IsSuccessStatusCode) {
+                    resp = GenericEncryptedMessage.FromJson(response.Content.ReadAsStringAsync().Result);
+                } else {
+                    //if failed the server is likely not online or the key material send was invalid/not parsable
+                    Console.WriteLine("Server sent invalid response " + response.StatusCode);
+                    Environment.Exit(0);
+                    return;
+                }
+            }
+
+            ciphertext = resp.Ciphertext;
+            iv = resp.IV;
+
+            string status = Encryption.DecryptMessage(ciphertext, iv);
+
+            if (status != "true") {
+                Console.WriteLine("This server does not have debugging svcs enabled! If you are the server operator, make sure to set \"DebugSvcs\" to 'true' in config.json.");
+                Console.ReadKey();
+                Environment.Exit(0);
+                return;
+            }
+
+            Console.WriteLine("Server has debug svcs enabled.");
+
+            return;
+        }
+
+#endif
     }
 }

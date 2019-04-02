@@ -18,11 +18,16 @@ namespace SSEBackend
         public static string CONFIG_DIRECTORY = (AppContext.BaseDirectory + "\\config").AsPath();
         public static string RUNTIME_CONFIG_DIRECTORY = (CONFIG_DIRECTORY + "\\runtimes\\").AsPath();
 
-        public static Data data;
+        public static Config config; //general data for configuring the server software itself
+
+        public static Data data; //dynamic data related to the current competition
 
         public static void LoadData() {
+            config = JsonConvert.DeserializeObject<Config>(File.ReadAllText((CONFIG_DIRECTORY + "\\config.json")).AsPath());
+
             data = new Data();
 
+            //load teams from file
             List<Team> _teams = JsonConvert.DeserializeObject<List<Team>>(File.ReadAllText((CONFIG_DIRECTORY + "\\teams.json")).AsPath());
 
             foreach (Team t in _teams) {
@@ -50,10 +55,24 @@ namespace SSEBackend
 
         public static bool VerifyTeamAuthenticity(string teamUuid, string runtimeId) {
             Team team;
+
+            //if there is no team with the correct team id, reject the client
             if (data.teams.ContainsKey(teamUuid)) {
                 team = data.teams[teamUuid];
             } else {
                 return false;
+            }
+
+            //if the client is using a debug team id but the server does not have debug mode enable, reject the client
+            if (team.Debug && !config.DebugSvcs) {
+                return false;
+            }
+
+            //if the organizer forgets to turn off debug mode and did not disable this check, disable debug mode when non-debug clients try to connect.
+            if (!team.Debug && config.DebugSvcs) {
+                if (!config.GiveUpSecurityAndDontBotherDisablingDebugModeWhenNormalClientsConnect) {
+                    config.DebugSvcs = false;
+                }
             }
 
             bool validRuntimeId = false;
@@ -65,8 +84,11 @@ namespace SSEBackend
                 }
             }
 
-            if (!validRuntimeId) return false;
+            //if this team is not registered for the runtime they are using, reject the client
+            if (!validRuntimeId)
+                return false;
 
+            //accept the client
             return true;
         }
 

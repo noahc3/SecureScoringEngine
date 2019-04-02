@@ -46,6 +46,16 @@ namespace SSEService {
         // information endpoints (reports, notices, etc)
         public static Uri ENDPOINT_SCORING_REPORT = new Uri(ENDPOINT_BASE_ADDRESS + "/api/scoring/getscoringreport");
 
+#if (DEBUG)
+
+        //--------------------------------//
+        //------- debug  endpoints -------//
+        //--------------------------------//
+
+        public static Uri ENDPOINT_DEBUG_CHECK_SVC_STATUS = new Uri(ENDPOINT_BASE_ADDRESS + "/api/debug/debugsvcstatus");
+
+#endif
+
         public static SessionConfig SessionConfig;
 
         public static ScoringReport ScoringReport;
