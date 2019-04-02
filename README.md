@@ -80,8 +80,8 @@ These are the additional dependencies not present on default operating system in
 * Windows 7 Only: KB2533623 <sup>[.net]</sup>
 
 **Linux**
-* notify-send in path <sup>[sse]</sup>
-* su in path <sup>[sse]</sup>
+* `notify-send` in path <sup>[sse]</sup>
+* `su` in path <sup>[sse]</sup>
 
 ### Dependencies to use provided scored item templates
 
