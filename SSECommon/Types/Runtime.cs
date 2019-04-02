@@ -10,7 +10,8 @@ namespace SSECommon.Types {
         public RuntimeType Type;
         public List<ScoringPayloadMetadata> scoredItems;
 
-        public string readmeLocation;
+        public string ReadmeLocation;
+        public string ScoringReportLocation;
         
         public static Runtime FromJson(string json) {
             return JsonConvert.DeserializeObject<Runtime>(json);

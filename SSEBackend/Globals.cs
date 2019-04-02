@@ -51,7 +51,7 @@ namespace SSEBackend
             bool validRuntimeId = false;
 
             foreach (string k in team.ValidRuntimeIDs) {
-                if (runtimeId.StartsWith(k)) {
+                if (runtimeId.Contains(k)) {
                     validRuntimeId = true;
                     break;
                 }
@@ -74,7 +74,7 @@ namespace SSEBackend
             //TODO: since runtimes can share id's, verify which one is intended using teamUuid
             Runtime runtime = null;
             foreach (string k in data.runtimes.Keys) {
-                if (runtimeId.StartsWith(k)) {
+                if (runtimeId.Contains(k)) {
                     runtime = data.runtimes[k];
                     break;
                 }
@@ -93,11 +93,21 @@ namespace SSEBackend
         public static FileTransferWrapper GetReadme(string teamUuid, string runtimeId) {
             Runtime runtime = GetRuntime(teamUuid, runtimeId);
             string confdir = GetRuntimeConfigDirectory(runtime);
-            Console.WriteLine((confdir + "\\readme.bin").AsPath());
             FileTransferWrapper ftw = new FileTransferWrapper();
 
             ftw.Blob = File.ReadAllBytes((confdir + "\\readme.bin").AsPath());
-            ftw.Path = runtime.readmeLocation;
+            ftw.Path = runtime.ReadmeLocation;
+
+            return ftw;
+        }
+
+        public static FileTransferWrapper GetScoringReportTemplate(string teamUuid, string runtimeId) {
+            Runtime runtime = GetRuntime(teamUuid, runtimeId);
+            string confdir = GetRuntimeConfigDirectory(runtime);
+            FileTransferWrapper ftw = new FileTransferWrapper();
+            
+            ftw.Blob = File.ReadAllBytes((confdir + "\\scoringreport.bin").AsPath());
+            ftw.Path = runtime.ScoringReportLocation;
 
             return ftw;
         }

@@ -21,7 +21,7 @@ namespace SSEBackend.Controllers
     {
         [HttpPost("start")]
         public ActionResult Start([FromBody] GenericEncryptedMessage message) {
-
+            
             //make sure the team requesting a key is legitimate with a legitimate RID
             if (!Globals.VerifyTeamAuthenticity(message.TeamUUID, message.RuntimeID)) {
                 return new StatusCodeResult(StatusCodes.Status401Unauthorized);

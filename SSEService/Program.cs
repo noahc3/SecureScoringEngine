@@ -1,6 +1,10 @@
 ﻿using System;
 using System.IO;
+using System.Text;
 
+using System.Threading;
+
+using SSECommon.Types;
 using SSEService.Net;
 
 namespace SSEService {
@@ -46,8 +50,52 @@ namespace SSEService {
                 if (ClientServerComms.RequestStartScoringProcess()) {
                     ClientServerComms.ScoringProcess();
                     ClientServerComms.GetScoringReport();
+                    FileTransferWrapper reportTemplateWrapper = ClientServerComms.GetScoringReportTemplate();
+
+                    string reportTemplate = Encoding.Default.GetString(reportTemplateWrapper.Blob);
+
+                    ScoringReport r = Globals.ScoringReport;
+
+                    int penaltyPoints = 0;
+                    string penalties = "";
+
+                    int rewardsPoints = 0;
+                    string rewards = "";
+
+                    if (r.penalties.Count > 0) {
+                        foreach (ClientScoreMetadata meta in r.penalties) {
+                            penaltyPoints += meta.ScoreValue;
+                            penalties += meta.Description + " - " + meta.ScoreValue + "<br>";
+                        }
+                    }
+
+                    if (r.rewards.Count > 0) {
+                        foreach (ClientScoreMetadata meta in r.rewards) {
+                            rewardsPoints += meta.ScoreValue;
+                            rewards += meta.Description + " - " + meta.ScoreValue + "<br>";
+                        }
+                    }
+
+                    //TODO: implement running time (from server i guess)
+                    reportTemplate = String.Format(reportTemplate, "Not yet implemented", r.score, r.totalScore, r.penaltiesGained, penaltyPoints, r.rewardsFound, rewardsPoints, r.totalRewards, penalties, rewards, Globals.SessionConfig.TeamUUID);
+
+                    File.WriteAllText(reportTemplateWrapper.Path, reportTemplate);
+
+                    if (r.score > Globals.LastScore) {
+                        Globals.SendToastNotification(Globals.SSESERVICE_NOTIFICATION_TITLE, Globals.SSESERVICE_NOTIFICATION_GAINED_POINTS);
+                    } else if (r.score < Globals.LastScore) {
+                        Globals.SendToastNotification(Globals.SSESERVICE_NOTIFICATION_TITLE, Globals.SSESERVICE_NOTIFICATION_LOST_POINTS);
+                    }
+
+                    Globals.LastScore = r.score;
                 }
-                break;
+                Thread.Sleep(10000);
+
+                if (File.Exists("C:\\killswitch.bin")) {
+                    Console.Write("Killswitch detected");
+                    break;
+                }
+                    
             }
 
             Console.WriteLine("-- Exited logic loop --");

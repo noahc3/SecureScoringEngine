@@ -75,6 +75,7 @@ namespace SSEBackend.Controllers
                     }
                 } catch (Exception e) {
                     //if this fails the public key sent by the client was either invalid or could not be parsed.
+                    Console.WriteLine("[FAILED IDK] \n" + e.Message);
                     return new StatusCodeResult(StatusCodes.Status400BadRequest);
                 }
 

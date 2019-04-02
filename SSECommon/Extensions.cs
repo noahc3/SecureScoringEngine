@@ -8,6 +8,7 @@ using System.Runtime.InteropServices;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Emit;
+using System.Diagnostics;
 
 using Microsoft.CodeAnalysis.CSharp.Scripting;
 using Microsoft.CodeAnalysis.Scripting;
@@ -57,6 +58,40 @@ namespace SSECommon {
                 Passthrough globals = new Passthrough { passthrough = passthrough };
                 return (ReturnType) CSharpScript.EvaluateAsync(code, ScriptOptions.Default.WithReferences(assemblies), globals: globals).Result;
             }
+        }
+
+        //TODO: clean up copy paste syndrome
+        public static string ExecuteAsBash(this string cmd) {
+            var escapedArgs = cmd.Replace("\"", "\\\"");
+
+            var process = new Process() {
+                StartInfo = new ProcessStartInfo {
+                    FileName = "/bin/bash",
+                    Arguments = $"-c \"{escapedArgs}\"",
+                    RedirectStandardOutput = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true,
+                }
+            };
+            process.Start();
+            string result = process.StandardOutput.ReadToEnd();
+            process.WaitForExit();
+            return result;
+        }
+
+        public static string ExecuteAsCmd(this string cmd) {
+            Process p = new Process();
+            p.StartInfo.FileName = "cmd.exe";
+            p.StartInfo.Arguments = "/c " + cmd;
+            p.StartInfo.UseShellExecute = false;
+            p.StartInfo.RedirectStandardOutput = true;
+
+            p.Start();
+
+            string result = p.StandardOutput.ReadToEnd();
+            p.WaitForExit();
+
+            return result;
         }
     }
 

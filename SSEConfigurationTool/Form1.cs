@@ -55,7 +55,7 @@ namespace SSEConfigurationTool {
             if (rbWindows.Checked) runtime.Type = RuntimeType.Windows;
             else if (rbLinux.Checked) runtime.Type = RuntimeType.Linux;
 
-            runtime.readmeLocation = txtReadmeVmLocation.Text;
+            runtime.ReadmeLocation = txtReadmeVmLocation.Text;
 
             //save runtime general conf
             File.WriteAllText(Environment.CurrentDirectory + "\\output\\server\\config\\runtimes\\" + txtRuntimeId.Text + "\\runtime.conf", JsonConvert.SerializeObject(runtime, Formatting.Indented));

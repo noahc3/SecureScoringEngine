@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 
 using SSECommon;
+using SSECommon.Types;
 using SSEService.Net;
 using SSEService.Types;
 
@@ -17,12 +18,12 @@ namespace SSEService {
         //file locations
 
         //base address
-        public static string ENDPOINT_BASE_ADDRESS = "http://localhost:5002";
+        public static string ENDPOINT_BASE_ADDRESS = "http://192.168.0.10:5002";
 
         //-------------------------------//
         //----- plaintext endpoints -----//
         //-------------------------------//
-
+        
         // various startup/initial config endpoints
         public static Uri ENDPOINT_VERIFY_TEAM_UUID = new Uri(ENDPOINT_BASE_ADDRESS + "/api/auth/isteamuuidvalid");
         public static Uri ENDPOINT_KEY_EXCHANGE = new Uri(ENDPOINT_BASE_ADDRESS + "/api/auth/keyexchange");
@@ -36,6 +37,7 @@ namespace SSEService {
 
         // general file request endpoints (readme, scoring report, forensics?)
         public static Uri ENDPOINT_README = new Uri(ENDPOINT_BASE_ADDRESS + "/api/fetch/readme");
+        public static Uri ENDPOINT_SCORING_REPORT_TEMPLATE = new Uri(ENDPOINT_BASE_ADDRESS + "/api/fetch/scoringreporttemplate");
 
         // actual logic endpoints (scoring)
         public static Uri ENDPOINT_START_SCORING_PROCESS = new Uri(ENDPOINT_BASE_ADDRESS + "/api/scoring/start");
@@ -45,6 +47,19 @@ namespace SSEService {
         public static Uri ENDPOINT_SCORING_REPORT = new Uri(ENDPOINT_BASE_ADDRESS + "/api/scoring/getscoringreport");
 
         public static SessionConfig SessionConfig;
+
+        public static ScoringReport ScoringReport;
+        public static int LastScore = 0;
+
+        //constant strings
+
+        public const string SSESERVICE_NOTIFICATION_TITLE = "SSEService Notification";
+        public const string SSESERVICE_NOTIFICATION_GAINED_POINTS = "You gained points!";
+        public const string SSESERVICE_NOTIFICATION_LOST_POINTS = "You lost points!";
+        public const string SSESERVICE_NOTIFICATION_CONNECTION_FAILED = "Failed to connect to server, check your internet!";
+
+
+
 
 
         public static void GenerateConfig() {
@@ -82,6 +97,18 @@ namespace SSEService {
                 File.Delete(Globals.CONFIG_SESSION);
                 GenerateConfig();
                 LoadConfig();
+            }
+        }
+        
+        //compatible with both windows and linux!
+        //vm needs notifu64.exe in path or running directory!
+        public static void SendToastNotification(string title, string message) {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) {
+                ("notifu64 /p \"" + title + "\" /m \"" + message + "\"").ExecuteAsCmd();
+            } else {
+                //string user = "echo $SUDO_USER".ExecuteAsBash();
+                //Console.WriteLine(("su " + user + " -c \"notify-send -u critical \"" + title + "\" \"" + message + "\"\"").ExecuteAsBash());
+                Console.WriteLine("Unable to show notification on Linux (for now)");
             }
         }
     }

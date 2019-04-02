@@ -108,6 +108,39 @@ namespace SSEService.Net {
             return;
         }
 
+        public static FileTransferWrapper GetScoringReportTemplate() {
+
+            byte[] iv;
+            byte[] ciphertext = Encryption.EncryptMessage(Constants.KEY_EXCHANGE_SANITY_CHECK, out iv);
+
+            GenericEncryptedMessage message = new GenericEncryptedMessage(ciphertext, iv, "", Globals.SessionConfig.TeamUUID, Globals.SessionConfig.RuntimeID);
+            GenericEncryptedMessage resp;
+
+            using (HttpClient http = new HttpClient()) {
+                StringContent content = new StringContent(message.ToJson());
+                content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                HttpResponseMessage response = http.PostAsync(Globals.ENDPOINT_SCORING_REPORT_TEMPLATE, content).Result;
+
+                if (response.IsSuccessStatusCode) {
+                    resp = GenericEncryptedMessage.FromJson(response.Content.ReadAsStringAsync().Result);
+                } else {
+                    //if failed the server is likely not online or the key material send was invalid/not parsable
+                    Console.WriteLine("Server sent invalid response " + response.StatusCode);
+                    Environment.Exit(0);
+                    return null;
+                }
+            }
+
+            ciphertext = resp.Ciphertext;
+            iv = resp.IV;
+
+            string plaintext = Encryption.DecryptMessage(ciphertext, iv);
+
+            FileTransferWrapper ftw = JsonConvert.DeserializeObject<FileTransferWrapper>(plaintext);
+
+            return ftw;
+        }
+
         public static bool RequestStartScoringProcess() {
 
             Console.WriteLine("Asking server to start scoring process...");
@@ -251,41 +284,9 @@ namespace SSEService.Net {
 
             string plaintext = Encryption.DecryptMessage(resp.Ciphertext, resp.IV);
             ScoringReport report = JsonConvert.DeserializeObject<ScoringReport>(plaintext);
+            Globals.ScoringReport = report;
 
             Console.WriteLine("Scoring report received from server!");
-
-            Console.WriteLine("---------------------------------------------------------------");
-            Console.WriteLine("-                          PENALTIES                          -");
-            Console.WriteLine("---------------------------------------------------------------");
-
-            if (report.penalties.Count > 0) {
-                foreach (ClientScoreMetadata meta in report.penalties) {
-                    Console.WriteLine(meta.Description + " | -" + meta.ScoreValue + "pts");
-                }
-            } else {
-                Console.WriteLine("No penalties!");
-            }
-            Console.WriteLine("");
-            Console.WriteLine("---------------------------------------------------------------");
-            Console.WriteLine("-                           REWARDS                           -");
-            Console.WriteLine("---------------------------------------------------------------");
-
-            if (report.rewards.Count > 0) {
-                foreach (ClientScoreMetadata meta in report.rewards) {
-                    Console.WriteLine(meta.Description + " | " + meta.ScoreValue + "pts");
-                }
-            } else {
-                Console.WriteLine("No rewards found.");
-            }
-            Console.WriteLine("");
-            Console.WriteLine("---------------------------------------------------------------");
-            Console.WriteLine("-                           SUMMARY                           -");
-            Console.WriteLine("---------------------------------------------------------------");
-            Console.WriteLine("");
-
-            Console.WriteLine("Found vulnerabilities: " + report.rewardsFound + "/" + report.totalRewards);
-            Console.WriteLine("Score: " + report.score + "/" + report.totalScore);
-
 
             return true;
         }
