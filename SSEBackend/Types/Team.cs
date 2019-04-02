@@ -14,5 +14,7 @@ namespace SSEBackend.Types
         public Dictionary<string, ScoringProgressTracker> scoringProgressTrackers;
 
         public Dictionary<Runtime, byte[]> EncKeys;
+
+        public bool Debug = false;
     }
 }

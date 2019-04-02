@@ -8,6 +8,8 @@ using SSEBackend.Types;
 using SSECommon;
 using SSECommon.Types;
 
+using Newtonsoft.Json;
+
 namespace SSEBackend
 {
     public static class Globals
@@ -20,6 +22,12 @@ namespace SSEBackend
 
         public static void LoadData() {
             data = new Data();
+
+            List<Team> _teams = JsonConvert.DeserializeObject<List<Team>>(File.ReadAllText((CONFIG_DIRECTORY + "\\teams.json")).AsPath());
+
+            foreach (Team t in _teams) {
+                data.teams[t.UUID] = t;
+            }
 
             //load all of the runtimes
             foreach (string k in Directory.EnumerateDirectories(RUNTIME_CONFIG_DIRECTORY)) {

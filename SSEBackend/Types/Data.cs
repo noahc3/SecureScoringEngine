@@ -14,8 +14,6 @@ namespace SSEBackend.Types
 
         public Dictionary<string, Runtime> runtimes = new Dictionary<string, Runtime>();
 
-        public Dictionary<string, Team> teams = new Dictionary<string, Team> {
-            { "test", new Team {UUID = "test", ValidRuntimeIDs = new List<string> { "Microsoft Windows 10", "Microsoft Windows 6.1", "18.04.1-Ubuntu" }, EncKeys = new Dictionary<Runtime, byte[]>()} }
-        };
+        public Dictionary<string, Team> teams = new Dictionary<string, Team>();
     }
 }
