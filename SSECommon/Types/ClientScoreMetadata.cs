@@ -8,9 +8,9 @@ namespace SSECommon.Types
 {
     public class ClientScoreMetadata
     {
-        public string Name;
-        public string Description;
-        public int ScoreValue;
-        public ScoreType Type;
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public int ScoreValue { get; set; }
+        public ScoreType Type { get; set; }
     }
 }

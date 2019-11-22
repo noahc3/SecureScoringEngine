@@ -15,6 +15,9 @@ namespace SSEBackend.Types
 
         public Dictionary<Runtime, byte[]> EncKeys;
 
+        public long TeamStartTimestamp; // ticks
+        public Dictionary<string, long> RuntimeStartTimestamps = new Dictionary<string, long>(); // runtimeid, ticks
+
         public bool Debug = false;
     }
 }

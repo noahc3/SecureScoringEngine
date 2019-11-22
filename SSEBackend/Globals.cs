@@ -77,8 +77,11 @@ namespace SSEBackend
 
             bool validRuntimeId = false;
 
+            string sanitizedRuntimeId = null;
+
             foreach (string k in team.ValidRuntimeIDs) {
                 if (runtimeId.Contains(k)) {
+                    sanitizedRuntimeId = k;
                     validRuntimeId = true;
                     break;
                 }
@@ -88,7 +91,15 @@ namespace SSEBackend
             if (!validRuntimeId)
                 return false;
 
-            //accept the client
+            //accept the client, set start timestamps if necessary
+
+            if (team.TeamStartTimestamp == default) {
+                team.TeamStartTimestamp = DateTime.UtcNow.Ticks;
+                team.RuntimeStartTimestamps[sanitizedRuntimeId] = DateTime.UtcNow.Ticks;
+            } else if (!team.RuntimeStartTimestamps.ContainsKey(runtimeId)) {
+                team.RuntimeStartTimestamps[runtimeId] = DateTime.UtcNow.Ticks;
+            }
+
             return true;
         }
 

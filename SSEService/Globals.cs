@@ -116,9 +116,7 @@ namespace SSEService {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) {
                 ("notifu64 /p \"" + title + "\" /m \"" + message + "\"").ExecuteAsCmd();
             } else {
-                //string user = "echo $SUDO_USER".ExecuteAsBash();
-                //Console.WriteLine(("su " + user + " -c \"notify-send -u critical \"" + title + "\" \"" + message + "\"\"").ExecuteAsBash());
-                Console.WriteLine("Unable to show notification on Linux (for now)");
+                ("notify-send -u critical -i \"/opt/SSEService/assets/icon.png\" \"" + title + "\" \"" + message + "\"").ExecuteAsBash();
             }
         }
     }

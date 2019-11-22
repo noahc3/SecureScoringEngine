@@ -10,14 +10,14 @@ namespace SSECommon.Types
 {
     public class ScoringPayloadMetadata
     {
-        public string Name;
-        public string Description;
-        public int ScoreValue;
-        public ScoreType Type;
-        public bool ScoreIfBool;
-        public bool BanOnInvalid;
-        public string ClientPayload;
-        public string ServerPayload;
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public int ScoreValue { get; set; }
+        public ScoreType Type { get; set; }
+        public bool ScoreIfBool { get; set; }
+        public bool BanOnInvalid { get; set; }
+        public string ClientPayload { get; set; }
+        public string ServerPayload { get; set; }
 
         public static ScoringPayloadMetadata FromJson(string json) {
             return JsonConvert.DeserializeObject<ScoringPayloadMetadata>(json);

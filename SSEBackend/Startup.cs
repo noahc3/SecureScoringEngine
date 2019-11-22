@@ -41,7 +41,9 @@ namespace SSEBackend
 
             app.UseHttpsRedirection();
 
-            app.UseRouting(routes => {
+            app.UseRouting();
+
+            app.UseEndpoints(routes => {
                 routes.MapControllers();
             });
 

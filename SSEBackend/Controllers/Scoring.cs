@@ -178,7 +178,8 @@ namespace SSEBackend.Controllers
                 return new StatusCodeResult(StatusCodes.Status400BadRequest);
             }
 
-            Dictionary<string, ScoringProgressTracker> scoringProgressTrackers = Globals.GetTeam(message.TeamUUID).scoringProgressTrackers;
+            Team team = Globals.GetTeam(message.TeamUUID);
+            Dictionary<string, ScoringProgressTracker> scoringProgressTrackers = team.scoringProgressTrackers;
 
             //[ -- 1 -- ]
             //the client messed up and needs to request to start scoring first.
@@ -241,6 +242,9 @@ namespace SSEBackend.Controllers
 
                 i++;
             }
+
+            report.teamStartTimestamp = team.TeamStartTimestamp;
+            report.runtimeStartTimestamp = team.RuntimeStartTimestamps[sanitizedRuntimeId];
 
             byte[] iv;
             byte[] ciphertext = Encryption.EncryptMessage(JsonConvert.SerializeObject(report), out iv, message.TeamUUID, message.RuntimeID);

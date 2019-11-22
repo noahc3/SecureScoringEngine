@@ -6,7 +6,7 @@ namespace SSECommon.Types
 {
     public class FileTransferWrapper
     {
-        public byte[] Blob;
-        public string Path;
+        public byte[] Blob { get; set; }
+        public string Path { get; set; }
     }
 }

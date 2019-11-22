@@ -5,11 +5,11 @@ using System.Text;
 
 namespace SSECommon.Types {
     public class GenericEncryptedMessage {
-        public byte[] Ciphertext;
-        public byte[] IV;
-        public string Tag;
-        public string TeamUUID;
-        public string RuntimeID;
+        public byte[] Ciphertext { get; set; }
+        public byte[] IV { get; set; }
+        public string Tag { get; set; }
+        public string TeamUUID { get; set; }
+        public string RuntimeID { get; set; }
 
         public GenericEncryptedMessage() {
 

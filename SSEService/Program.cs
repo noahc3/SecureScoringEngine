@@ -91,8 +91,11 @@ namespace SSEService {
                         }
                     }
 
+                    TimeSpan teamRunningTime = DateTime.UtcNow.Subtract(new DateTime(r.teamStartTimestamp));
+                    TimeSpan imageRunningTime = DateTime.UtcNow.Subtract(new DateTime(r.runtimeStartTimestamp));
+
                     //TODO: implement running time (from server i guess)
-                    reportTemplate = String.Format(reportTemplate, "Not yet implemented", r.score, r.totalScore, r.penaltiesGained, penaltyPoints, r.rewardsFound, rewardsPoints, r.totalRewards, penalties, rewards, Globals.SessionConfig.TeamUUID);
+                    reportTemplate = String.Format(reportTemplate, String.Format("{0:0}:{1:00}:{2:00}", teamRunningTime.TotalHours, teamRunningTime.Minutes, teamRunningTime.Seconds), r.score, r.totalScore, r.penaltiesGained, penaltyPoints, r.rewardsFound, rewardsPoints, r.totalRewards, penalties, rewards, Globals.SessionConfig.TeamUUID, String.Format("{0:0}:{1:00}:{2:00}", imageRunningTime.TotalHours, imageRunningTime.Minutes, imageRunningTime.Seconds));
 
                     File.WriteAllText(reportTemplateWrapper.Path, reportTemplate);
 
