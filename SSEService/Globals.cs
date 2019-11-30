@@ -12,19 +12,29 @@ using SSEService.Types;
 namespace SSEService {
     static class Globals {
         public static string CONFIG_DIRECTORY = (Environment.CurrentDirectory + "\\config\\").AsPath();
+        public static string FILES_DIRECTORY = (Environment.CurrentDirectory + "\\files\\").AsPath();
+
         public static string CONFIG_SESSION = (CONFIG_DIRECTORY + "\\session.json").AsPath();
-        public static string README_LOCATION = (CONFIG_DIRECTORY + "\\readme.rtf").AsPath();
+
+        public static string README_LOCATION = (FILES_DIRECTORY + "\\readme.html").AsPath();
+        public static string SCORING_REPORT_LOCATION = (FILES_DIRECTORY + "\\report.html").AsPath();
 
         //file locations
 
         //base address
+        public static string INTERNET_CHECK_ADDRESS = "http://www.google.com/";
+#if (DEBUG)
         public static string ENDPOINT_BASE_ADDRESS = "http://192.168.0.10:5002";
+#else
+        public static string ENDPOINT_BASE_ADDRESS = "http://sse.noahc3.tech";
+#endif
 
         //-------------------------------//
         //----- plaintext endpoints -----//
         //-------------------------------//
-        
+
         // various startup/initial config endpoints
+        public static Uri ENDPOINT_PING_PLAINTEXT = new Uri(ENDPOINT_BASE_ADDRESS + "/api/generic/ping");
         public static Uri ENDPOINT_VERIFY_TEAM_UUID = new Uri(ENDPOINT_BASE_ADDRESS + "/api/auth/isteamuuidvalid");
         public static Uri ENDPOINT_KEY_EXCHANGE = new Uri(ENDPOINT_BASE_ADDRESS + "/api/auth/keyexchange");
 
@@ -68,6 +78,8 @@ namespace SSEService {
         public const string SSESERVICE_NOTIFICATION_LOST_POINTS = "You lost points!";
         public const string SSESERVICE_NOTIFICATION_CONNECTION_FAILED = "Failed to connect to server, check your internet!";
 
+        public const string SSESERVICE_ERROR_HTML = "<html><!--SSEERR--><head><meta http-equiv=\"refresh\" content=\"5\"/><title>{0}</title><style type=\"text/css\"> .centerDiv{{left:50%; top:50%; transform: translate(-50%, -50%); position: fixed; border-style: solid; border-color: {1}; border-width: 3px; text-align:center; padding:40px; font-family: Arial, Verdana, sans-serif; font-size: 16px;}}h1{{color: {1}; font-family: Helvetica,Arial,sans-serif;}}h3{{font-family: 'Roboto', sans-serif;}}</style></head><body><div class=\"centerDiv\"> <h1>{2}</h1> <p>{3}</p><h3>{4}</h3> <h3>{5}</h3></div></body></html>";
+
 
 
 
@@ -77,18 +89,19 @@ namespace SSEService {
 
             Console.WriteLine("Platform: " + RuntimeInformation.OSDescription);
             sessionConfig.RuntimeID = RuntimeInformation.OSDescription;
+            sessionConfig.TeamUUID = "";
 
             //loop to require people to enter a valid team UUID.
-            while (true) {
-                Console.WriteLine("TEMPORARY INPUT: Please enter your Team UUID:");
-                sessionConfig.TeamUUID = Console.ReadLine();
-                if (ClientServerComms.VerifyTeamUUID(sessionConfig.TeamUUID, sessionConfig.RuntimeID)) {
-                    Console.WriteLine("Team UUID authorized.");
-                    break;
-                } else {
-                    Console.WriteLine("Invalid team UUID!");
-                }
-            }
+            //while (true) {
+            //    Console.WriteLine("TEMPORARY INPUT: Please enter your Team UUID:");
+            //    sessionConfig.TeamUUID = Console.ReadLine();
+            //    if (ClientServerComms.VerifyTeamUUID(sessionConfig.TeamUUID, sessionConfig.RuntimeID)) {
+            //        Console.WriteLine("Team UUID authorized.");
+            //        break;
+            //    } else {
+            //        Console.WriteLine("Invalid team UUID!");
+            //    }
+            //}
 
             sessionConfig.Flush();
             Console.WriteLine("Session Config flushed to disk.");
@@ -98,16 +111,20 @@ namespace SSEService {
             SessionConfig = SessionConfig.FromJson(File.ReadAllText(Globals.CONFIG_SESSION));
 
             //verify the team UUID and runtime ID parsed from the config
-            Console.WriteLine("Verifying team UUID and runtime ID...");
-            if (ClientServerComms.VerifyTeamUUID(SessionConfig.TeamUUID, SessionConfig.RuntimeID)) {
-                Console.WriteLine("Team UUID authorized.");
-            } else {
-                //if the team UUID and runtime ID pair are invalid, wipe the session config and restart the authentication process.
-                Console.WriteLine("Invalid team UUID!");
-                File.Delete(Globals.CONFIG_SESSION);
-                GenerateConfig();
-                LoadConfig();
-            }
+            //Console.WriteLine("Verifying team UUID and runtime ID...");
+            //if (ClientServerComms.VerifyTeamUUID(SessionConfig.TeamUUID, SessionConfig.RuntimeID)) {
+            //    Console.WriteLine("Team UUID authorized.");
+            //} else {
+            //    //if the team UUID and runtime ID pair are invalid, wipe the session config and restart the authentication process.
+            //    Console.WriteLine("Invalid team UUID!");
+            //    File.Delete(Globals.CONFIG_SESSION);
+            //    GenerateConfig();
+            //    LoadConfig();
+            //}
+        }
+
+        public static void WriteErrorScoringReport(string windowTitle, string color, string headerText, string smallText, string errorText, string solutionText) {
+            File.WriteAllText(Globals.SCORING_REPORT_LOCATION, String.Format(SSESERVICE_ERROR_HTML, windowTitle, color, headerText, smallText, errorText, solutionText));
         }
         
         //compatible with both windows and linux!

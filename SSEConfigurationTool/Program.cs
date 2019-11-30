@@ -6,11 +6,14 @@ using System.Windows.Forms;
 
 namespace SSEConfigurationTool {
     static class Program {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
+
         [STAThread]
         static void Main() {
+
+            Globals.InitializeGlobals();
+
+
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());

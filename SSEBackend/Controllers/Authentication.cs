@@ -100,7 +100,6 @@ namespace SSEBackend.Controllers
 
         //can be used to ping the server and verify key refresh is working
         //this endpoint is NOT plaintext! use /api/generic/ping for plaintext ping!
-        //TODO: implement /api/generic/ping
         //this endpoint WILL invalidate the key! it should only be used to verify the key exchange is working, not to verify keys!
         [HttpPost("ping")]
 

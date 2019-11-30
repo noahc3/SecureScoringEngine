@@ -45,9 +45,9 @@ namespace SSEBackend.Controllers
             tracker.scored = new List<bool>();
             tracker.scoringProgress = -1;
 
-            if (team.scoringProgressTrackers == null) team.scoringProgressTrackers = new Dictionary<string, ScoringProgressTracker>();
+            if (team.ScoringProgressTrackers == null) team.ScoringProgressTrackers = new Dictionary<string, ScoringProgressTracker>();
 
-            team.scoringProgressTrackers[Globals.GetRuntime(message.TeamUUID, message.RuntimeID).ID] = tracker;
+            team.ScoringProgressTrackers[Globals.GetRuntime(message.TeamUUID, message.RuntimeID).ID] = tracker;
 
             return new StatusCodeResult(StatusCodes.Status200OK);
         }
@@ -67,7 +67,7 @@ namespace SSEBackend.Controllers
 
             //TODO: consider moving this validation to a method in Globals
 
-            Dictionary<string, ScoringProgressTracker> scoringProgressTrackers = Globals.GetTeam(message.TeamUUID).scoringProgressTrackers;
+            Dictionary<string, ScoringProgressTracker> scoringProgressTrackers = Globals.GetTeam(message.TeamUUID).ScoringProgressTrackers;
 
             //[ -- 1 -- ]
             //the client messed up and needs to request to start scoring first.
@@ -179,7 +179,7 @@ namespace SSEBackend.Controllers
             }
 
             Team team = Globals.GetTeam(message.TeamUUID);
-            Dictionary<string, ScoringProgressTracker> scoringProgressTrackers = team.scoringProgressTrackers;
+            Dictionary<string, ScoringProgressTracker> scoringProgressTrackers = team.ScoringProgressTrackers;
 
             //[ -- 1 -- ]
             //the client messed up and needs to request to start scoring first.
@@ -242,6 +242,10 @@ namespace SSEBackend.Controllers
 
                 i++;
             }
+
+            team.RuntimeLastScores[sanitizedRuntimeId] = report.score;
+            team.RuntimeLastTimestamps[sanitizedRuntimeId] = DateTime.UtcNow.Ticks;
+            team.TeamLastTimestamp = DateTime.UtcNow.Ticks;
 
             report.teamStartTimestamp = team.TeamStartTimestamp;
             report.runtimeStartTimestamp = team.RuntimeStartTimestamps[sanitizedRuntimeId];

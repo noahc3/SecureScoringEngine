@@ -45,6 +45,7 @@ namespace SSEService {
             //end fancy format stuff
 
             if (!Directory.Exists(Globals.CONFIG_DIRECTORY)) Directory.CreateDirectory(Globals.CONFIG_DIRECTORY);
+            if (!Directory.Exists(Globals.FILES_DIRECTORY)) Directory.CreateDirectory(Globals.FILES_DIRECTORY);
 
             if (!File.Exists(Globals.CONFIG_SESSION)) {
                 Globals.GenerateConfig();
@@ -52,16 +53,18 @@ namespace SSEService {
 
             Globals.LoadConfig();
 
-#if (DEBUG)
-            ClientServerComms.CheckDebugSvcStatus();
-#endif
-
-            ClientServerComms.CiphertextPing();
-
-            ClientServerComms.GetReadme();
-
             //main logic loop
             while (true) {
+                if (!IsClientReadyForScoring()) {
+                    Thread.Sleep(5000);
+                    Globals.LoadConfig();
+                    continue;
+                }
+
+                if (!File.Exists(Globals.README_LOCATION)) {
+                    ClientServerComms.GetReadme();
+                }
+
                 if (ClientServerComms.RequestStartScoringProcess()) {
                     ClientServerComms.ScoringProcess();
                     ClientServerComms.GetScoringReport();
@@ -94,10 +97,9 @@ namespace SSEService {
                     TimeSpan teamRunningTime = DateTime.UtcNow.Subtract(new DateTime(r.teamStartTimestamp));
                     TimeSpan imageRunningTime = DateTime.UtcNow.Subtract(new DateTime(r.runtimeStartTimestamp));
 
-                    //TODO: implement running time (from server i guess)
-                    reportTemplate = String.Format(reportTemplate, String.Format("{0:0}:{1:00}:{2:00}", teamRunningTime.TotalHours, teamRunningTime.Minutes, teamRunningTime.Seconds), r.score, r.totalScore, r.penaltiesGained, penaltyPoints, r.rewardsFound, rewardsPoints, r.totalRewards, penalties, rewards, Globals.SessionConfig.TeamUUID, String.Format("{0:0}:{1:00}:{2:00}", imageRunningTime.TotalHours, imageRunningTime.Minutes, imageRunningTime.Seconds));
+                    reportTemplate = String.Format(reportTemplate, String.Format("{0:0}:{1:00}:{2:00}", Math.Floor(teamRunningTime.TotalHours), teamRunningTime.Minutes, teamRunningTime.Seconds), r.score, r.totalScore, r.penaltiesGained, penaltyPoints, r.rewardsFound, rewardsPoints, r.totalRewards, penalties, rewards, Globals.SessionConfig.TeamUUID, String.Format("{0:0}:{1:00}:{2:00}", Math.Floor(imageRunningTime.TotalHours), imageRunningTime.Minutes, imageRunningTime.Seconds));
 
-                    File.WriteAllText(reportTemplateWrapper.Path, reportTemplate);
+                    File.WriteAllText(Globals.SCORING_REPORT_LOCATION, reportTemplate);
 
                     if (r.score > Globals.LastScore) {
                         Globals.SendToastNotification(Globals.SSESERVICE_NOTIFICATION_TITLE, Globals.SSESERVICE_NOTIFICATION_GAINED_POINTS);
@@ -120,6 +122,56 @@ namespace SSEService {
 
             Console.WriteLine("-- Exited logic loop --");
             Console.ReadKey();
+
+            
         }
+
+
+        public static bool IsClientReadyForScoring() {
+            if (!ClientServerComms.IsInternetAvailable()) {
+                Globals.WriteErrorScoringReport("SSEService Error", "red", "SSE Error", "The scoring engine failed to connect to the server. Scoring cannot continue.", "Failed to ping " + Globals.INTERNET_CHECK_ADDRESS, "Please check your Internet connection!");
+                Globals.SendToastNotification("SSEService Error", "Cannot connect to scoring server, check the scoring report for more information.");
+                return false;
+            }
+
+            if (String.IsNullOrWhiteSpace(Globals.SessionConfig.TeamUUID)) {
+                Globals.WriteErrorScoringReport("SSEService Warning", "orange", "SSE WARNING", "The scoring engine failed to connect to the server. Scoring cannot continue.", "Your Team UUID has not been set!", "Please enter your Team UUID with the \"Set Team UUID\" desktop icon!");
+                Globals.SendToastNotification("SSEService Warning", "Please enter your team UUID!");
+                return false;
+            }
+
+            if (!ClientServerComms.CanReachScoringServer()) {
+                Globals.WriteErrorScoringReport("SSEService Error", "red", "SSE ERROR", "The scoring engine failed to connect to the server. Scoring cannot continue.", "Cannot connect to the scoring server at " + Globals.ENDPOINT_BASE_ADDRESS, "Please check your Internet connection and ensure the scoring server can be reached through any firewalls!");
+                Globals.SendToastNotification("SSEService Error", "Cannot connect to scoring server, check the scoring report for more information.");
+                return false;
+            }
+            
+
+            if (!ClientServerComms.VerifyTeamUUID(Globals.SessionConfig.TeamUUID, Globals.SessionConfig.RuntimeID)) {
+                Globals.WriteErrorScoringReport("SSEService Error", "red", "SSE ERROR", "The scoring engine failed to connect to the server. Scoring cannot continue.", "Your Team UUID is invalid!", "Please correct your Team UUID with the \"Set Team UUID\" desktop icon!");
+                Globals.SendToastNotification("SSEService Error", "Your Team UUID is invalid! Please correct it with the 'Set Team UUID' desktop icon!");
+                return false;
+            }
+
+            if (!ClientServerComms.CiphertextPing()) {
+                Globals.WriteErrorScoringReport("SSEService Error", "red", "SSE ERROR", "The scoring engine failed to connect to the server. Scoring cannot continue.", "Encrypted communications with the server failed.", "Please check your Internet connection and ensure the scoring server can be reached through any firewalls!");
+                Globals.SendToastNotification("SSEService Error", "Cannot connect to scoring server, check the scoring report for more information.");
+                return false;
+            }
+
+#if (DEBUG)
+            ClientServerComms.CheckDebugSvcStatus();
+#endif
+
+            if (!File.Exists(Globals.SCORING_REPORT_LOCATION) || File.ReadAllText(Globals.SCORING_REPORT_LOCATION).Contains("<!--SSEERR-->")) {
+                Globals.WriteErrorScoringReport("Scoring in Progress", "blue", "SCORING IN PROGRESS", "Please wait for scoring to complete before your scoring report is generated.", "", "");
+            }
+
+            return true;
+        }
+
+
     }
+
+
 }

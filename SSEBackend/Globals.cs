@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Threading;
 
 using SSEBackend.Types;
 using SSECommon;
@@ -22,15 +23,25 @@ namespace SSEBackend
 
         public static Data data; //dynamic data related to the current competition
 
+        public static Team[] scoreboard = new Team[0]; //list of teams sorted by score/time for use with the scoreboard.
+
         public static void LoadData() {
             config = JsonConvert.DeserializeObject<Config>(File.ReadAllText((CONFIG_DIRECTORY + "\\config.json")).AsPath());
 
             data = new Data();
 
-            //load teams from file
-            List<Team> _teams = JsonConvert.DeserializeObject<List<Team>>(File.ReadAllText((CONFIG_DIRECTORY + "\\teams.json")).AsPath());
+            List<Team> _teams;
+
+            //checks if saved teams data exists (with scores and stuff) and loads it, otherwise loads template teams file.
+            if (File.Exists((CONFIG_DIRECTORY + "\\teams_saved.json").AsPath())) {
+                _teams = JsonConvert.DeserializeObject<List<Team>>(File.ReadAllText((CONFIG_DIRECTORY + "\\teams_saved.json").AsPath()));
+
+            } else {
+                _teams = JsonConvert.DeserializeObject<List<Team>>(File.ReadAllText((CONFIG_DIRECTORY + "\\teams.json")).AsPath());
+            }
 
             foreach (Team t in _teams) {
+                t.EncKeys = new Dictionary<Runtime, byte[]>();
                 data.teams[t.UUID] = t;
             }
 
@@ -51,6 +62,14 @@ namespace SSEBackend
 
                 data.runtimes[runtime.ID] = runtime;
             }
+        }
+
+        public static void SaveData() {
+            List<Team> teams = new List<Team>();
+            foreach(Team k in data.teams.Values) {
+                teams.Add(k.GetScoreboardShadowCopy());
+            }
+            File.WriteAllText((CONFIG_DIRECTORY + "\\teams_saved.json").AsPath(), JsonConvert.SerializeObject(teams, Formatting.Indented));
         }
 
         public static bool VerifyTeamAuthenticity(string teamUuid, string runtimeId) {
@@ -151,6 +170,27 @@ namespace SSEBackend
             ftw.Path = runtime.ScoringReportLocation;
 
             return ftw;
+        }
+
+        public static void StartPassiveTasks() {
+            Task.Factory.StartNew(new Action(() => {
+                while (true) {
+                    Thread.Sleep(10000);
+                    List<Team> teams = new List<Team>();
+
+                    foreach (Team k in Globals.data.teams.Values) {
+                        if (k.TeamLastTimestamp != default) {
+                            teams.Add(k.GetScoreboardShadowCopy());
+                        }
+                    }
+
+                    teams.OrderBy(c => c.RuntimeLastScores.Values.Sum()).ThenBy(c => c.TeamLastTimestamp - c.TeamStartTimestamp);
+
+                    Globals.scoreboard = teams.ToArray();
+
+                    SaveData();
+                }
+            }));
         }
     }
 }

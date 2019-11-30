@@ -9,12 +9,45 @@ using SSECommon;
 using SSECommon.Types;
 
 using SSEService.Security;
-using SSEService.Types;
 
 using Newtonsoft.Json;
 
 namespace SSEService.Net {
     class ClientServerComms {
+
+        public static bool IsInternetAvailable() {
+
+            using (HttpClient http = new HttpClient()) {
+                try {
+                    http.DefaultRequestHeaders.Add("User-Agent", "AppleWebKit/536.2+ (KHTML, like Gecko)"); //makes google return a very small html file
+                    HttpResponseMessage response = http.GetAsync(Globals.INTERNET_CHECK_ADDRESS).Result;
+                    if (response.IsSuccessStatusCode) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                } catch (Exception) {
+                    return false;
+                }
+            }
+
+            
+        }
+
+        public static bool CanReachScoringServer() {
+            using (HttpClient http = new HttpClient()) {
+                try {
+                    HttpResponseMessage response = http.GetAsync(Globals.ENDPOINT_PING_PLAINTEXT).Result;
+                    if (response.IsSuccessStatusCode && response.Content.ReadAsStringAsync().Result.Contains("PONG!")) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                } catch (Exception) {
+                    return false;
+                }
+            }
+        }
 
         //asks the server if the teamUuid and runtimeId combo is valid. Since the global SessionConfig may not be defined at this point, the id's are passed in as arguments.
         public static bool VerifyTeamUUID(string teamUuid, string runtimeId) {
@@ -32,7 +65,7 @@ namespace SSEService.Net {
             }
         }
         
-        public static void CiphertextPing() {
+        public static bool CiphertextPing() {
 
             byte[] iv;
             byte[] ciphertext = Encryption.EncryptMessage("PING!", out iv);
@@ -50,10 +83,9 @@ namespace SSEService.Net {
                 if (response.IsSuccessStatusCode) {
                     resp = GenericEncryptedMessage.FromJson(response.Content.ReadAsStringAsync().Result);
                 } else {
-                    //if failed the server is likely not online or the key material send was invalid/not parsable
+                    //if failed the server is likely not online or the key material sent was invalid/not parsable
                     Console.WriteLine("Server sent invalid response " + response.StatusCode);
-                    Environment.Exit(0);
-                    return;
+                    return false;
                 }
             }
 
@@ -62,15 +94,7 @@ namespace SSEService.Net {
 
             string pong = Encryption.DecryptMessage(ciphertext, iv);
 
-            if (pong != "PONG!") {
-                Console.WriteLine("Ping failed! Invalid response: " + pong);
-                Environment.Exit(0);
-                return;
-            }
-
-            Console.WriteLine(pong);
-
-            return;
+            return pong == "PONG!";
         }
         
         public static void GetReadme() {
@@ -103,7 +127,7 @@ namespace SSEService.Net {
 
             FileTransferWrapper ftw = JsonConvert.DeserializeObject<FileTransferWrapper>(plaintext);
 
-            File.WriteAllBytes(ftw.Path, ftw.Blob);
+            File.WriteAllBytes(Globals.README_LOCATION, ftw.Blob);
 
             return;
         }
@@ -295,46 +319,49 @@ namespace SSEService.Net {
 
 #if (DEBUG)
         // DEBUG SERVICES //
-        public static void CheckDebugSvcStatus() {
+        public static bool CheckDebugSvcStatus() {
+            try {
+                byte[] iv;
+                byte[] ciphertext = Encryption.EncryptMessage(Constants.KEY_EXCHANGE_SANITY_CHECK, out iv);
 
-            byte[] iv;
-            byte[] ciphertext = Encryption.EncryptMessage(Constants.KEY_EXCHANGE_SANITY_CHECK, out iv);
-
-            GenericEncryptedMessage message = new GenericEncryptedMessage(ciphertext, iv, "", Globals.SessionConfig.TeamUUID, Globals.SessionConfig.RuntimeID);
-            GenericEncryptedMessage resp;
+                GenericEncryptedMessage message = new GenericEncryptedMessage(ciphertext, iv, "", Globals.SessionConfig.TeamUUID, Globals.SessionConfig.RuntimeID);
+                GenericEncryptedMessage resp;
 
 
 
-            using (HttpClient http = new HttpClient()) {
-                StringContent content = new StringContent(message.ToJson());
-                content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-                HttpResponseMessage response = http.PostAsync(Globals.ENDPOINT_DEBUG_CHECK_SVC_STATUS, content).Result;
+                using (HttpClient http = new HttpClient()) {
+                    StringContent content = new StringContent(message.ToJson());
+                    content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                    HttpResponseMessage response = http.PostAsync(Globals.ENDPOINT_DEBUG_CHECK_SVC_STATUS, content).Result;
 
-                if (response.IsSuccessStatusCode) {
-                    resp = GenericEncryptedMessage.FromJson(response.Content.ReadAsStringAsync().Result);
-                } else {
-                    //if failed the server is likely not online or the key material send was invalid/not parsable
-                    Console.WriteLine("Server sent invalid response " + response.StatusCode);
-                    Environment.Exit(0);
-                    return;
+                    if (response.IsSuccessStatusCode) {
+                        resp = GenericEncryptedMessage.FromJson(response.Content.ReadAsStringAsync().Result);
+                    } else {
+                        //if failed the server is likely not online or the key material send was invalid/not parsable
+                        Console.WriteLine("Server sent invalid response " + response.StatusCode);
+                        Environment.Exit(0);
+                        return false;
+                    }
                 }
+
+                ciphertext = resp.Ciphertext;
+                iv = resp.IV;
+
+                string status = Encryption.DecryptMessage(ciphertext, iv);
+
+                if (status != "true") {
+                    Console.WriteLine("This server does not have debugging svcs enabled! If you are the server operator, make sure to set \"DebugSvcs\" to 'true' in config.json.");
+                    Console.ReadKey();
+                    Environment.Exit(0);
+                    return false;
+                }
+
+                Console.WriteLine("Server has debug svcs enabled.");
+
+                return true;
+            } catch (Exception) {
+                return false;
             }
-
-            ciphertext = resp.Ciphertext;
-            iv = resp.IV;
-
-            string status = Encryption.DecryptMessage(ciphertext, iv);
-
-            if (status != "true") {
-                Console.WriteLine("This server does not have debugging svcs enabled! If you are the server operator, make sure to set \"DebugSvcs\" to 'true' in config.json.");
-                Console.ReadKey();
-                Environment.Exit(0);
-                return;
-            }
-
-            Console.WriteLine("Server has debug svcs enabled.");
-
-            return;
         }
 
 #endif
