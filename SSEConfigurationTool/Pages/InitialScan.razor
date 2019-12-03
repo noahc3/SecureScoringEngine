@@ -1,0 +1,35 @@
+﻿@page "/initialscan"
+
+    <div class="vertical-center text-center">
+        @if (!initialized) {
+            <h2>Please Wait</h2>
+            <p>The configuration tool is performing an initial scan of the VM.</p>
+        } else {
+            <h2>Detected Info</h2>
+            <BSContainer>
+                <BSRow>
+                    <BSCol XS="1">Platform</BSCol>
+                    <BSCol XS="11">@Globals.DisplayName</BSCol>
+                </BSRow>
+                <BSRow>
+                    <BSCol XS="1">Users</BSCol>
+                    <BSCol XS="11">
+                        @foreach(User k in Globals.users) {
+                            <BSRow>@k.Name</BSRow>
+                        }
+                    </BSCol>
+                </BSRow>
+            </BSContainer>
+        }
+    </div>
+
+
+
+@functions {
+    private bool initialized = false;
+
+    protected override async Task OnInitializedAsync() {
+        Globals.Init();
+
+    }
+}

@@ -16,6 +16,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSEBackend", "SSEBackend\SS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSESetTeamUUID", "SSESetTeamUUID\SSESetTeamUUID.csproj", "{1141AAAB-F62A-4F96-AFED-A36404F2B7DA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SSEConfigurationTool", "SSEConfigurationTool\SSEConfigurationTool.csproj", "{846A9B08-262C-4A8F-B3F5-28F69C6C62C8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,6 +40,10 @@ Global
 		{1141AAAB-F62A-4F96-AFED-A36404F2B7DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1141AAAB-F62A-4F96-AFED-A36404F2B7DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1141AAAB-F62A-4F96-AFED-A36404F2B7DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{846A9B08-262C-4A8F-B3F5-28F69C6C62C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{846A9B08-262C-4A8F-B3F5-28F69C6C62C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{846A9B08-262C-4A8F-B3F5-28F69C6C62C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{846A9B08-262C-4A8F-B3F5-28F69C6C62C8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

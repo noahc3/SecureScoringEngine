@@ -1,0 +1,12 @@
+﻿@inherits LayoutComponentBase
+@inject IBootstrapCSS BootstrapCSS
+
+<div class="main">
+    <div class="content">
+        @Body
+    </div>
+</div>
+
+@functions {
+    private bool bootstrapInitialized = false;
+}

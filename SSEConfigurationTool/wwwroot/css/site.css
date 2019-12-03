@@ -1,0 +1,41 @@
+@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
+
+html, body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+app {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+    margin: 0 5rem 0 5rem;
+}
+
+.nud {
+    max-width: 2rem;
+}
+
+.text-center {
+    text-align:center;
+}
+
+.vertical-center {
+    margin:0;
+    margin-top:50vh;
+    transform: translateY(-50%);
+}
+
+.contained-list {
+    max-width:900px;
+    text-align:left;
+    background-color:#efefef;
+    margin: 1rem auto 1rem auto;
+    padding:2rem;
+}
+
+.contained-list ul {
+    margin-bottom: 0;
+}

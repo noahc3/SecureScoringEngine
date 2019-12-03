@@ -1,0 +1,18 @@
+﻿@page "/beforestarting"
+
+    <div class="vertical-center text-center">
+        <h2>Before Starting</h2>
+
+        <p>Ensure you have already done the following before using this tool:</p>
+
+        <div class="contained-list">
+            <ul>
+                <li>This program should be running <b>inside of the VM you want to score</b> so the tool can scan the system and prepare possible vulns to score.</li>
+                <li>This program should be running with root privileges in under the user account that competitors will use during the competition.</li>
+                <li>Make sure you have already implemented the vulns you want to score. You will be using this tool to create the scoring configurations for these vulns, not to implement the vulns themselves.</li>
+                <li>If you are planning to run this image with the live scoring server, consider starting the server software with debug services enabled. This will allow the configuration tool to automatically send the scoring data to the scoring server when exporting.</li>
+            </ul>
+        </div>
+
+        <button type="button" class="btn btn-primary">Continue</button>
+    </div>
