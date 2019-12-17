@@ -1,0 +1,10 @@
+{
+  "Name": "User griley should not be administrator",
+  "Description": "User griley should not be administrator",
+  "ScoreValue": 1,
+  "Type": 0,
+  "ScoreIfBool": true,
+  "BanOnInvalid": false,
+  "ClientPayload": null,
+  "ServerPayload": null
+}

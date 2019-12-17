@@ -1,0 +1,10 @@
+{
+  "Name": "Prohibited package neverball removed",
+  "Description": "Prohibited package neverball removed",
+  "ScoreValue": 1,
+  "Type": 0,
+  "ScoreIfBool": true,
+  "BanOnInvalid": false,
+  "ClientPayload": null,
+  "ServerPayload": null
+}

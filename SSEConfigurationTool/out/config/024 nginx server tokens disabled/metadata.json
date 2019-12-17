@@ -1,0 +1,10 @@
+{
+  "Name": "nginx server tokens disabled",
+  "Description": "nginx server tokens disabled",
+  "ScoreValue": 3,
+  "Type": 0,
+  "ScoreIfBool": true,
+  "BanOnInvalid": false,
+  "ClientPayload": null,
+  "ServerPayload": null
+}

@@ -1,0 +1,10 @@
+{
+  "Name": "nginx outdated TLS protocol disabled",
+  "Description": "nginx outdated TLS protocol disabled",
+  "ScoreValue": 3,
+  "Type": 0,
+  "ScoreIfBool": true,
+  "BanOnInvalid": false,
+  "ClientPayload": null,
+  "ServerPayload": null
+}

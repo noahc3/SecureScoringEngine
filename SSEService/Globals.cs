@@ -110,6 +110,8 @@ namespace SSEService {
         public static void LoadConfig() {
             SessionConfig = SessionConfig.FromJson(File.ReadAllText(Globals.CONFIG_SESSION));
 
+            //ENDPOINT_BASE_ADDRESS = SessionConfig.Backend;
+
             //verify the team UUID and runtime ID parsed from the config
             //Console.WriteLine("Verifying team UUID and runtime ID...");
             //if (ClientServerComms.VerifyTeamUUID(SessionConfig.TeamUUID, SessionConfig.RuntimeID)) {

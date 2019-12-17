@@ -1,0 +1,10 @@
+{
+  "Name": "Account policy check passed",
+  "Description": "A sufficient default minimum password age is set",
+  "ScoreValue": 1,
+  "Type": 0,
+  "ScoreIfBool": true,
+  "BanOnInvalid": false,
+  "ClientPayload": null,
+  "ServerPayload": null
+}

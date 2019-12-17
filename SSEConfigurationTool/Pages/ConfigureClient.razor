@@ -1,0 +1,107 @@
+﻿@page "/configureclient"
+@page "/configureclient/{tab}"
+@inject NavigationManager nav
+
+<div class="total-space">
+    <BSNav id="configure-client-tabs" IsList="true" IsPills="true" IsFill="true">
+        <BSNavItem>
+            <BSNavLink href="/configureclient/summary">Summary</BSNavLink>
+        </BSNavItem>
+        <BSNavItem>
+            <BSNavLink href="/configureclient/additem">Add Item</BSNavLink>
+        </BSNavItem>
+    </BSNav>
+    @if (tab == "additem") {
+        <BSRow Class="fill-height">
+            <BSCol XS="2" Class="scoring-menu-column">
+                <ScoringItemsMenu platform="@Globals.TargetPlatform" OnSelected="@(new Action<TemplateScoringItem>((i) => { SelectScoringItem(i); }))"></ScoringItemsMenu>
+            </BSCol>
+            <BSCol XS="10" style="height:100%;overflow-y:scroll;padding:30px;">
+                @if (selectedItem == null) {
+                    <h2>Select an item...</h2>
+                } else {
+                    <ScoringItemEditor item="@selectedItem"></ScoringItemEditor>
+                }
+            </BSCol>
+        </BSRow>
+    } else if (tab == "edititem") {
+        <div class="fill-height" style="padding:30px;overflow-y:scroll;">
+                <ScoringItemEditor confItem="@editItem" edit="true"></ScoringItemEditor>
+
+        </div>
+    } else if (tab == "summary") {
+        <div style="padding:30px;text-align:center;width:100vw;overflow-y:scroll;">
+            <h2>Configured Scoring Items</h2>
+            <BSTable IsSmall="true">
+                <thead>
+                    <tr>
+                        <th scope="col">Descriptive Name</th>
+                        <th scope="col">Scoring Report Name</th>
+                        <th scope="col">Score Type</th>
+                        <th scope="col">Score Amount</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (ConfiguredScoringItem _k in Globals.ConfiguredScoringItems) {
+                        ConfiguredScoringItem k = _k;
+                        <tr>
+                            <td>@k.DescriptiveName</td>
+                            <td>@k.ScoringReportName</td>
+                            <td>@k.ScoreType</td>
+                            <td>@k.ScoreAmount</td>
+                            <td>
+                                <BSButtonGroup Size="Size.Small">
+                                    <BSButton Size="Size.Small" Color="Color.Warning" OnClick="(() => { EditScoringItem(k); })">Edit</BSButton>
+                                    <BSButton Size="Size.Small" Color="Color.Danger" OnClick="(() => { RemoveScoringItem(k); })">Remove</BSButton>
+                                </BSButtonGroup>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </BSTable>
+
+            <BSButton IsBlock="true" OnClick="SaveDraft">Save Draft</BSButton>
+            <BSButton IsBlock="true" OnClick="Export">Export Configuration</BSButton>
+        </div>
+    } 
+</div>
+
+@code {
+
+    [Parameter]
+    public string tab { get; set; }
+
+    private TemplateScoringItem selectedItem;
+    private ConfiguredScoringItem editItem;
+
+    protected override Task OnParametersSetAsync() {
+        if (String.IsNullOrWhiteSpace(tab)) nav.NavigateTo("/configureclient/summary");
+        return base.OnParametersSetAsync();
+    }
+
+    public void SelectScoringItem(TemplateScoringItem item) {
+        selectedItem = item;
+        StateHasChanged();
+    }
+
+    public void EditScoringItem(ConfiguredScoringItem item) {
+        editItem = item;
+        nav.NavigateTo("/configureclient/edititem");
+        StateHasChanged();
+    }
+
+    public void RemoveScoringItem(ConfiguredScoringItem item) {
+        Globals.ConfiguredScoringItems.Remove(item);
+        StateHasChanged();
+    }
+
+    public void Export() {
+        tab = "";
+        nav.NavigateTo("/exportclient");
+    }
+
+    private void SaveDraft() {
+        Utilities.SaveDraftJson(Globals.DRAFT_PATH);
+    }
+}

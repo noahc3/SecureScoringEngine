@@ -1,0 +1,10 @@
+{
+  "Name": "Prohibited software check passed",
+  "Description": "Prohibited software OpenRA removed",
+  "ScoreValue": 2,
+  "Type": 0,
+  "ScoreIfBool": true,
+  "BanOnInvalid": false,
+  "ClientPayload": null,
+  "ServerPayload": null
+}

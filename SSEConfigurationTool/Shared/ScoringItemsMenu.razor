@@ -1,0 +1,42 @@
+﻿@inherits ComponentBase
+<div>
+
+       
+
+    <div class="accordion">
+        @foreach (KeyValuePair<string, Dictionary<string, TemplateScoringItem>> _k in Globals.ScoringItems[platform]) {
+            KeyValuePair<string, Dictionary<string, TemplateScoringItem>> k = _k;
+            <BSCard CardType="CardType.Card">
+            <BSCard CardType="CardType.Header"><BSButton ButtonType="ButtonType.Button" OnClick="@(() => {SetOpen(k.Key);})" Color="Color.None" Class="btn-link">@k.Key</BSButton></BSCard>
+                <BSCollapse IsOpen="@categoryCollapseState[k.Key]">
+                    @foreach (TemplateScoringItem i in k.Value.Values) {
+                    <BSListGroupItem ListGroupType="ListGroupType.Link" OnClick="@(() => { OnSelected(i); })">@i.Name</BSListGroupItem>
+                    }
+                </BSCollapse>
+            </BSCard>
+        }
+    </div>
+            
+</div>
+
+@code {
+    [Parameter]
+    public string platform { get; set; }
+
+    [Parameter]
+    public Action<TemplateScoringItem> OnSelected { get; set; }
+
+    private Dictionary<string, bool> categoryCollapseState = new Dictionary<string, bool>();
+
+    protected override void OnInitialized() {
+        foreach (string k in Globals.ScoringItems[platform].Keys) {
+            categoryCollapseState[k] = false;
+        }
+        base.OnInitialized();
+    }
+
+    private void SetOpen(string category) {
+        foreach (string k in categoryCollapseState.Keys.ToList()) if (k != category) categoryCollapseState[k] = false;
+        categoryCollapseState[category] = !categoryCollapseState[category];
+    }
+}

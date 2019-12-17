@@ -1,0 +1,10 @@
+{
+  "Name": "Forensics Question 3 Correct",
+  "Description": "Forensics Question 3 Correct",
+  "ScoreValue": 5,
+  "Type": 0,
+  "ScoreIfBool": true,
+  "BanOnInvalid": false,
+  "ClientPayload": null,
+  "ServerPayload": null
+}

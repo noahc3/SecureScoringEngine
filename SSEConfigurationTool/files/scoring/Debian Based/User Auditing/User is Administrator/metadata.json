@@ -1,0 +1,8 @@
+{
+  "Name": "User minho should be an administrator",
+  "Description": "User minho should be an administrator",
+  "ScoreValue": 2,
+  "ScoreIfBool": true,
+  "BanOnInvalid": false,
+  "Type": 0
+}

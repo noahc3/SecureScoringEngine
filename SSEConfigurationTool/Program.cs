@@ -13,6 +13,7 @@ using ElectronNET.API;
 namespace SSEConfigurationTool {
     public class Program {
         public static void Main(string[] args) {
+            Data.Globals.Init();
             CreateHostBuilder(args).Build().Run();
         }
 

@@ -1,0 +1,42 @@
+﻿@page "/platformselect"
+@inject NavigationManager Nav
+
+    <div class="vertical-center text-center">
+        <h2>Select Platform</h2>
+
+        <p>Select the platform that you are creating a scoring configuration for:</p>
+
+        <BSCard CardType="CardType.Deck" Class="contained">
+            @foreach(string _platform in ScoringItemUtilities.GetPlatforms()) {
+                string platform = _platform;
+                <BSCard>
+                    <BSCard CardType="CardType.Body">
+                        <BSCard CardType="CardType.Title">@platform</BSCard>
+                        <BSCard CardType="CardType.Text">
+                            @ScoringItemUtilities.CountScoringCategories(platform) scoring categories <br />
+                            @ScoringItemUtilities.CountScoringItems(platform) total scoring templates
+                        </BSCard>
+                        <BSButton IsBlock="true" OnClick="@(() => SelectPlatform(platform))">Select</BSButton>
+                    </BSCard>
+                </BSCard>
+            }
+        </BSCard>
+
+        <div class="separator">or</div>
+
+        <BSButton OnClick="LoadDraft">Load a Draft</BSButton>
+    </div>
+
+@code {
+    private void SelectPlatform(string platform) {
+        Globals.TargetPlatform = platform;
+        Console.WriteLine("TARGET: " + platform);
+        Nav.NavigateTo("/configureclient");
+    }
+
+    private void LoadDraft() {
+        if (Utilities.LoadDraftJson("out/draft.json")) {
+            Nav.NavigateTo("/configureclient");
+        }
+    }
+}

@@ -1,0 +1,10 @@
+{
+  "Name": "Insecure password for user bmasrani changed",
+  "Description": "Insecure password for user bmasrani changed",
+  "ScoreValue": 1,
+  "Type": 0,
+  "ScoreIfBool": true,
+  "BanOnInvalid": false,
+  "ClientPayload": null,
+  "ServerPayload": null
+}

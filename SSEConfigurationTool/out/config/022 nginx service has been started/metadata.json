@@ -1,0 +1,10 @@
+{
+  "Name": "nginx service has been started",
+  "Description": "nginx service has been started",
+  "ScoreValue": 1,
+  "Type": 0,
+  "ScoreIfBool": true,
+  "BanOnInvalid": false,
+  "ClientPayload": null,
+  "ServerPayload": null
+}

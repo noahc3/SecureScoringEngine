@@ -1,0 +1,10 @@
+{
+  "Name": "SSH password authentication has been disabled",
+  "Description": "SSH password authentication has been disabled",
+  "ScoreValue": 2,
+  "Type": 0,
+  "ScoreIfBool": true,
+  "BanOnInvalid": false,
+  "ClientPayload": null,
+  "ServerPayload": null
+}

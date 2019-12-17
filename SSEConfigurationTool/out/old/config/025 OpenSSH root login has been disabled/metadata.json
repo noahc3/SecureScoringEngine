@@ -1,0 +1,6 @@
+{
+  "Name": "OpenSSH root login has been disabled",
+  "Description": "OpenSSH root login has been disabled",
+  "ScoreValue": 3,
+  "Type": 0
+}

@@ -220,8 +220,13 @@ namespace SSEBackend.Controllers
                         report.rewardsFound++;
 
                         ClientScoreMetadata meta = new ClientScoreMetadata();
-                        meta.Name = p.Name;
-                        meta.Description = p.Description;
+                        if (Globals.config.DetailedScoringReports) {
+                            meta.Name = p.Description;
+                            meta.Description = p.Description;
+                        } else {
+                            meta.Name = p.Name;
+                            meta.Description = p.Name;
+                        }
                         meta.ScoreValue = p.ScoreValue;
                         meta.Type = p.Type;
                         report.rewards.Add(meta);
@@ -232,8 +237,13 @@ namespace SSEBackend.Controllers
                         report.penaltiesGained++;
 
                         ClientScoreMetadata meta = new ClientScoreMetadata();
-                        meta.Name = p.Name;
-                        meta.Description = p.Description;
+                        if (Globals.config.DetailedScoringReports) {
+                            meta.Name = p.Description;
+                            meta.Description = p.Description;
+                        } else {
+                            meta.Name = p.Name;
+                            meta.Description = p.Name;
+                        }
                         meta.ScoreValue = p.ScoreValue;
                         meta.Type = p.Type;
                         report.penalties.Add(meta);

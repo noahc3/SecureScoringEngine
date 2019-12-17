@@ -1,0 +1,6 @@
+{
+  "Name": "ASLR fully enabled",
+  "Description": "ASLR has been fully enabled",
+  "ScoreValue": 4,
+  "Type": 0
+}

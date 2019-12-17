@@ -1,0 +1,10 @@
+{
+  "Name": "nginx does not run as root",
+  "Description": "nginx does not run as root",
+  "ScoreValue": 3,
+  "Type": 0,
+  "ScoreIfBool": true,
+  "BanOnInvalid": false,
+  "ClientPayload": null,
+  "ServerPayload": null
+}

@@ -1,0 +1,127 @@
+﻿@page "/admin"
+@using SSEBackend;
+@using SSEBackend.Types;
+<!DOCTYPE html>
+<head>
+    <title>SSE Scoreboard</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <style>
+
+        body {
+            padding: 10px;
+            background-color: #e6e6e6;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 1.5em;
+        }
+
+        .container {
+            background-color: white;
+        }
+
+        .table {
+            margin-top: 2rem;
+            padding: 1rem;
+        }
+
+            .table .tr.row:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+
+        .th {
+            font-weight: bold;
+            text-align: left;
+        }
+
+            .th.row {
+                border-top: 1px solid #e6e6e6;
+                border-bottom: 2px solid #e6e6e6;
+                padding: 10px 1px 10px 1px;
+            }
+
+        .tr.row {
+            border-bottom: 1px solid #e6e6e6;
+            padding: 10px 1px 10px 1px;
+            cursor: pointer;
+        }
+
+        .info {
+        }
+    </style>
+
+</head>
+
+<body>
+    @if (Request.Cookies.ContainsKey("auth-uuid") && Globals.IsTeamDebug(Request.Cookies["auth-uuid"])) {
+        <div class="container">
+            <p align="center" style="width:100%;text-align:center;">
+                <img src="https://puu.sh/EJ5dh/8e10afe349.png" align="middle" style="width:160px;height:160px;margin-top:1rem;" />
+                &nbsp;
+            </p>
+
+            <h1>SSE Scoreboard</h1>
+
+            <h2 style="color:red">ADMINISTRATOR VIEW</h2>
+            <h2>Displaying All Teams</h2>
+            <h2>Generated At: @DateTime.UtcNow.ToShortDateString() @DateTime.UtcNow.ToShortTimeString() UTC</h2>
+
+            <p style="text-align:center;padding-left:15%;padding-right:15%">
+                <i>
+                    The scores and warnings shown on this site have not been officially
+                    verified and are provided for reference purposes only.
+                    Displayed scores may not include penalties or other lost points.
+                </i>
+            </p>
+
+            <div class="table">
+                <div class="th row">
+                    <div class="th col-1">#</div>
+                    <div class="th col-3">Team</div>
+                    <div class="th col-3">Scored Images</div>
+                    <div class="th col-2">Play Time</div>
+                    <div class="th col-3">Total Score</div>
+                </div>
+
+                @for (int i = 0; i < Globals.scoreboard.Length; i++) {
+                    Team k = Globals.scoreboard[i];
+                    TimeSpan rt = new TimeSpan(k.TeamLastTimestamp - k.TeamStartTimestamp);
+                    <div class="tr row" data-toggle="collapse" data-target="@("#col-" + k.Name)" aria-expanded="false" aria-controls="@("col-" + k.Name)">
+                        <div class="tr col-1">@(i + 1)</div>
+                        <div class="tr col-3">@k.Name</div>
+                        <div class="tr col-3">@k.RuntimeLastScores.Count()</div>
+                        <div class="tr col-2">@String.Format("{0:0}:{1:00}", Math.Floor(rt.TotalHours), rt.Minutes)</div>
+                        <div class="tr col-3">@(k.RuntimeLastScores.Values.Sum())</div>
+
+                        <div class="info collapse col-12" id="@("col-" + k.Name)">
+                            <hr style="margin-top:10px;margin-bottom:10px;" />
+
+                            @foreach (String n in k.RuntimeLastScores.Keys) {
+                                TimeSpan irt = new TimeSpan(k.RuntimeLastTimestamps[n] - k.RuntimeStartTimestamps[n]);
+                                <div class="row">
+                                    <div class="col-4"></div>
+                                    <div class="col-3">@n</div>
+                                    <div class="col-2">@(String.Format("{0:0}:{1:00}", Math.Floor(irt.TotalHours), irt.Minutes))</div>
+                                    <div class="col-3">@k.RuntimeLastScores[n]</div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    } else {
+        <h1>You are not administrator.</h1>
+    }
+</body>

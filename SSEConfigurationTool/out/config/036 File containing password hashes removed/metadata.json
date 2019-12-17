@@ -1,0 +1,10 @@
+{
+  "Name": "File containing password hashes removed",
+  "Description": "File containing password hashes removed",
+  "ScoreValue": 3,
+  "Type": 0,
+  "ScoreIfBool": true,
+  "BanOnInvalid": false,
+  "ClientPayload": null,
+  "ServerPayload": null
+}

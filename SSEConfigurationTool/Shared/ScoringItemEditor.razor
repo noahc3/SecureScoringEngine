@@ -1,0 +1,133 @@
+﻿@inherits ComponentBase
+@inject NavigationManager nav
+
+<div>
+    <h3 style="text-decoration:underline">@confItem.Category &rarr; @confItem.Name</h3>
+    <BSRow>
+        <BSCol XS="6">
+            <BSBasicForm>
+                @foreach (ScoringVariable _k in new List<ScoringVariable>().Concat(confItem.ClientScoringVariables).Concat(confItem.ServerScoringVariables)) {
+                    ScoringVariable k = _k;
+                    string id = "CLIENT_INPUT" + k.Name;
+                    if (k.Type == "string") {
+                        <BSFormGroup>
+                            <BSLabel title="@(k.Name + " : " + k.Type)" For="@id">@k.PrettyName</BSLabel>
+                            <BSBasicInput Id="@id" InputType="InputType.Text" @bind-Value="k.Value" />
+                            <small class="form-text text-muted">@k.HelpText</small>
+                        </BSFormGroup>
+                    } else if (k.Type == "bool") {
+                        <BSFormGroup IsCheck="true">
+                            <label>@k.PrettyName</label>
+                            <BSBasicInput InputType="InputType.Radio" Id="scoreTypeRadio1" RadioValue="@("true")" @bind-Value="k.Value" />
+                            <BSLabel For="scoreTypeRadio1">true</BSLabel>
+                            <BSBasicInput InputType="InputType.Radio" Id="scoreTypeRadio2" RadioValue="@("false")" @bind-Value="k.Value" />
+                            <BSLabel For="scoreTypeRadio2">false</BSLabel>
+                            <small class="form-text text-muted">@k.HelpText</small>
+                        </BSFormGroup>
+                    } else if (k.Type == "int") {
+                        <BSFormGroup>
+                            <BSLabel title="@(k.Name + " : " + k.Type)" For="@id">@k.PrettyName</BSLabel>
+                            <BSBasicInput Id="@id" InputType="InputType.Number" @bind-Value="k.Value" />
+                            <small class="form-text text-muted">@k.HelpText</small>
+                        </BSFormGroup>
+                    } else if (k.Type == "List<string>") {
+                        <BSFormGroup>
+                            <BSLabel title="@(k.Name + " : " + k.Type)" For="@id">@k.PrettyName</BSLabel>
+                            <BSBasicInput Id="@id" InputType="InputType.TextArea" @bind-Value="k.Value" />
+                            <small class="form-text text-muted">@k.HelpText</small>
+                        </BSFormGroup>
+                    }
+                }
+
+                <hr />
+
+                <BSFormGroup>
+                    <BSLabel For="scoringReportName">Name in Scoring Report</BSLabel>
+                    <BSBasicInput Id="scoringReportName" InputType="InputType.Text" @bind-Value="@confItem.ScoringReportName" />
+                    <small class="form-text text-muted">This will be shown to competitors in their scoring report when the check passes. Decide whether this should be descriptive, or ambiguous to impede point sharing.</small>
+                </BSFormGroup>
+                <BSFormGroup>
+                    <BSLabel For="scoringReportName">Descriptive Name</BSLabel>
+                    <BSBasicInput Id="scoringReportName" InputType="InputType.Text" @bind-Value="@confItem.DescriptiveName" />
+                    <small class="form-text text-muted">This is used to help administrators distinguish between scoring configurations if the scoring report name is ambiguous. Only shown when viewing config files, generating master lists, or in the admin scoreboard.</small>
+                </BSFormGroup>
+                <BSFormGroup IsCheck="true">
+                    <BSBasicInput InputType="InputType.Radio" Id="scoreTypeRadio1" RadioValue="@("reward")" @bind-Value="confItem.ScoreType" />
+                    <BSLabel For="scoreTypeRadio1">Reward</BSLabel>
+                    <BSBasicInput InputType="InputType.Radio" Id="scoreTypeRadio2" RadioValue="@("penalty")" @bind-Value="confItem.ScoreType" />
+                    <BSLabel For="scoreTypeRadio2">Penalty</BSLabel>
+                    <BSBasicInput InputType="InputType.Radio" Id="scoreTypeRadio3" RadioValue="@("donotscore")" @bind-Value="confItem.ScoreType" />
+                    <BSLabel For="scoreTypeRadio3">Do Not Score</BSLabel>
+                    <small class="form-text text-muted">Whether passing this check gives the competitor a reward or a penalty. "Do Not Score" will execute the client and server payloads but will never reward/penalize points or show in competitor scoring reports.</small>
+                </BSFormGroup>
+                <BSFormGroup>
+                    <BSLabel For="scoreCount">Score Amount</BSLabel>
+                    <BSBasicInput Id="scoreCount" InputType="InputType.Number" @bind-Value="@confItem.ScoreAmount" min="0" />
+                    <small class="form-text text-muted">Amount to reward or penalize.</small>
+                </BSFormGroup>
+                <BSFormGroup IsCheck="true">
+                    <BSBasicInput Id="banOnInvalid" InputType="InputType.Checkbox" @bind-Value="@confItem.BanOnInvalid" />
+                    <BSLabel IsCheck="true" For="banOnInvalid">Ban If Check Fails</BSLabel>
+                    <small class="form-text text-muted">Ban the offending team if the check fails. Designed for anti-cheat payloads, be careful with this option!</small>
+                </BSFormGroup>
+
+            </BSBasicForm>
+        </BSCol>
+        <BSCol XS="6">
+            <BSButton IsBlock="true" Color="Color.Warning">Test Configuration (not yet implemented)</BSButton>
+
+            <div class="test-results bg-light"><i>Test results will appear here when complete.</i></div>
+
+            <BSButton IsBlock="true" Color="Color.Primary" OnClick="@AddItem">@(edit ? "Save Item" : "Add Item")</BSButton>
+
+        </BSCol>
+    </BSRow>
+</div>
+
+@code {
+
+    [Parameter]
+    public bool edit { get; set; } = false;
+
+    [Parameter]
+    public TemplateScoringItem item { get; set; }
+
+    [Parameter]
+    public ConfiguredScoringItem confItem { get; set; }
+
+    private string ScoreType;
+
+    protected override void OnParametersSet() {
+        base.OnParametersSet();
+
+        if (!edit) SetConfItem();
+    }
+
+    private void SetConfItem() {
+        List<ScoringVariable> clientVariables = new List<ScoringVariable>();
+        List<ScoringVariable> serverVariables = new List<ScoringVariable>();
+
+        foreach (ScoringVariable k in item.ClientScoringVariables) {
+            clientVariables.Add(k.Copy());
+        }
+
+        foreach (ScoringVariable k in item.ServerScoringVariables) {
+            serverVariables.Add(k.Copy());
+        }
+
+        confItem = new ConfiguredScoringItem() {
+            Platform = item.Platform,
+            Category = item.Category,
+            Name = item.Name,
+            ClientScoringVariables = clientVariables,
+            ServerScoringVariables = serverVariables
+        };
+    }
+
+
+
+    private void AddItem() {
+        if (!Globals.ConfiguredScoringItems.Contains(confItem)) Globals.ConfiguredScoringItems.Add(confItem);
+        nav.NavigateTo("/configureclient/summary");
+    }
+}

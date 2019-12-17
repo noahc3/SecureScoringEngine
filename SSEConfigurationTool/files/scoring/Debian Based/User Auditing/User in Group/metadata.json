@@ -1,0 +1,8 @@
+{
+  "Name": "User teresa cannot login without a password",
+  "Description": "User teresa cannot login without a password",
+  "ScoreValue": 3,
+  "ScoreIfBool": true,
+  "BanOnInvalid": false,
+  "Type": 0
+}

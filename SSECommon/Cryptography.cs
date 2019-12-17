@@ -25,6 +25,21 @@ namespace SSECommon {
             }
         }
 
+        public static byte[] EncryptBytes(byte[] file, byte[] key, out byte[] iv) {
+            using (Aes aes = new AesCryptoServiceProvider()) {
+                aes.Key = key;
+                iv = aes.IV;
+
+                using (MemoryStream ciphertext = new MemoryStream())
+                using (CryptoStream cs = new CryptoStream(ciphertext, aes.CreateEncryptor(), CryptoStreamMode.Write)) {
+                    byte[] plaintextMessage = file;
+                    cs.Write(plaintextMessage, 0, plaintextMessage.Length);
+                    cs.Close();
+                    return ciphertext.ToArray();
+                }
+            }
+        }
+
         public static string Decrypt(byte[] ciphertext, byte[] key, byte[] iv) {
             using (Aes aes = new AesCryptoServiceProvider()) {
                 aes.Key = key;
@@ -35,6 +50,21 @@ namespace SSECommon {
                         cs.Write(ciphertext, 0, ciphertext.Length);
                         cs.Close();
                         return Encoding.UTF8.GetString(plaintext.ToArray());
+                    }
+                }
+            }
+        }
+
+        public static byte[] DecryptBytes(byte[] ciphertext, byte[] key, byte[] iv) {
+            using (Aes aes = new AesCryptoServiceProvider()) {
+                aes.Key = key;
+                aes.IV = iv;
+
+                using (MemoryStream plaintext = new MemoryStream()) {
+                    using (CryptoStream cs = new CryptoStream(plaintext, aes.CreateDecryptor(), CryptoStreamMode.Write)) {
+                        cs.Write(ciphertext, 0, ciphertext.Length);
+                        cs.Close();
+                        return plaintext.ToArray();
                     }
                 }
             }

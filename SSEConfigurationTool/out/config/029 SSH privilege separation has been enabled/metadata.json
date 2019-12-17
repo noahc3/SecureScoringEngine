@@ -1,0 +1,10 @@
+{
+  "Name": "SSH privilege separation has been enabled",
+  "Description": "SSH privilege separation has been enabled",
+  "ScoreValue": 2,
+  "Type": 0,
+  "ScoreIfBool": true,
+  "BanOnInvalid": false,
+  "ClientPayload": null,
+  "ServerPayload": null
+}

@@ -1,0 +1,9 @@
+﻿@inherits ComponentBase
+
+<span>@item.ScoringReportName (@item.DescriptiveName) - @(item.ScoreType == "penalty" ? "-" : "")@item.ScoreAmount pts</span>
+
+@code {
+    [Parameter]
+    public ConfiguredScoringItem item { get; set; }
+
+}

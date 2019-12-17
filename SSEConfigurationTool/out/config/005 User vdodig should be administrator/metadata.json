@@ -1,0 +1,10 @@
+{
+  "Name": "User vdodig should be administrator",
+  "Description": "User vdodig should be administrator",
+  "ScoreValue": 1,
+  "Type": 0,
+  "ScoreIfBool": true,
+  "BanOnInvalid": false,
+  "ClientPayload": null,
+  "ServerPayload": null
+}

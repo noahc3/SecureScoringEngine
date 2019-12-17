@@ -1,5 +1,6 @@
 ﻿@inherits LayoutComponentBase
 @inject IBootstrapCSS BootstrapCSS
+@inject NavigationManager NavigationManager
 
 <div class="main">
     <div class="content">
@@ -9,4 +10,12 @@
 
 @functions {
     private bool bootstrapInitialized = false;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender) {
+        if (!bootstrapInitialized) {
+            await BootstrapCSS.SetBootstrapCSS("cosmo", "4.3.1");
+            bootstrapInitialized = true;
+        }
+        await base.OnAfterRenderAsync(firstRender);
+    }
 }

@@ -1,0 +1,8 @@
+{
+  "Name": "OpenSSH password authentication has been disabled",
+  "Description": "OpenSSH password authentication has been disabled",
+  "ScoreValue": 3,
+  "ScoreIfBool": true,
+  "BanOnInvalid": false,
+  "Type": 0
+}

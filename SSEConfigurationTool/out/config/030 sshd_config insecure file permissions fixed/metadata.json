@@ -1,0 +1,10 @@
+{
+  "Name": "File permission check passed",
+  "Description": "sshd_config insecure file permissions fixed",
+  "ScoreValue": 3,
+  "Type": 0,
+  "ScoreIfBool": true,
+  "BanOnInvalid": false,
+  "ClientPayload": null,
+  "ServerPayload": null
+}

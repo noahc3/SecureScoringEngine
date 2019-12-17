@@ -1,0 +1,10 @@
+{
+  "Name": "Malicious root cronjob removed",
+  "Description": "Malicious root cronjob removed",
+  "ScoreValue": 4,
+  "Type": 0,
+  "ScoreIfBool": true,
+  "BanOnInvalid": false,
+  "ClientPayload": null,
+  "ServerPayload": null
+}

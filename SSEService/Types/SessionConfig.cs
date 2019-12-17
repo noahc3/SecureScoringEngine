@@ -9,6 +9,7 @@ namespace SSEService.Types {
     class SessionConfig {
         public string TeamUUID;
         public string RuntimeID;
+        public string Backend;
 
 
         public void Flush() {

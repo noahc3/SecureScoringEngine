@@ -1,0 +1,10 @@
+{
+  "Name": "System policy check passed",
+  "Description": "Kernel pointer access is fully restricted",
+  "ScoreValue": 3,
+  "Type": 0,
+  "ScoreIfBool": true,
+  "BanOnInvalid": false,
+  "ClientPayload": null,
+  "ServerPayload": null
+}

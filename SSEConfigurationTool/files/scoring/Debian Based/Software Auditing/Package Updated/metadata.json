@@ -1,0 +1,8 @@
+{
+  "Name": "apt has been updated",
+  "Description": "apt has been updated",
+  "ScoreValue": 2,
+  "ScoreIfBool": true,
+  "BanOnInvalid": false,
+  "Type": 0
+}

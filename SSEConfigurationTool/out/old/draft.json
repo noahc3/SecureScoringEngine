@@ -1,0 +1,2134 @@
+{
+  "Version": 1,
+  "Platform": "Debian Based",
+  "ConfiguredScoringItems": [
+    {
+      "Platform": "Debian Based",
+      "Category": "Generic",
+      "Name": "Forensics Question",
+      "ClientScoringVariables": [
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": "fileLocation",
+          "PrettyName": " Forensics Question File Location ",
+          "HelpText": " Where the forensics question txt file is located on the system.",
+          "Type": "string",
+          "Value": "/home/thomas/Desktop/Forensics Question 1.txt"
+        }
+      ],
+      "ServerScoringVariables": [
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": "answer",
+          "PrettyName": " Correct Answer ",
+          "HelpText": " The correct answer to the forensics question.",
+          "Type": "string",
+          "Value": "w1cK3d_1S_g00D_6uTnvdqDaO"
+        },
+        {
+          "Name": "ignoreCapitalization",
+          "PrettyName": " Ignore Capitalization ",
+          "HelpText": " Whether to ignore capitalization in the answer.",
+          "Type": "bool",
+          "Value": "true"
+        },
+        {
+          "Name": "ignoreWhitespace",
+          "PrettyName": " Ignore Whitespace ",
+          "HelpText": " Whether to ignore whitespace like spaces and tabs in the answer.",
+          "Type": "bool",
+          "Value": "true"
+        }
+      ],
+      "ScoringReportName": "Forensics Question 1 Correct",
+      "DescriptiveName": "Forensics Question 1 Correct",
+      "ScoreType": "reward",
+      "ScoreAmount": 7,
+      "BanOnInvalid": false
+    },
+    {
+      "Platform": "Debian Based",
+      "Category": "Generic",
+      "Name": "Forensics Question",
+      "ClientScoringVariables": [
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": "fileLocation",
+          "PrettyName": " Forensics Question File Location ",
+          "HelpText": " Where the forensics question txt file is located on the system.",
+          "Type": "string",
+          "Value": "/home/thomas/Desktop/Forensics Question 2.txt"
+        }
+      ],
+      "ServerScoringVariables": [
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": "answer",
+          "PrettyName": " Correct Answer ",
+          "HelpText": " The correct answer to the forensics question.",
+          "Type": "string",
+          "Value": "192.168.85.26"
+        },
+        {
+          "Name": "ignoreCapitalization",
+          "PrettyName": " Ignore Capitalization ",
+          "HelpText": " Whether to ignore capitalization in the answer.",
+          "Type": "bool",
+          "Value": "true"
+        },
+        {
+          "Name": "ignoreWhitespace",
+          "PrettyName": " Ignore Whitespace ",
+          "HelpText": " Whether to ignore whitespace like spaces and tabs in the answer.",
+          "Type": "bool",
+          "Value": "true"
+        }
+      ],
+      "ScoringReportName": "Forensics Question 2 Correct",
+      "DescriptiveName": "Forensics Question 2 Correct",
+      "ScoreType": "reward",
+      "ScoreAmount": 7,
+      "BanOnInvalid": false
+    },
+    {
+      "Platform": "Debian Based",
+      "Category": "Generic",
+      "Name": "Forensics Question",
+      "ClientScoringVariables": [
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": "fileLocation",
+          "PrettyName": " Forensics Question File Location ",
+          "HelpText": " Where the forensics question txt file is located on the system.",
+          "Type": "string",
+          "Value": "/home/thomas/Desktop/Forensics Question 3.txt"
+        }
+      ],
+      "ServerScoringVariables": [
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": "answer",
+          "PrettyName": " Correct Answer ",
+          "HelpText": " The correct answer to the forensics question.",
+          "Type": "string",
+          "Value": "B073JYVKNX"
+        },
+        {
+          "Name": "ignoreCapitalization",
+          "PrettyName": " Ignore Capitalization ",
+          "HelpText": " Whether to ignore capitalization in the answer.",
+          "Type": "bool",
+          "Value": "true"
+        },
+        {
+          "Name": "ignoreWhitespace",
+          "PrettyName": " Ignore Whitespace ",
+          "HelpText": " Whether to ignore whitespace like spaces and tabs in the answer.",
+          "Type": "bool",
+          "Value": "true"
+        }
+      ],
+      "ScoringReportName": "Forensics Question 3 Correct",
+      "DescriptiveName": "Forensics Question 3 Correct",
+      "ScoreType": "reward",
+      "ScoreAmount": 7,
+      "BanOnInvalid": false
+    },
+    {
+      "Platform": "Debian Based",
+      "Category": "User Auditing",
+      "Name": "User Exists",
+      "ClientScoringVariables": [
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": "username",
+          "PrettyName": " Username ",
+          "HelpText": " Name of the user to check.",
+          "Type": "string",
+          "Value": "ava"
+        }
+      ],
+      "ServerScoringVariables": [
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": "userShouldExist",
+          "PrettyName": " Score if User Exists ",
+          "HelpText": " Score if the user exists or does not exist.",
+          "Type": "bool",
+          "Value": "false"
+        }
+      ],
+      "ScoringReportName": "Removed unauthorized user ava",
+      "DescriptiveName": "Removed unauthorized user ava",
+      "ScoreType": "reward",
+      "ScoreAmount": 2,
+      "BanOnInvalid": false
+    },
+    {
+      "Platform": "Debian Based",
+      "Category": "User Auditing",
+      "Name": "User Exists",
+      "ClientScoringVariables": [
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": "username",
+          "PrettyName": " Username ",
+          "HelpText": " Name of the user to check.",
+          "Type": "string",
+          "Value": "brenda"
+        }
+      ],
+      "ServerScoringVariables": [
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": "userShouldExist",
+          "PrettyName": " Score if User Exists ",
+          "HelpText": " Score if the user exists or does not exist.",
+          "Type": "bool",
+          "Value": "false"
+        }
+      ],
+      "ScoringReportName": "Removed unauthorized user brenda",
+      "DescriptiveName": "Removed unauthorized user brenda",
+      "ScoreType": "reward",
+      "ScoreAmount": 2,
+      "BanOnInvalid": false
+    },
+    {
+      "Platform": "Debian Based",
+      "Category": "User Auditing",
+      "Name": "User Exists",
+      "ClientScoringVariables": [
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": "username",
+          "PrettyName": " Username ",
+          "HelpText": " Name of the user to check.",
+          "Type": "string",
+          "Value": "jorge"
+        }
+      ],
+      "ServerScoringVariables": [
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": "userShouldExist",
+          "PrettyName": " Score if User Exists ",
+          "HelpText": " Score if the user exists or does not exist.",
+          "Type": "bool",
+          "Value": "false"
+        }
+      ],
+      "ScoringReportName": "Removed unauthorized user jorge",
+      "DescriptiveName": "Removed unauthorized user jorge",
+      "ScoreType": "reward",
+      "ScoreAmount": 2,
+      "BanOnInvalid": false
+    },
+    {
+      "Platform": "Debian Based",
+      "Category": "User Auditing",
+      "Name": "User in Group",
+      "ClientScoringVariables": [
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": "username",
+          "PrettyName": " Username ",
+          "HelpText": " Name of the user to check.",
+          "Type": "string",
+          "Value": "teresa"
+        }
+      ],
+      "ServerScoringVariables": [
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": "checkGroup",
+          "PrettyName": " Group Name ",
+          "HelpText": " Name of the group to check if the user is part of.",
+          "Type": "string",
+          "Value": "nopasswdlogin"
+        },
+        {
+          "Name": "userShouldBeInGroup",
+          "PrettyName": " Score if User is in Group ",
+          "HelpText": " Score if the user is or is not part of the group.",
+          "Type": "bool",
+          "Value": "false"
+        }
+      ],
+      "ScoringReportName": "User teresa can not login without a password",
+      "DescriptiveName": "User teresa can not login without a password",
+      "ScoreType": "reward",
+      "ScoreAmount": 3,
+      "BanOnInvalid": false
+    },
+    {
+      "Platform": "Debian Based",
+      "Category": "User Auditing",
+      "Name": "User is Administrator",
+      "ClientScoringVariables": [
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": "username",
+          "PrettyName": " Username ",
+          "HelpText": " Name of the user to check.",
+          "Type": "string",
+          "Value": "minho"
+        }
+      ],
+      "ServerScoringVariables": [
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": "shouldBeAdministrator",
+          "PrettyName": " Score if User is Administrator ",
+          "HelpText": " Score if the user is or is not an administrator.",
+          "Type": "bool",
+          "Value": "true"
+        }
+      ],
+      "ScoringReportName": "User minho is an administrator",
+      "DescriptiveName": "User minho is an administrator",
+      "ScoreType": "reward",
+      "ScoreAmount": 2,
+      "BanOnInvalid": false
+    },
+    {
+      "Platform": "Debian Based",
+      "Category": "Policies",
+      "Name": "Default Minimum Password Age",
+      "ClientScoringVariables": [
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        }
+      ],
+      "ServerScoringVariables": [
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": "minimumAcceptableValue",
+          "PrettyName": " Minimum Acceptable Value ",
+          "HelpText": " The lowest value permitted to pass the check.",
+          "Type": "int",
+          "Value": "7"
+        },
+        {
+          "Name": "maximumAcceptableValue",
+          "PrettyName": " Maximum Acceptable Value ",
+          "HelpText": " The highest value permitted to pass the check.",
+          "Type": "int",
+          "Value": "21"
+        },
+        {
+          "Name": "allowNotDefined",
+          "PrettyName": " Allow Undefined ",
+          "HelpText": " Whether or not having no custom minimum password age passes the check. Enable this if the default system value is acceptable to pass the check.",
+          "Type": "bool",
+          "Value": "false"
+        }
+      ],
+      "ScoringReportName": "A sufficient default minimum password age is set",
+      "DescriptiveName": "A sufficient default minimum password age is set",
+      "ScoreType": "reward",
+      "ScoreAmount": 3,
+      "BanOnInvalid": false
+    },
+    {
+      "Platform": "Debian Based",
+      "Category": "Policies",
+      "Name": "Previous Passwords Are Remembered",
+      "ClientScoringVariables": [
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        }
+      ],
+      "ServerScoringVariables": [
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": "shouldBeRemembered",
+          "PrettyName": " Score if Passwords Remembered ",
+          "HelpText": " Score if passwords are or are not remembered.",
+          "Type": "bool",
+          "Value": "true"
+        },
+        {
+          "Name": "fileMissingIsOk",
+          "PrettyName": " File Missing is OK ",
+          "HelpText": " Whether or not the check should pass if the common-password file is not found. Enable this if the system default is acceptable.",
+          "Type": "bool",
+          "Value": "false"
+        }
+      ],
+      "ScoringReportName": "Previous passwords are remembered",
+      "DescriptiveName": "Previous passwords are remembered",
+      "ScoreType": "reward",
+      "ScoreAmount": 3,
+      "BanOnInvalid": false
+    },
+    {
+      "Platform": "Debian Based",
+      "Category": "Software Auditing",
+      "Name": "Package Updated",
+      "ClientScoringVariables": [
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": "packageName",
+          "PrettyName": " Package Name ",
+          "HelpText": " Name of the package to check.",
+          "Type": "string",
+          "Value": "apt"
+        },
+        {
+          "Name": "oldVersion",
+          "PrettyName": " Old Version ",
+          "HelpText": " The version of the package that will be initially installed on the system.",
+          "Type": "string",
+          "Value": "1.2.29ubuntu0.1"
+        },
+        {
+          "Name": "requireNoUpdatesAvailable",
+          "PrettyName": " Require No Updates Available ",
+          "HelpText": " With this enabled, the check will only pass if the package version is different and if apt reports there are no newer versions to install. Otherwise, only the former is checked.",
+          "Type": "bool",
+          "Value": "true"
+        }
+      ],
+      "ServerScoringVariables": [
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": "packageShouldBeUpdated",
+          "PrettyName": " Score if Package Updated ",
+          "HelpText": " Score if the package is or is not updated.",
+          "Type": "bool",
+          "Value": "true"
+        }
+      ],
+      "ScoringReportName": "apt has been updated",
+      "DescriptiveName": "apt has been updated",
+      "ScoreType": "reward",
+      "ScoreAmount": 2,
+      "BanOnInvalid": false
+    },
+    {
+      "Platform": "Debian Based",
+      "Category": "Software Auditing",
+      "Name": "Package Updated",
+      "ClientScoringVariables": [
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": "packageName",
+          "PrettyName": " Package Name ",
+          "HelpText": " Name of the package to check.",
+          "Type": "string",
+          "Value": "bash"
+        },
+        {
+          "Name": "oldVersion",
+          "PrettyName": " Old Version ",
+          "HelpText": " The version of the package that will be initially installed on the system.",
+          "Type": "string",
+          "Value": "4.3-14ubuntu1.2"
+        },
+        {
+          "Name": "requireNoUpdatesAvailable",
+          "PrettyName": " Require No Updates Available ",
+          "HelpText": " With this enabled, the check will only pass if the package version is different and if apt reports there are no newer versions to install. Otherwise, only the former is checked.",
+          "Type": "bool",
+          "Value": "true"
+        }
+      ],
+      "ServerScoringVariables": [
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": "packageShouldBeUpdated",
+          "PrettyName": " Score if Package Updated ",
+          "HelpText": " Score if the package is or is not updated.",
+          "Type": "bool",
+          "Value": "true"
+        }
+      ],
+      "ScoringReportName": "bash has been updated",
+      "DescriptiveName": "bash has been updated",
+      "ScoreType": "reward",
+      "ScoreAmount": 2,
+      "BanOnInvalid": false
+    },
+    {
+      "Platform": "Debian Based",
+      "Category": "Software Auditing",
+      "Name": "Package Updated",
+      "ClientScoringVariables": [
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": "packageName",
+          "PrettyName": " Package Name ",
+          "HelpText": " Name of the package to check.",
+          "Type": "string",
+          "Value": "firefox"
+        },
+        {
+          "Name": "oldVersion",
+          "PrettyName": " Old Version ",
+          "HelpText": " The version of the package that will be initially installed on the system.",
+          "Type": "string",
+          "Value": "65.0.1+build2-0ubuntu0.16.04.1"
+        },
+        {
+          "Name": "requireNoUpdatesAvailable",
+          "PrettyName": " Require No Updates Available ",
+          "HelpText": " With this enabled, the check will only pass if the package version is different and if apt reports there are no newer versions to install. Otherwise, only the former is checked.",
+          "Type": "bool",
+          "Value": "true"
+        }
+      ],
+      "ServerScoringVariables": [
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": "packageShouldBeUpdated",
+          "PrettyName": " Score if Package Updated ",
+          "HelpText": " Score if the package is or is not updated.",
+          "Type": "bool",
+          "Value": "true"
+        }
+      ],
+      "ScoringReportName": "Firefox has been updated",
+      "DescriptiveName": "Firefox has been updated",
+      "ScoreType": "reward",
+      "ScoreAmount": 2,
+      "BanOnInvalid": false
+    },
+    {
+      "Platform": "Debian Based",
+      "Category": "File Auditing",
+      "Name": "Text in File",
+      "ClientScoringVariables": [
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": "fileLocation",
+          "PrettyName": " File Path ",
+          "HelpText": " The path to the file to check for text.",
+          "Type": "string",
+          "Value": "/etc/apt/sources.list"
+        },
+        {
+          "Name": "search",
+          "PrettyName": " Text ",
+          "HelpText": " Text to search for.",
+          "Type": "string",
+          "Value": "xenial-security"
+        }
+      ],
+      "ServerScoringVariables": [
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": "fileMissingIsOk",
+          "PrettyName": " File Missing is Acceptable ",
+          "HelpText": " Whether or not to score if the file is missing.",
+          "Type": "bool",
+          "Value": "false"
+        },
+        {
+          "Name": "scoreIfTextFound",
+          "PrettyName": " Score if Text Found ",
+          "HelpText": " Whether or not to score if the text is or is not found.",
+          "Type": "bool",
+          "Value": "true"
+        }
+      ],
+      "ScoringReportName": "Install updates from important security updates",
+      "DescriptiveName": "Install updates from important security updates",
+      "ScoreType": "reward",
+      "ScoreAmount": 2,
+      "BanOnInvalid": false
+    },
+    {
+      "Platform": "Debian Based",
+      "Category": "File Auditing",
+      "Name": "Files in Directory Exists",
+      "ClientScoringVariables": [
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": "directory",
+          "PrettyName": " Directory Path ",
+          "HelpText": " Path to the directory with files to check for.",
+          "Type": "string",
+          "Value": "/home/chuck/Documents/.music/"
+        },
+        {
+          "Name": "extension",
+          "PrettyName": " File Extension ",
+          "HelpText": " Only count files with this extension. Leave blank to ignore file extension. Case insensitive.",
+          "Type": "string",
+          "Value": "mp3"
+        }
+      ],
+      "ServerScoringVariables": [
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": "directoryRemovedIsAcceptable",
+          "PrettyName": " Directory Removed is Acceptable ",
+          "HelpText": " Whether or not the check passes if the directory doesn't exist.",
+          "Type": "bool",
+          "Value": "true"
+        },
+        {
+          "Name": "minCountToScore",
+          "PrettyName": " Minimum Count to Score ",
+          "HelpText": " The minimum number of files found to pass the check. Set to 0 if you want all files to be removed.",
+          "Type": "int",
+          "Value": "0"
+        },
+        {
+          "Name": "maxCountToScore",
+          "PrettyName": " Maximum Count to Score ",
+          "HelpText": " The maximum number of files found to pass the check. Set to 0 if you want all files to be removed.",
+          "Type": "int",
+          "Value": "0"
+        }
+      ],
+      "ScoringReportName": "Prohibited MP3 files have been removed",
+      "DescriptiveName": "Prohibited MP3 files have been removed",
+      "ScoreType": "reward",
+      "ScoreAmount": 3,
+      "BanOnInvalid": false
+    },
+    {
+      "Platform": "Debian Based",
+      "Category": "File Auditing",
+      "Name": "Files Removed",
+      "ClientScoringVariables": [
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": "files",
+          "PrettyName": " File paths ",
+          "HelpText": " List of file paths separated by a new line.",
+          "Type": "List<string>",
+          "Value": "/etc/thunderbird/hwTQhOfEm1ZZ2eHm5W9xZIwLsx5ucGYR"
+        }
+      ],
+      "ServerScoringVariables": [
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": "minCountToScore",
+          "PrettyName": " Minimum Count to Score ",
+          "HelpText": " The minimum number of files found to pass the check. Set to 0 if you want all files to be removed.",
+          "Type": "int",
+          "Value": "0"
+        },
+        {
+          "Name": "maxCountToScore",
+          "PrettyName": " Maximum Count to Score ",
+          "HelpText": " The maximum number of files found to pass the check. Set to 0 if you want all files to be removed.",
+          "Type": "int",
+          "Value": "0"
+        }
+      ],
+      "ScoringReportName": "Suspicious file removed",
+      "DescriptiveName": "Suspicious file removed",
+      "ScoreType": "reward",
+      "ScoreAmount": 3,
+      "BanOnInvalid": false
+    },
+    {
+      "Platform": "Debian Based",
+      "Category": "Policies",
+      "Name": "Sysctl Value Configured",
+      "ClientScoringVariables": [
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": "sysctlKey",
+          "PrettyName": " sysctl Key ",
+          "HelpText": " The key for the sysctl setting to check. Example: kernel.randomize_va_space.",
+          "Type": "string",
+          "Value": "kernel.randomize_va_space"
+        }
+      ],
+      "ServerScoringVariables": [
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": "expectedValue",
+          "PrettyName": " Expected Value ",
+          "HelpText": " The value the setting should be to pass the check.",
+          "Type": "string",
+          "Value": "2"
+        },
+        {
+          "Name": "shouldMatch",
+          "PrettyName": " Score if Matches Expected Values ",
+          "HelpText": " Score if the sysctl value does or does not match.",
+          "Type": "bool",
+          "Value": "true"
+        }
+      ],
+      "ScoringReportName": "ASLR fully enabled",
+      "DescriptiveName": "ASLR has been fully enabled",
+      "ScoreType": "reward",
+      "ScoreAmount": 4,
+      "BanOnInvalid": false
+    },
+    {
+      "Platform": "Debian Based",
+      "Category": "Policies",
+      "Name": "Sysctl Value Configured",
+      "ClientScoringVariables": [
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": "sysctlKey",
+          "PrettyName": " sysctl Key ",
+          "HelpText": " The key for the sysctl setting to check. Example: kernel.randomize_va_space.",
+          "Type": "string",
+          "Value": "net.ipv4.tcp_syncookies"
+        }
+      ],
+      "ServerScoringVariables": [
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": "expectedValue",
+          "PrettyName": " Expected Value ",
+          "HelpText": " The value the setting should be to pass the check.",
+          "Type": "string",
+          "Value": "1"
+        },
+        {
+          "Name": "shouldMatch",
+          "PrettyName": " Score if Matches Expected Values ",
+          "HelpText": " Score if the sysctl value does or does not match.",
+          "Type": "bool",
+          "Value": "true"
+        }
+      ],
+      "ScoringReportName": "TCP syncookies have been enabled",
+      "DescriptiveName": "TCP syncookies have been enabled",
+      "ScoreType": "reward",
+      "ScoreAmount": 3,
+      "BanOnInvalid": false
+    },
+    {
+      "Platform": "Debian Based",
+      "Category": "File Auditing",
+      "Name": "Text in File",
+      "ClientScoringVariables": [
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": "fileLocation",
+          "PrettyName": " File Path ",
+          "HelpText": " The path to the file to check for text.",
+          "Type": "string",
+          "Value": "/etc/sudoers"
+        },
+        {
+          "Name": "search",
+          "PrettyName": " Text ",
+          "HelpText": " Text to search for.",
+          "Type": "string",
+          "Value": "!authenticate"
+        }
+      ],
+      "ServerScoringVariables": [
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": "fileMissingIsOk",
+          "PrettyName": " File Missing is Acceptable ",
+          "HelpText": " Whether or not to score if the file is missing.",
+          "Type": "bool",
+          "Value": "false"
+        },
+        {
+          "Name": "scoreIfTextFound",
+          "PrettyName": " Score if Text Found ",
+          "HelpText": " Whether or not to score if the text is or is not found.",
+          "Type": "bool",
+          "Value": "false"
+        }
+      ],
+      "ScoringReportName": "sudo requires a password",
+      "DescriptiveName": "sudo requires a password",
+      "ScoreType": "reward",
+      "ScoreAmount": 3,
+      "BanOnInvalid": false
+    },
+    {
+      "Platform": "Debian Based",
+      "Category": "Service Auditing",
+      "Name": "Service Enabled",
+      "ClientScoringVariables": [
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": "serviceName",
+          "PrettyName": " Service Name ",
+          "HelpText": " Name of the service to check the status of.",
+          "Type": "string",
+          "Value": "proftpd"
+        }
+      ],
+      "ServerScoringVariables": [
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": "allowServiceNotFound",
+          "PrettyName": " Score if Service Not Found ",
+          "HelpText": " Whether to score if the service was not found (ex. uninstalled).",
+          "Type": "bool",
+          "Value": "true"
+        },
+        {
+          "Name": "serviceShouldBeEnabled",
+          "PrettyName": " Score if Service Enabled ",
+          "HelpText": " Whether to score if the service is or is not enabled.",
+          "Type": "bool",
+          "Value": "false"
+        }
+      ],
+      "ScoringReportName": "FTP service has been disabled or removed",
+      "DescriptiveName": "FTP service has been disabled or removed",
+      "ScoreType": "reward",
+      "ScoreAmount": 3,
+      "BanOnInvalid": false
+    },
+    {
+      "Platform": "Debian Based",
+      "Category": "Software Auditing",
+      "Name": "Package Installed",
+      "ClientScoringVariables": [
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": "packageName",
+          "PrettyName": " Package Name ",
+          "HelpText": " Name of the package to check the install status of.",
+          "Type": "string",
+          "Value": "chromium-bsu"
+        }
+      ],
+      "ServerScoringVariables": [
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": "shouldBeInstalled",
+          "PrettyName": " Score if Package Installed ",
+          "HelpText": " Whether to score if the package is or is not installed.",
+          "Type": "bool",
+          "Value": "false"
+        }
+      ],
+      "ScoringReportName": "Unauthorized software chromium-bsu has been removed",
+      "DescriptiveName": "Unauthorized software chromium-bsu has been removed",
+      "ScoreType": "reward",
+      "ScoreAmount": 3,
+      "BanOnInvalid": false
+    },
+    {
+      "Platform": "Debian Based",
+      "Category": "Software Auditing",
+      "Name": "Package Installed",
+      "ClientScoringVariables": [
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": "packageName",
+          "PrettyName": " Package Name ",
+          "HelpText": " Name of the package to check the install status of.",
+          "Type": "string",
+          "Value": "frozen-bubble"
+        }
+      ],
+      "ServerScoringVariables": [
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": "shouldBeInstalled",
+          "PrettyName": " Score if Package Installed ",
+          "HelpText": " Whether to score if the package is or is not installed.",
+          "Type": "bool",
+          "Value": "false"
+        }
+      ],
+      "ScoringReportName": "Unauthorized software frozen-bubble has been removed",
+      "DescriptiveName": "Unauthorized software frozen-bubble has been removed",
+      "ScoreType": "reward",
+      "ScoreAmount": 3,
+      "BanOnInvalid": false
+    },
+    {
+      "Platform": "Debian Based",
+      "Category": "Software Auditing",
+      "Name": "Package Installed",
+      "ClientScoringVariables": [
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": "packageName",
+          "PrettyName": " Package Name ",
+          "HelpText": " Name of the package to check the install status of.",
+          "Type": "string",
+          "Value": "git"
+        }
+      ],
+      "ServerScoringVariables": [
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": "shouldBeInstalled",
+          "PrettyName": " Score if Package Installed ",
+          "HelpText": " Whether to score if the package is or is not installed.",
+          "Type": "bool",
+          "Value": "true"
+        }
+      ],
+      "ScoringReportName": "git package has been installed",
+      "DescriptiveName": "git package has been installed",
+      "ScoreType": "reward",
+      "ScoreAmount": 2,
+      "BanOnInvalid": false
+    },
+    {
+      "Platform": "Debian Based",
+      "Category": "Service Auditing",
+      "Name": "Service Enabled",
+      "ClientScoringVariables": [
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": "serviceName",
+          "PrettyName": " Service Name ",
+          "HelpText": " Name of the service to check the status of.",
+          "Type": "string",
+          "Value": "ssh"
+        }
+      ],
+      "ServerScoringVariables": [
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": "allowServiceNotFound",
+          "PrettyName": " Score if Service Not Found ",
+          "HelpText": " Whether to score if the service was not found (ex. uninstalled).",
+          "Type": "bool",
+          "Value": "true"
+        },
+        {
+          "Name": "serviceShouldBeEnabled",
+          "PrettyName": " Score if Service Enabled ",
+          "HelpText": " Whether to score if the service is or is not enabled.",
+          "Type": "bool",
+          "Value": "true"
+        }
+      ],
+      "ScoringReportName": "OpenSSH service has been started",
+      "DescriptiveName": "OpenSSH service has been started",
+      "ScoreType": "reward",
+      "ScoreAmount": 3,
+      "BanOnInvalid": false
+    },
+    {
+      "Platform": "Debian Based",
+      "Category": "Service Auditing",
+      "Name": "OpenSSH Setting Configured",
+      "ClientScoringVariables": [
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        }
+      ],
+      "ServerScoringVariables": [
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": "key",
+          "PrettyName": " SSH Server Setting Key ",
+          "HelpText": " The key for the sshd setting.",
+          "Type": "string",
+          "Value": "PermitRootLogin"
+        },
+        {
+          "Name": "expectedValue",
+          "PrettyName": " Check Value ",
+          "HelpText": " The value to check for the sshd setting.",
+          "Type": "string",
+          "Value": "no"
+        },
+        {
+          "Name": "shouldMatchExpectedValue",
+          "PrettyName": " Should Match Check Value ",
+          "HelpText": " Whether to score if the sshd setting value matches or does not match the check value.",
+          "Type": "bool",
+          "Value": "true"
+        }
+      ],
+      "ScoringReportName": "OpenSSH root login has been disabled",
+      "DescriptiveName": "OpenSSH root login has been disabled",
+      "ScoreType": "reward",
+      "ScoreAmount": 3,
+      "BanOnInvalid": false
+    },
+    {
+      "Platform": "Debian Based",
+      "Category": "Service Auditing",
+      "Name": "OpenSSH Setting Configured",
+      "ClientScoringVariables": [
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        }
+      ],
+      "ServerScoringVariables": [
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": "key",
+          "PrettyName": " SSH Server Setting Key ",
+          "HelpText": " The key for the sshd setting.",
+          "Type": "string",
+          "Value": "PasswordAuthentication"
+        },
+        {
+          "Name": "expectedValue",
+          "PrettyName": " Check Value ",
+          "HelpText": " The value to check for the sshd setting.",
+          "Type": "string",
+          "Value": "no"
+        },
+        {
+          "Name": "shouldMatchExpectedValue",
+          "PrettyName": " Should Match Check Value ",
+          "HelpText": " Whether to score if the sshd setting value matches or does not match the check value.",
+          "Type": "bool",
+          "Value": "true"
+        }
+      ],
+      "ScoringReportName": "OpenSSH password authentication has been disabled",
+      "DescriptiveName": "OpenSSH password authentication has been disabled",
+      "ScoreType": "reward",
+      "ScoreAmount": 3,
+      "BanOnInvalid": false
+    },
+    {
+      "Platform": "Debian Based",
+      "Category": "File Auditing",
+      "Name": "Text in File",
+      "ClientScoringVariables": [
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": "fileLocation",
+          "PrettyName": " File Path ",
+          "HelpText": " The path to the file to check for text.",
+          "Type": "string",
+          "Value": "/home/alby/.ssh/authorized_keys"
+        },
+        {
+          "Name": "search",
+          "PrettyName": " Text ",
+          "HelpText": " Text to search for.",
+          "Type": "string",
+          "Value": "ssh-rsa"
+        }
+      ],
+      "ServerScoringVariables": [
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": "fileMissingIsOk",
+          "PrettyName": " File Missing is Acceptable ",
+          "HelpText": " Whether or not to score if the file is missing.",
+          "Type": "bool",
+          "Value": "true"
+        },
+        {
+          "Name": "scoreIfTextFound",
+          "PrettyName": " Score if Text Found ",
+          "HelpText": " Whether or not to score if the text is or is not found.",
+          "Type": "bool",
+          "Value": "false"
+        }
+      ],
+      "ScoringReportName": "Unauthorized ssh key for user alby removed",
+      "DescriptiveName": "Unauthorized ssh key for user alby removed",
+      "ScoreType": "reward",
+      "ScoreAmount": 4,
+      "BanOnInvalid": false
+    },
+    {
+      "Platform": "Debian Based",
+      "Category": "File Auditing",
+      "Name": "File Permissions Match",
+      "ClientScoringVariables": [
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": "path",
+          "PrettyName": " File Path ",
+          "HelpText": " Path to the file to check permissions of.",
+          "Type": "string",
+          "Value": "/etc/gshadow"
+        }
+      ],
+      "ServerScoringVariables": [
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": "fileNotFoundAcceptable",
+          "PrettyName": " File Not Found is Acceptable ",
+          "HelpText": " Whether or not the check passes if the file doesn't exist.",
+          "Type": "bool",
+          "Value": "false"
+        },
+        {
+          "Name": "octalBitmask",
+          "PrettyName": " Octal Bitmask ",
+          "HelpText": " Three digit octal bitmask to bitwise AND with the files permissions before checking. Use this to ignore certain permissions.",
+          "Type": "string",
+          "Value": "037"
+        },
+        {
+          "Name": "checkBits",
+          "PrettyName": " Octal Permission Check ",
+          "HelpText": " Three digit octal permissions to check.",
+          "Type": "string",
+          "Value": "000"
+        },
+        {
+          "Name": "scoreIfMatch",
+          "PrettyName": " Score if Permissions Match Check ",
+          "HelpText": " Whether to score if the file permissions match or do not match the permission check.",
+          "Type": "bool",
+          "Value": "true"
+        }
+      ],
+      "ScoringReportName": "Insecure file permissions for gshadow fixed",
+      "DescriptiveName": "Insecure file permissions for gshadow fixed",
+      "ScoreType": "reward",
+      "ScoreAmount": 4,
+      "BanOnInvalid": false
+    },
+    {
+      "Platform": "Debian Based",
+      "Category": "File Auditing",
+      "Name": "Files Removed",
+      "ClientScoringVariables": [
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": "files",
+          "PrettyName": " File paths ",
+          "HelpText": " List of file paths separated by a new line.",
+          "Type": "List<string>",
+          "Value": "/etc/cron.d/nc"
+        }
+      ],
+      "ServerScoringVariables": [
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": "minCountToScore",
+          "PrettyName": " Minimum Count to Score ",
+          "HelpText": " The minimum number of files found to pass the check. Set to 0 if you want all files to be removed.",
+          "Type": "int",
+          "Value": "0"
+        },
+        {
+          "Name": "maxCountToScore",
+          "PrettyName": " Maximum Count to Score ",
+          "HelpText": " The maximum number of files found to pass the check. Set to 0 if you want all files to be removed.",
+          "Type": "int",
+          "Value": "0"
+        }
+      ],
+      "ScoringReportName": "Netcat backdoor has been removed",
+      "DescriptiveName": "Netcat backdoor has been removed",
+      "ScoreType": "reward",
+      "ScoreAmount": 4,
+      "BanOnInvalid": false
+    },
+    {
+      "Platform": "Debian Based",
+      "Category": "File Auditing",
+      "Name": "Text in File",
+      "ClientScoringVariables": [
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": "fileLocation",
+          "PrettyName": " File Path ",
+          "HelpText": " The path to the file to check for text.",
+          "Type": "string",
+          "Value": "/home/thomas/.bashrc"
+        },
+        {
+          "Name": "search",
+          "PrettyName": " Text ",
+          "HelpText": " Text to search for.",
+          "Type": "string",
+          "Value": "fs.sdsetup.com"
+        }
+      ],
+      "ServerScoringVariables": [
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": null,
+          "PrettyName": null,
+          "HelpText": null,
+          "Type": null,
+          "Value": ""
+        },
+        {
+          "Name": "fileMissingIsOk",
+          "PrettyName": " File Missing is Acceptable ",
+          "HelpText": " Whether or not to score if the file is missing.",
+          "Type": "bool",
+          "Value": "true"
+        },
+        {
+          "Name": "scoreIfTextFound",
+          "PrettyName": " Score if Text Found ",
+          "HelpText": " Whether or not to score if the text is or is not found.",
+          "Type": "bool",
+          "Value": "false"
+        }
+      ],
+      "ScoringReportName": "wget backdoor removed",
+      "DescriptiveName": "wget backdoor removed",
+      "ScoreType": "reward",
+      "ScoreAmount": 6,
+      "BanOnInvalid": false
+    }
+  ]
+}

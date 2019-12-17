@@ -1,0 +1,10 @@
+{
+  "Name": "User auditing check passed",
+  "Description": "Removed hidden user root_",
+  "ScoreValue": 2,
+  "Type": 0,
+  "ScoreIfBool": true,
+  "BanOnInvalid": false,
+  "ClientPayload": null,
+  "ServerPayload": null
+}

@@ -1,0 +1,8 @@
+{
+  "Name": "Removed unauthorized user ava",
+  "Description": "Removed unauthorized user ava",
+  "ScoreValue": 2,
+  "ScoreIfBool": true,
+  "BanOnInvalid": false,
+  "Type": 0
+}

@@ -1,0 +1,10 @@
+{
+  "Name": "Firewall rule check passed",
+  "Description": "OpenSSH traffic is permitted through the firewall",
+  "ScoreValue": 3,
+  "Type": 0,
+  "ScoreIfBool": true,
+  "BanOnInvalid": false,
+  "ClientPayload": null,
+  "ServerPayload": null
+}

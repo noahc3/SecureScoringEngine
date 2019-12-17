@@ -1,0 +1,10 @@
+{
+  "Name": "System policy check passed",
+  "Description": "ASLR has been fully enabled",
+  "ScoreValue": 1,
+  "Type": 0,
+  "ScoreIfBool": true,
+  "BanOnInvalid": false,
+  "ClientPayload": null,
+  "ServerPayload": null
+}

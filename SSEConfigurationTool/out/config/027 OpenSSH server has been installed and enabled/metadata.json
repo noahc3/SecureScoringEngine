@@ -1,0 +1,10 @@
+{
+  "Name": "OpenSSH server has been installed and enabled",
+  "Description": "OpenSSH server has been installed and enabled",
+  "ScoreValue": 3,
+  "Type": 0,
+  "ScoreIfBool": true,
+  "BanOnInvalid": false,
+  "ClientPayload": null,
+  "ServerPayload": null
+}

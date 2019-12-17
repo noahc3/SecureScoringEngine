@@ -1,0 +1,10 @@
+{
+  "Name": "wget backdoor script removed",
+  "Description": "wget backdoor script removed",
+  "ScoreValue": 5,
+  "Type": 0,
+  "ScoreIfBool": true,
+  "BanOnInvalid": false,
+  "ClientPayload": null,
+  "ServerPayload": null
+}

@@ -1,0 +1,8 @@
+{
+  "Name": "FTP service removed or disabled",
+  "Description": "FTP service removed or disabled",
+  "ScoreValue": 3,
+  "ScoreIfBool": true,
+  "BanOnInvalid": false,
+  "Type": 0
+}

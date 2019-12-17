@@ -11,6 +11,9 @@ using SSECommon.Types;
 
 using Newtonsoft.Json;
 
+using ICSharpCode.SharpZipLib.Core;
+using ICSharpCode.SharpZipLib.Zip;
+
 namespace SSEBackend
 {
     public static class Globals
@@ -46,20 +49,66 @@ namespace SSEBackend
             }
 
             //load all of the runtimes
-            foreach (string k in Directory.EnumerateDirectories(RUNTIME_CONFIG_DIRECTORY)) {
-                string runtimeJson = File.ReadAllText((k + "\\runtime.conf").AsPath());
+            foreach (string runtimeDirectory in Directory.EnumerateDirectories(RUNTIME_CONFIG_DIRECTORY)) {
+                string runtimeJson = File.ReadAllText((runtimeDirectory + "\\runtime.conf").AsPath());
                 Runtime runtime = Runtime.FromJson(runtimeJson);
 
                 runtime.scoredItems = new List<ScoringPayloadMetadata>();
 
-                //load all of the scored item payloads into the runtime object
-                foreach (string p in Directory.EnumerateDirectories((k + "\\scoring\\").AsPath())) {
-                    ScoringPayloadMetadata meta = ScoringPayloadMetadata.FromJson(File.ReadAllText((p + "\\metadata.json").AsPath()));
-                    meta.ClientPayload = File.ReadAllText((p + "\\client.cs").AsPath());
-                    meta.ServerPayload = File.ReadAllText((p + "\\server.cs").AsPath());
-                    runtime.scoredItems.Add(meta);
-                }
+                if (!config.OfflineMode) {
+                    //if the server is running in online mode, the scoring data will be in a subdirectory.
+                    //load all of the scored item payloads into the runtime object
+                    foreach (string p in Directory.EnumerateDirectories((runtimeDirectory + "\\scoring\\").AsPath())) {
+                        ScoringPayloadMetadata meta = ScoringPayloadMetadata.FromJson(File.ReadAllText((p + "\\metadata.json").AsPath()));
+                        meta.ClientPayload = File.ReadAllText((p + "\\client.csx").AsPath());
+                        meta.ServerPayload = File.ReadAllText((p + "\\server.csx").AsPath());
+                        runtime.scoredItems.Add(meta);
+                    }
+                } else {
+                    //if the server is running in offline mode, runtime scoring data will be located in encrypted zip files.
+                    //the zip file is encrypted with a STATIC password which is defined in SSECommon constants. the encryption is
+                    //to prevent accidentally viewing the scoring configuration data (ex. running a grep on the whole fs), NOT for
+                    //security! If you want security, host an online scoring server!
+                    Dictionary<string, Dictionary<string, byte[]>> zipEntries = new Dictionary<string, Dictionary<string, byte[]>>(); //<runtimeid, <filename, file bytes>>
 
+                    using (Stream fsInput = File.OpenRead((runtimeDirectory + "\\scoring.zip").AsPath()))
+                    using (ZipFile zf = new ZipFile(fsInput)) {
+                        zf.Password = Constants.OFFLINE_SCORING_CONFIGURATION_PASSWORD;
+
+                        foreach (ZipEntry zipEntry in zf) {
+                            if (!zipEntry.IsFile) continue;
+
+                            string fileName = zipEntry.Name.Replace("\\", "/");
+                            string[] _split = fileName.Split('/');
+                            string directoryName = String.Join('/', _split.Take(_split.Length - 1));
+                            fileName = _split.Last();
+
+                            byte[] file = new byte[zipEntry.Size];
+
+                            using (Stream fileStream = zf.GetInputStream(zipEntry)) {
+                                StreamUtils.ReadFully(fileStream, file);
+                            }
+
+                            if (!zipEntries.ContainsKey(directoryName)) zipEntries[directoryName] = new Dictionary<string, byte[]>();
+                            zipEntries[directoryName][fileName] = file;
+                        }
+
+
+
+                        foreach (string dir in zipEntries.Keys) {
+                            if (zipEntries[dir].ContainsKey("client.csx") && zipEntries[dir].ContainsKey("server.csx") && zipEntries[dir].ContainsKey("metadata.json")) {
+                                ScoringPayloadMetadata meta = ScoringPayloadMetadata.FromJson(System.Text.Encoding.Default.GetString(zipEntries[dir]["metadata.json"]));
+                                meta.ClientPayload = System.Text.Encoding.Default.GetString(zipEntries[dir]["client.csx"]);
+                                meta.ServerPayload = System.Text.Encoding.Default.GetString(zipEntries[dir]["server.csx"]);
+                                runtime.scoredItems.Add(meta);
+                            }
+                        }
+
+                        foreach(ScoringPayloadMetadata k in runtime.scoredItems) {
+                            Console.WriteLine(k.ClientPayload);
+                        }
+                    }
+                }
                 data.runtimes[runtime.ID] = runtime;
             }
         }
@@ -70,6 +119,14 @@ namespace SSEBackend
                 teams.Add(k.GetScoreboardShadowCopy());
             }
             File.WriteAllText((CONFIG_DIRECTORY + "\\teams_saved.json").AsPath(), JsonConvert.SerializeObject(teams, Formatting.Indented));
+        }
+
+        public static bool VerifyTeamExists(string teamUuid) {
+            if (data.teams.ContainsKey(teamUuid)) {
+                return true;
+            } else {
+                return false;
+            }
         }
 
         public static bool VerifyTeamAuthenticity(string teamUuid, string runtimeId) {
@@ -127,6 +184,12 @@ namespace SSEBackend
             Team team = GetTeam(teamUuid);
 
             return team.EncKeys[runtime] != null;
+        }
+
+        public static bool IsTeamDebug(string teamUuid) {
+            if (!VerifyTeamExists(teamUuid)) return false;
+            Team t = GetTeam(teamUuid);
+            return t.Debug;
         }
 
         public static Runtime GetRuntime(string teamUuid, string runtimeId) {

@@ -1,0 +1,63 @@
+﻿@page "/exportclient"
+
+    <div class="contained-wide">
+        <h2>Export and Install</h2>
+        <p>
+            This page will export the scoring configuration as a set of scripts that are used by the scoring server.
+            Note that you cannot reimport an exported configuration back into this tool.
+            If you want to be able to edit the scoring configuration, you should make sure you save a draft!
+        </p>
+
+        <p>
+            You have the option to install the client for online images or for offline images.
+            <ul>
+                <li>
+                    An online image is one that connects to a hosted scoring server.
+                    <ul>
+                        <li>This is the correct option if you want to make an image where teams will compete, or if security is a requirement</li>
+                        <li>Online images require Team UUIDs to be configured and delivered to competitors.</li>
+                    </ul>
+                </li>
+                <li>
+                    An offline image is one where the scoring server runs locally within the VM.
+                    <ul>
+                        <li>This is useful for creating practice images as you don't need to keep an external scoring server running.</li>
+                        <li>Offline images do not use Team UUIDs, and as such the scoring server scoreboard is disabled.</li>
+                    </ul>
+                </li>
+            </ul>
+        </p>
+
+        <p>
+            If you are creating an online image, you can enable debug services on the scoring server and have the configuration pushed directly to the server.
+            This will setup the configuration on the scoring server without any additional input.
+        </p>
+
+        <BSBasicForm>
+            <h4>Choose Image Type</h4>
+            <BSFormGroup IsCheck="true">
+                <BSBasicInput InputType="InputType.Radio" Id="onlineRadio" RadioValue="@("online")" @bind-Value="imageType" />
+                <BSLabel For="onlineRadio">Online Image</BSLabel>
+                <BSBasicInput InputType="InputType.Radio" Id="offlineRadio" RadioValue="@("offline")" @bind-Value="imageType" />
+                <BSLabel For="offlineRadio">Offline Image</BSLabel>
+                <BSBasicInput InputType="InputType.Radio" Id="exportRadio" RadioValue="@("export")" @bind-Value="imageType" />
+                <BSLabel For="exportRadio">Just Export Configuration</BSLabel>
+            </BSFormGroup>
+        </BSBasicForm>
+
+        @if(imageType == "export") {
+            <BSButton OnClick="Export">Generate and Save Configuration</BSButton>
+        } else if (imageType == "online") {
+            <i>Not yet implemented</i>
+        } else if (imageType == "offline") {
+            <i>Not yet implemented</i>
+        }
+    </div>
+
+@code {
+    private string imageType = "export";
+
+    private void Export() {
+        Utilities.ExportConfiguration("out/config/");
+    }
+}

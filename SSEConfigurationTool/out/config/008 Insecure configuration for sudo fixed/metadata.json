@@ -1,0 +1,10 @@
+{
+  "Name": "Insecure configuration for sudo fixed",
+  "Description": "Insecure configuration for sudo fixed",
+  "ScoreValue": 2,
+  "Type": 0,
+  "ScoreIfBool": true,
+  "BanOnInvalid": false,
+  "ClientPayload": null,
+  "ServerPayload": null
+}

@@ -1,0 +1,10 @@
+{
+  "Name": "MariaDB service has been disabled or removed",
+  "Description": "MariaDB service has been disabled or removed",
+  "ScoreValue": 2,
+  "Type": 0,
+  "ScoreIfBool": true,
+  "BanOnInvalid": false,
+  "ClientPayload": null,
+  "ServerPayload": null
+}

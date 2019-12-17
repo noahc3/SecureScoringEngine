@@ -1,0 +1,10 @@
+{
+  "Name": "Prohibited MP3 files have been removed",
+  "Description": "Prohibited MP3 files have been removed",
+  "ScoreValue": 2,
+  "Type": 0,
+  "ScoreIfBool": true,
+  "BanOnInvalid": false,
+  "ClientPayload": null,
+  "ServerPayload": null
+}

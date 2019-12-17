@@ -1,0 +1,10 @@
+{
+  "Name": "Netcat backdoor removed",
+  "Description": "Netcat backdoor removed",
+  "ScoreValue": 4,
+  "Type": 0,
+  "ScoreIfBool": true,
+  "BanOnInvalid": false,
+  "ClientPayload": null,
+  "ServerPayload": null
+}

@@ -1,0 +1,8 @@
+{
+  "Name": "ASLR has been fully enabled",
+  "Description": "ASLR has been fully enabled",
+  "ScoreValue": 4,
+  "ScoreIfBool": true,
+  "BanOnInvalid": false,
+  "Type": 0
+}

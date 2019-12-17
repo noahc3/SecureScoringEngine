@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace SSEBackend.Pages
 {
-    [ResponseCache(Duration = 3600)]
     public class IndexModel : PageModel
     {
         public void OnGet()

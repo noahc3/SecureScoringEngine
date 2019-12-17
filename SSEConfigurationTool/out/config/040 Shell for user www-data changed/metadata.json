@@ -1,0 +1,10 @@
+{
+  "Name": "User auditing check passed",
+  "Description": "Shell for user www-data changed",
+  "ScoreValue": 3,
+  "Type": 0,
+  "ScoreIfBool": true,
+  "BanOnInvalid": false,
+  "ClientPayload": null,
+  "ServerPayload": null
+}

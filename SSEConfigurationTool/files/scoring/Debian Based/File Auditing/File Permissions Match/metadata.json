@@ -1,0 +1,8 @@
+{
+  "Name": "Prohibited MP3 files have been removed",
+  "Description": "Prohibited MP3 files have been removed",
+  "ScoreValue": 3,
+  "ScoreIfBool": true,
+  "BanOnInvalid": false,
+  "Type": 0
+}

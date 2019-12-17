@@ -1,0 +1,10 @@
+{
+  "Name": "nginx does not listen on port 80",
+  "Description": "nginx does not listen on port 80",
+  "ScoreValue": 3,
+  "Type": 0,
+  "ScoreIfBool": true,
+  "BanOnInvalid": false,
+  "ClientPayload": null,
+  "ServerPayload": null
+}
