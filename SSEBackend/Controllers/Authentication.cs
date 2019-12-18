@@ -33,9 +33,7 @@ namespace SSEBackend.Controllers
 
         }
 
-        //Currently only works on Windows servers!!!
-        //(supports windows AND linux clients)
-        //TODO: Implement Linux server support
+        //Cross-platform (server & client) elliptic-curve diffie-helman key exchange.
         [HttpGet("keyexchange")]
         public ActionResult KeyExchange([FromHeader] KeyExchangeInputModel model) {
 
@@ -51,34 +49,16 @@ namespace SSEBackend.Controllers
             Team team = Globals.GetTeam(teamUuid);
             Runtime runtime = Globals.GetRuntime(teamUuid, runtimeId);
 
-            //initialize the key exchange
-            using (ECDiffieHellmanCng exchange = new ECDiffieHellmanCng()) {
-                exchange.KeyDerivationFunction = ECDiffieHellmanKeyDerivationFunction.Hash;
-                exchange.HashAlgorithm = CngAlgorithm.Sha256;
-
-                //try to read clients's public keyblob into DHKE and derive the key material
-                try {
-                    //client is windows, provided CNG key
-                    if (model.CryptoAPI == Constants.CRYPTO_API_WINDOWS) {
-                        Encryption.SetRuntimeKeySlot(teamUuid, runtimeId, exchange.DeriveKeyMaterial(CngKey.Import(theirPublicKey, CngKeyBlobFormat.GenericPublicBlob)));
-                    }
-                    //client is unix, provided OpenSSL key
-                    else if (model.CryptoAPI == Constants.CRYPTO_API_UNIX) {
-                        int read;
-                        ECDiffieHellman ecdh = ECDiffieHellman.Create();
-                        ecdh.ImportSubjectPublicKeyInfo(model.DHKEPublicKey.FromHexToByteArray(), out read);
-                        Encryption.SetRuntimeKeySlot(teamUuid, runtimeId, exchange.DeriveKeyMaterial(ecdh.PublicKey));
-                    }
-                    //unknown crypto provider
-                    else {
-                        return new StatusCodeResult(StatusCodes.Status400BadRequest);
-                    }
-                } catch (Exception e) {
-                    //if this fails the public key sent by the client was either invalid or could not be parsed.
-                    Console.WriteLine("[FAILED IDK] \n" + e.Message);
-                    return new StatusCodeResult(StatusCodes.Status400BadRequest);
-                }
-
+            //create server exchange
+            using (ECDiffieHellman exchange = ECDiffieHellman.Create()) {
+                int read;
+                //import the other party's serialized public key info and export the public key as the object we need
+                ECDiffieHellman otherParty = ECDiffieHellman.Create();
+                otherParty.ImportSubjectPublicKeyInfo(model.DHKEPublicKey.FromHexToByteArray(), out read);
+                ECDiffieHellmanPublicKey otherPartyKey = otherParty.PublicKey;
+                //derive key material and populate the keyslot
+                byte[] privateKey = exchange.DeriveKeyMaterial(otherPartyKey);
+                Encryption.SetRuntimeKeySlot(teamUuid, runtimeId, privateKey);
 
                 //key exchange was successful! send back the server's public key with a sanity check
                 byte[] iv;

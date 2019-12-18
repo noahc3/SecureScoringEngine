@@ -29,7 +29,7 @@ namespace SSEBackend
         public static Team[] scoreboard = new Team[0]; //list of teams sorted by score/time for use with the scoreboard.
 
         public static void LoadData() {
-            config = JsonConvert.DeserializeObject<Config>(File.ReadAllText((CONFIG_DIRECTORY + "\\config.json")).AsPath());
+            config = JsonConvert.DeserializeObject<Config>(File.ReadAllText((CONFIG_DIRECTORY + "\\config.json").AsPath()));
 
             data = new Data();
 
@@ -40,7 +40,7 @@ namespace SSEBackend
                 _teams = JsonConvert.DeserializeObject<List<Team>>(File.ReadAllText((CONFIG_DIRECTORY + "\\teams_saved.json").AsPath()));
 
             } else {
-                _teams = JsonConvert.DeserializeObject<List<Team>>(File.ReadAllText((CONFIG_DIRECTORY + "\\teams.json")).AsPath());
+                _teams = JsonConvert.DeserializeObject<List<Team>>(File.ReadAllText((CONFIG_DIRECTORY + "\\teams.json").AsPath()));
             }
 
             foreach (Team t in _teams) {

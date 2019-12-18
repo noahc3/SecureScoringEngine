@@ -34,27 +34,27 @@ namespace SSEService {
         //-------------------------------//
 
         // various startup/initial config endpoints
-        public static Uri ENDPOINT_PING_PLAINTEXT = new Uri(ENDPOINT_BASE_ADDRESS + "/api/generic/ping");
-        public static Uri ENDPOINT_VERIFY_TEAM_UUID = new Uri(ENDPOINT_BASE_ADDRESS + "/api/auth/isteamuuidvalid");
-        public static Uri ENDPOINT_KEY_EXCHANGE = new Uri(ENDPOINT_BASE_ADDRESS + "/api/auth/keyexchange");
+        public static Uri ENDPOINT_PING_PLAINTEXT;
+        public static Uri ENDPOINT_VERIFY_TEAM_UUID;
+        public static Uri ENDPOINT_KEY_EXCHANGE;
 
         //--------------------------------//
         //----- ciphertext endpoints -----//
         //--------------------------------//
 
         // various startup/initial config endpoints
-        public static Uri ENDPOINT_PING_CIPHERTEXT = new Uri(ENDPOINT_BASE_ADDRESS + "/api/auth/ping");
+        public static Uri ENDPOINT_PING_CIPHERTEXT;
 
         // general file request endpoints (readme, scoring report, forensics?)
-        public static Uri ENDPOINT_README = new Uri(ENDPOINT_BASE_ADDRESS + "/api/fetch/readme");
-        public static Uri ENDPOINT_SCORING_REPORT_TEMPLATE = new Uri(ENDPOINT_BASE_ADDRESS + "/api/fetch/scoringreporttemplate");
+        public static Uri ENDPOINT_README;
+        public static Uri ENDPOINT_SCORING_REPORT_TEMPLATE;
 
         // actual logic endpoints (scoring)
-        public static Uri ENDPOINT_START_SCORING_PROCESS = new Uri(ENDPOINT_BASE_ADDRESS + "/api/scoring/start");
-        public static Uri ENDPOINT_CONTINUE_SCORING_PROCESS = new Uri(ENDPOINT_BASE_ADDRESS + "/api/scoring/continuescoringprocess");
+        public static Uri ENDPOINT_START_SCORING_PROCESS;
+        public static Uri ENDPOINT_CONTINUE_SCORING_PROCESS;
 
         // information endpoints (reports, notices, etc)
-        public static Uri ENDPOINT_SCORING_REPORT = new Uri(ENDPOINT_BASE_ADDRESS + "/api/scoring/getscoringreport");
+        public static Uri ENDPOINT_SCORING_REPORT;
 
 #if (DEBUG)
 
@@ -62,7 +62,7 @@ namespace SSEService {
         //------- debug  endpoints -------//
         //--------------------------------//
 
-        public static Uri ENDPOINT_DEBUG_CHECK_SVC_STATUS = new Uri(ENDPOINT_BASE_ADDRESS + "/api/debug/debugsvcstatus");
+        public static Uri ENDPOINT_DEBUG_CHECK_SVC_STATUS;
 
 #endif
 
@@ -82,7 +82,22 @@ namespace SSEService {
 
 
 
+        public static void SetEndpoints() {
+            ENDPOINT_PING_PLAINTEXT = new Uri(ENDPOINT_BASE_ADDRESS + "/api/generic/ping");
+            ENDPOINT_VERIFY_TEAM_UUID = new Uri(ENDPOINT_BASE_ADDRESS + "/api/auth/isteamuuidvalid");
+            ENDPOINT_KEY_EXCHANGE = new Uri(ENDPOINT_BASE_ADDRESS + "/api/auth/keyexchange");
 
+            ENDPOINT_PING_CIPHERTEXT = new Uri(ENDPOINT_BASE_ADDRESS + "/api/auth/ping");
+            ENDPOINT_README = new Uri(ENDPOINT_BASE_ADDRESS + "/api/fetch/readme");
+            ENDPOINT_SCORING_REPORT_TEMPLATE = new Uri(ENDPOINT_BASE_ADDRESS + "/api/fetch/scoringreporttemplate");
+            ENDPOINT_START_SCORING_PROCESS = new Uri(ENDPOINT_BASE_ADDRESS + "/api/scoring/start");
+            ENDPOINT_CONTINUE_SCORING_PROCESS = new Uri(ENDPOINT_BASE_ADDRESS + "/api/scoring/continuescoringprocess");
+            ENDPOINT_SCORING_REPORT = new Uri(ENDPOINT_BASE_ADDRESS + "/api/scoring/getscoringreport");
+
+            #if (DEBUG)
+            ENDPOINT_DEBUG_CHECK_SVC_STATUS = new Uri(ENDPOINT_BASE_ADDRESS + "/api/debug/debugsvcstatus");
+            #endif
+        }
 
         public static void GenerateConfig() {
             SessionConfig sessionConfig = new SessionConfig();
@@ -109,20 +124,10 @@ namespace SSEService {
 
         public static void LoadConfig() {
             SessionConfig = SessionConfig.FromJson(File.ReadAllText(Globals.CONFIG_SESSION));
-
-            //ENDPOINT_BASE_ADDRESS = SessionConfig.Backend;
-
-            //verify the team UUID and runtime ID parsed from the config
-            //Console.WriteLine("Verifying team UUID and runtime ID...");
-            //if (ClientServerComms.VerifyTeamUUID(SessionConfig.TeamUUID, SessionConfig.RuntimeID)) {
-            //    Console.WriteLine("Team UUID authorized.");
-            //} else {
-            //    //if the team UUID and runtime ID pair are invalid, wipe the session config and restart the authentication process.
-            //    Console.WriteLine("Invalid team UUID!");
-            //    File.Delete(Globals.CONFIG_SESSION);
-            //    GenerateConfig();
-            //    LoadConfig();
-            //}
+            ENDPOINT_BASE_ADDRESS = SessionConfig.Backend;
+            Console.WriteLine(SessionConfig.Backend);
+            Console.WriteLine(ENDPOINT_BASE_ADDRESS);
+            SetEndpoints();
         }
 
         public static void WriteErrorScoringReport(string windowTitle, string color, string headerText, string smallText, string errorText, string solutionText) {

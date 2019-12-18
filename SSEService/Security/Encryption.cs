@@ -34,7 +34,7 @@ namespace SSEService.Security {
 
                     //communicate public key to server
                     using (HttpClient http = new HttpClient()) {
-                        http.DefaultRequestHeaders.Add("DHKE-PUBLIC-KEY", exchange.PublicKey.ToByteArray().ToHex());
+                        http.DefaultRequestHeaders.Add("DHKE-PUBLIC-KEY", exchange.ExportSubjectPublicKeyInfo().ToHex());
                         http.DefaultRequestHeaders.Add("TEAM-UUID", Globals.SessionConfig.TeamUUID);
                         http.DefaultRequestHeaders.Add("RUNTIME-ID", Globals.SessionConfig.RuntimeID);
                         http.DefaultRequestHeaders.Add("CRYPTO-API", Constants.CRYPTO_API_WINDOWS);
