@@ -64,17 +64,8 @@ namespace SSEBackend.Controllers
                 byte[] iv;
                 byte[] sanityCheck = Encryption.EncryptMessage(Constants.KEY_EXCHANGE_SANITY_CHECK, out iv, teamUuid, runtimeId);
 
-                //client is windows, expects CNG key
-                if (model.CryptoAPI == Constants.CRYPTO_API_WINDOWS) {
-                    return new ObjectResult(new GenericEncryptedMessage(sanityCheck, iv, exchange.PublicKey.ToByteArray().ToHex(), teamUuid, runtimeId).ToJson());
-                }
-                //client is unix, expects OpenSSL key
-                else if (model.CryptoAPI == Constants.CRYPTO_API_UNIX) {
-                    return new ObjectResult(new GenericEncryptedMessage(sanityCheck, iv, exchange.ExportSubjectPublicKeyInfo().ToHex(), teamUuid, runtimeId).ToJson());
-                }
-
-                //shouldnt get here but compiler says otherwise /shrug
-                return new StatusCodeResult(StatusCodes.Status400BadRequest);
+                //return server public key
+                return new ObjectResult(new GenericEncryptedMessage(sanityCheck, iv, exchange.ExportSubjectPublicKeyInfo().ToHex(), teamUuid, runtimeId).ToJson());
             }
         }
 
@@ -133,9 +124,5 @@ namespace SSEBackend.Controllers
         [FromHeader(Name = "DHKE-PUBLIC-KEY")]
         [Required]
         public string DHKEPublicKey { get; set; }
-
-        [FromHeader(Name = "CRYPTO-API")]
-        [Required]
-        public string CryptoAPI { get; set; }
     }
 }
