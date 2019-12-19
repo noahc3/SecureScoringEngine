@@ -5,6 +5,7 @@ VisualStudioVersion = 16.0.28721.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{642229BA-6BD0-47E8-92F2-418D851342C7}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -16,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSEBackend", "SSEBackend\SS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSESetTeamUUID", "SSESetTeamUUID\SSESetTeamUUID.csproj", "{1141AAAB-F62A-4F96-AFED-A36404F2B7DA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SSEConfigurationTool", "SSEConfigurationTool\SSEConfigurationTool.csproj", "{846A9B08-262C-4A8F-B3F5-28F69C6C62C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSEConfigurationTool", "SSEConfigurationTool\SSEConfigurationTool.csproj", "{846A9B08-262C-4A8F-B3F5-28F69C6C62C8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

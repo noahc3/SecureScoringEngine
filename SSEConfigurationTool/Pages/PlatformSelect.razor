@@ -35,7 +35,8 @@
     }
 
     private void LoadDraft() {
-        if (Utilities.LoadDraftJson("out/draft.json")) {
+        string file = Utilities.PickFile("Open Scoring Draft", "");
+        if (Utilities.LoadDraftJson(file)) {
             Nav.NavigateTo("/configureclient");
         }
     }

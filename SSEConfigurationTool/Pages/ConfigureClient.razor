@@ -102,6 +102,8 @@
     }
 
     private void SaveDraft() {
-        Utilities.SaveDraftJson(Globals.DRAFT_PATH);
+        string path = Utilities.PickFile("Save Scoring Draft (JSON)", "", true);
+        if (!path.ToLower().EndsWith(".json")) path += ".json";
+        Utilities.SaveDraftJson(path);
     }
 }

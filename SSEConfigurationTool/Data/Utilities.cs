@@ -7,7 +7,6 @@ using System.Reflection;
 using SSECommon;
 using Newtonsoft.Json;
 using System.Diagnostics;
-
 namespace SSEConfigurationTool.Data {
     public class Utilities {
         public static bool MatchesLogicalDistros(params LogicalDistro[] distros) {
@@ -23,12 +22,9 @@ namespace SSEConfigurationTool.Data {
         }
 
         public static void SaveDraftJson(string path) {
-            FileInfo i = new FileInfo(path);
-            if (!Directory.Exists(i.DirectoryName)) Directory.CreateDirectory(i.DirectoryName);
             Draft draft = new Draft() { Platform = Globals.TargetPlatform, ConfiguredScoringItems = Globals.ConfiguredScoringItems };
             string json = JsonConvert.SerializeObject(draft, Formatting.Indented);
             File.WriteAllText(path, json);
-            new Process { StartInfo = new ProcessStartInfo(i.FullName) { UseShellExecute = true } }.Start();
         }
 
         public static bool LoadDraftJson(string path) {
@@ -51,6 +47,21 @@ namespace SSEConfigurationTool.Data {
                 File.WriteAllText((dir + "/server.csx").AsPath(), item.ServerPayload);
                 File.WriteAllText((dir + "/metadata.json").AsPath(), item.Metadata);
             }
+        }
+
+        public static string PickFile(string title, string startDirectory, bool save = false) {
+            string file;
+            if (Environment.OSVersion.Platform == PlatformID.Unix) {
+                file = ("zenity --file-selection --title=\"" + title + "\" " + (save ? "--save --confirm-overwrite " : "")).ExecuteAsBash(false);
+            } else if (Environment.OSVersion.Platform == PlatformID.Win32NT) {
+                if (save) {
+                    file = ("powershell \"Add-Type -AssemblyName System.windows.forms|Out-Null;$f=New-Object System.Windows.Forms.SaveFileDialog;$f.InitialDirectory='" + startDirectory + "';$f.Title='" + title +"';$f.ShowDialog()|Out-Null;$f.FileName\"").ExecuteAsCmd();
+                } else {
+                    file = ("powershell \"Add-Type -AssemblyName System.windows.forms|Out-Null;$f=New-Object System.Windows.Forms.OpenFileDialog;$f.InitialDirectory='" + startDirectory + "';$f.Title='" + title + "';$f.ShowDialog()|Out-Null;$f.FileName\"").ExecuteAsCmd();
+                }
+            } else throw new PlatformNotSupportedException();
+
+            return file.Trim();
         }
     }
 }

@@ -61,7 +61,7 @@ namespace SSECommon {
         }
 
         //TODO: clean up copy paste syndrome
-        public static string ExecuteAsBash(this string cmd) {
+        public static string ExecuteAsBash(this string cmd, bool includeErrors = true) {
             var escapedArgs = cmd.Replace("\"", "\\\"");
 
             var process = new Process() {
@@ -69,6 +69,7 @@ namespace SSECommon {
                     FileName = "/bin/bash",
                     Arguments = $"-c \"{escapedArgs}\"",
                     RedirectStandardOutput = true,
+                    RedirectStandardError = includeErrors,
                     UseShellExecute = false,
                     CreateNoWindow = true,
                 }

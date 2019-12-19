@@ -7,7 +7,7 @@
     <EmbeddedResource Include="files\scoring\**\*" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="BlazorStrap" Version="1.0.106" />
+    <PackageReference Include="BlazorStrap" Version="1.1.101" />
     <PackageReference Include="ElectronNET.API" Version="7.30.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.0.1">
@@ -17,7 +17,6 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.0.1" />
     <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="3.3.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.0.0" />
-    <PackageReference Include="Microsoft.Windows.Compatibility" Version="3.0.1" />
     <PackageReference Include="SharpZipLib" Version="1.2.0" />
   </ItemGroup>
   <ItemGroup>
