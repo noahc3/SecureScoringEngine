@@ -6,6 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{642229BA-6BD0-47E8-92F2-418D851342C7}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		build.csx = build.csx
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -18,6 +19,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSESetTeamUUID", "SSESetTeamUUID\SSESetTeamUUID.csproj", "{1141AAAB-F62A-4F96-AFED-A36404F2B7DA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSEConfigurationTool", "SSEConfigurationTool\SSEConfigurationTool.csproj", "{846A9B08-262C-4A8F-B3F5-28F69C6C62C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SSEWatchdog", "SSEWatchdog\SSEWatchdog.csproj", "{B9F67042-FCBF-4CE9-84DC-59A38ED1A04A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +48,10 @@ Global
 		{846A9B08-262C-4A8F-B3F5-28F69C6C62C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{846A9B08-262C-4A8F-B3F5-28F69C6C62C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{846A9B08-262C-4A8F-B3F5-28F69C6C62C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9F67042-FCBF-4CE9-84DC-59A38ED1A04A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9F67042-FCBF-4CE9-84DC-59A38ED1A04A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9F67042-FCBF-4CE9-84DC-59A38ED1A04A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9F67042-FCBF-4CE9-84DC-59A38ED1A04A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

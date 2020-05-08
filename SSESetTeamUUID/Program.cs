@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 using SSECommon;
+using SSECommon.Types;
 using Newtonsoft.Json;
 
 namespace SSESetTeamUUID {
@@ -30,20 +31,7 @@ namespace SSESetTeamUUID {
 
             config.TeamUUID = Console.ReadLine();
 
-            File.WriteAllText(CONFIG_SESSION, config.ToJson());
-        }
-    }
-
-    class SessionConfig {
-        public string TeamUUID;
-        public string RuntimeID;
-
-        public string ToJson() {
-            return JsonConvert.SerializeObject(this, Formatting.Indented);
-        }
-
-        public static SessionConfig FromJson(string json) {
-            return JsonConvert.DeserializeObject<SessionConfig>(json);
+            config.Flush(CONFIG_SESSION);
         }
     }
 }

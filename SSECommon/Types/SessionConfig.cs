@@ -5,15 +5,15 @@ using System.Text;
 
 using Newtonsoft.Json;
 
-namespace SSEService.Types {
-    class SessionConfig {
+namespace SSECommon.Types {
+    public class SessionConfig {
         public string TeamUUID;
         public string RuntimeID;
         public string Backend;
 
 
-        public void Flush() {
-            File.WriteAllText(Globals.CONFIG_SESSION, this.ToJson());
+        public void Flush(string path) {
+            File.WriteAllText(path, this.ToJson());
         }
 
 

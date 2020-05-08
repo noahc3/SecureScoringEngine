@@ -15,6 +15,7 @@ namespace SSECommon.Types
 
         public int score { get; set; }
         public int totalScore { get; set; }
+        public int lastTotalScore { get; set; }
 
         public long runtimeStartTimestamp { get; set; }
         public long teamStartTimestamp { get; set; }

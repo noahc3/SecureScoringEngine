@@ -1,0 +1,8 @@
+{
+  "Name": "Audit Computer Account Management",
+  "Description": "Audit Computer Account Management [Success]",
+  "ScoreValue": 4,
+  "ScoreIfBool": true,
+  "BanOnInvalid": false,
+  "Type": 0
+}

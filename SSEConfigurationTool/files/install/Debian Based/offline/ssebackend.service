@@ -1,0 +1,16 @@
+[Unit]
+Description=SSEBackend
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=root
+ExecStart=/usr/bin/env bash /opt/SSEBackend/start.sh
+WorkingDirectory=/opt/SSEBackend
+Environment="DISPLAY=:0" "XAUTHORITY=/home/bporter/.Xauthority"
+
+[Install]
+WantedBy=multi-user.target

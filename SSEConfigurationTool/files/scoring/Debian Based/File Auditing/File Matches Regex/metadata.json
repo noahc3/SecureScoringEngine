@@ -1,0 +1,8 @@
+{
+  "Name": "Sudo requires a password",
+  "Description": "sudo requires a password",
+  "ScoreValue": 3,
+  "ScoreIfBool": false,
+  "BanOnInvalid": false,
+  "Type": 0
+}

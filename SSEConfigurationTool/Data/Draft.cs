@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 
 namespace SSEConfigurationTool.Data {
     public class Draft {
-        public int Version = 1;
+        public static int LatestVersion = 2;
+        public int Version = LatestVersion;
         public string Platform;
         public List<ConfiguredScoringItem> ConfiguredScoringItems;
     }

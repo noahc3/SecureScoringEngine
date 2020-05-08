@@ -228,7 +228,7 @@ namespace SSEService.Net {
             string clientPayloadOutput = payload.ExecuteAsCode<string>();
 
 #if (DEBUG)
-            Console.WriteLine(clientPayloadOutput);
+            Console.WriteLine("HELLO " + clientPayloadOutput);
 #endif
 
             iv = null;
@@ -266,7 +266,7 @@ namespace SSEService.Net {
 
                     clientPayloadOutput = payload.ExecuteAsCode<string>();
 #if (DEBUG)
-                    Console.WriteLine(clientPayloadOutput);
+                    Console.WriteLine("HELLO " + clientPayloadOutput);
 #endif
                     iv = null;
                     ciphertext = Encryption.EncryptMessage(clientPayloadOutput, out iv);

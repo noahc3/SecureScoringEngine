@@ -1,0 +1,101 @@
+<meta http-equiv="refresh" content="5"/>
+
+<style>
+    h1 {{
+        text-align: center;
+        color: #e33636;
+        font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+        font-weight: bold;
+    }}
+
+    h2 {{
+    
+    }}
+
+    body {{
+        font-family: Arial, Verdana, sans-serif;
+        font-size: 16px;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #e6e6e6;
+    }}
+
+    pre {{
+        font-family: Arial, Verdana, sans-serif;
+        font-size: 16px;
+    }}
+
+    .main {{
+        margin-top: 10px;
+        margin-bottom: 10px;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 0px;
+        background-color: white;
+        width: 900px;
+        max-width: 100%;
+        min-width: 600px;
+    }}
+
+    .text {{
+        padding-top: 12px;
+        padding-bottom: 12px;
+        padding-left: 40px;
+        padding-right: 40px;
+    }}
+
+    .center {{
+        text-align: center;
+    }}
+    
+    li {{
+        padding-top:3px;
+        padding-bottom:3px;
+    }}
+</style>
+
+<div class="mod-wrap">
+    <div class="article article-body">
+        <div class="article-content">
+            <div class="cp-article-title">
+            </div>
+            <div>
+                <div id="ctl00_PlaceHolderMain_ctl02_label" style="display:none">Page Content</div>
+                <div id="ctl00_PlaceHolderMain_ctl02__ControlWrapper_RichHtmlField" class="ms-rtestate-field" style="display:inline" aria-labelledby="ctl00_PlaceHolderMain_ctl02_label">
+                    <div class="main">
+                        <div class="text">
+                            <p align="center" style="width:100%;text-align:center;">
+                                <img src="C:/SSE/SSEService/assets/icon.png" align="middle" alt="" style="width:160px;height:160px;">
+                                &nbsp;
+                            </p>
+                            <h1><strong>SSE Scoring Report</strong></h1>
+                            
+                            <div style="text-align:center;">
+                                <h3><span style="font-size:18px;">Approximate Team Running Time: {0}</span></h3>
+                                <h3><span style="font-size:18px;">Approximate Image Running Time: {11}</span></h3>
+                                <h3><span style="font-size:18px;">Current Team UUID: <span style="color:#10a010;">{10}</span></span></h3>
+                                <h2><span style="font-size:22px;">{1} out of {2} points received</span></h2>
+                            </div>
+                            
+                            <div>
+                                <h3><span style="font-size:18px;">Connection Status: <span style="color:#10a010;">This warning is not yet implemented.</span></span></h3>
+                            </div>
+                            
+                            <div>
+                                <h3><span style="font-size:18px;">{3} penalties assessed, for a loss of {4} points:</span></h3>
+                                <p>{8}</p>
+                            </div>
+                            
+                            <div>
+                                <h3><span style="font-size:18px;">{5} out of {7} scored security issues fixed, for a gain of {6} points:</span></h3>
+                                <p>{9}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

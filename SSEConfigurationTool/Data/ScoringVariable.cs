@@ -30,7 +30,7 @@ namespace SSEConfigurationTool.Data {
             } else if (Type == "int") {
                 code += Value + ";";
             } else if (Type == "string") {
-                code += "\"" + Value + "\";";
+                code += "\"" + System.Web.HttpUtility.JavaScriptStringEncode(Value) + "\";";
             } else if (Type == "List<string>") {
                 string values = "";
                 using (StringReader sr = new StringReader(Value)) {

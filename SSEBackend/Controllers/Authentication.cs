@@ -39,7 +39,7 @@ namespace SSEBackend.Controllers
 
             byte[] theirPublicKey = model.DHKEPublicKey.FromHexToByteArray();
             string teamUuid = model.TeamUUID;
-            string runtimeId = model.RunetimeID;
+            string runtimeId = model.RuntimeID;
 
             //make sure the team requesting a key is legitimate with a legitimate RID
             if (!Globals.VerifyTeamAuthenticity(teamUuid, runtimeId)) {
@@ -119,7 +119,7 @@ namespace SSEBackend.Controllers
 
         [FromHeader(Name = "RUNTIME-ID")]
         [Required]
-        public string RunetimeID { get; set; }
+        public string RuntimeID { get; set; }
 
         [FromHeader(Name = "DHKE-PUBLIC-KEY")]
         [Required]

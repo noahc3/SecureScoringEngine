@@ -10,7 +10,18 @@ using SSEConfigurationTool.Types;
 namespace SSEConfigurationTool.Data {
     public class Globals {
 
+        public static string DebugTeamUUID = "";
+        public static string CONFIG_TOOL_RUNTIME_ID = "DEBUG";
+
         public static string DRAFT_PATH = "out/draft.json";
+
+        public static string ENDPOINT_BASE_ADDRESS;
+        public static Uri ENDPOINT_PING_PLAINTEXT;
+        public static Uri ENDPOINT_KEY_EXCHANGE;
+
+        public static Uri ENDPOINT_DEBUG_CHECK_SVC_STATUS;
+        public static Uri ENDPOINT_DEBUG_ADD_RUNTIME;
+        public static Uri ENDPOINT_DEBUG_HOT_RELOAD;
 
         public static string TargetPlatform = "";
         public static Dictionary<string, Dictionary<string, Dictionary<string, TemplateScoringItem>>> ScoringItems = new Dictionary<string, Dictionary<string, Dictionary<string, TemplateScoringItem>>>();
@@ -19,6 +30,16 @@ namespace SSEConfigurationTool.Data {
         public static LogicalDistro distro;
 
 
+        public static void SetScoringServerEndpoints(string serverUrl) {
+            ENDPOINT_BASE_ADDRESS = serverUrl;
+            ENDPOINT_PING_PLAINTEXT = new Uri(ENDPOINT_BASE_ADDRESS + "/api/generic/ping");
+            ENDPOINT_KEY_EXCHANGE = new Uri(serverUrl + "/api/auth/keyexchange");
+
+            ENDPOINT_DEBUG_CHECK_SVC_STATUS = new Uri(ENDPOINT_BASE_ADDRESS + "/api/debug/debugsvcstatus");
+            ENDPOINT_DEBUG_ADD_RUNTIME = new Uri(ENDPOINT_BASE_ADDRESS + "/api/debug/addruntime");
+            ENDPOINT_DEBUG_HOT_RELOAD = new Uri(ENDPOINT_BASE_ADDRESS + "/api/debug/hotreload");
+
+        }
 
         //called on launch
         public static void Init() {
@@ -28,9 +49,9 @@ namespace SSEConfigurationTool.Data {
                 if (path.StartsWith("SSEConfigurationTool.files.scoring.")) {
                     path = path.Substring("SSEConfigurationTool.files.scoring.".Length);
                     string[] split = path.Split('.');
-                    string platform = split[0].Replace("_", " ");
-                    string category = split[1].Replace("_", " ");
-                    string item = split[2].Replace("_", " ");
+                    string platform = split[0].Replace("_", " ").Trim();
+                    string category = split[1].Replace("_", " ").Trim();
+                    string item = split[2].Replace("_", " ").Trim();
 
                     if (!ScoringItems.ContainsKey(platform)) ScoringItems[platform] = new Dictionary<string, Dictionary<string, TemplateScoringItem>>();
                     if (!ScoringItems[platform].ContainsKey(category)) ScoringItems[platform][category] = new Dictionary<string, TemplateScoringItem>();

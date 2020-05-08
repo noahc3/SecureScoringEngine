@@ -1,0 +1,8 @@
+{
+  "Name": "User is not an administrator",
+  "Description": "User kyle is not an administrator",
+  "ScoreValue": 3,
+  "ScoreIfBool": true,
+  "BanOnInvalid": false,
+  "Type": 0
+}

@@ -207,6 +207,8 @@ namespace SSEBackend.Controllers
             }
 
             ScoringReport report = new ScoringReport();
+            List<string> serverreport = null;
+            if (Globals.config.SaveScoringReportsOnServer) serverreport = new List<string>();
 
             int i = 0;
 
@@ -230,6 +232,7 @@ namespace SSEBackend.Controllers
                         meta.ScoreValue = p.ScoreValue;
                         meta.Type = p.Type;
                         report.rewards.Add(meta);
+                        if (Globals.config.SaveScoringReportsOnServer) serverreport.Add(p.Description + " : " + meta.ScoreValue);
                     }
                 } else if (p.Type == ScoreType.Penalty) {
                     if (tracker.safeScored[i]) {
@@ -247,11 +250,14 @@ namespace SSEBackend.Controllers
                         meta.ScoreValue = p.ScoreValue;
                         meta.Type = p.Type;
                         report.penalties.Add(meta);
+                        if (Globals.config.SaveScoringReportsOnServer) serverreport.Add(p.Description + " : -" + meta.ScoreValue);
                     }
                 }
 
                 i++;
             }
+
+            report.lastTotalScore = team.RuntimeLastScores.ContainsKey(sanitizedRuntimeId) ? team.RuntimeLastScores[sanitizedRuntimeId] : 0;
 
             team.RuntimeLastScores[sanitizedRuntimeId] = report.score;
             team.RuntimeLastTimestamps[sanitizedRuntimeId] = DateTime.UtcNow.Ticks;
@@ -260,8 +266,15 @@ namespace SSEBackend.Controllers
             report.teamStartTimestamp = team.TeamStartTimestamp;
             report.runtimeStartTimestamp = team.RuntimeStartTimestamps[sanitizedRuntimeId];
 
+            string serialized = JsonConvert.SerializeObject(report);
+
+            if (Globals.config.SaveScoringReportsOnServer) {
+                serverreport.Insert(0, report.score + "/" + report.totalScore + " (" + report.rewardsFound + "/" + report.totalRewards + ")");
+                System.IO.File.WriteAllLines((Globals.SCORING_REPORTS_DIRECTORY + "\\" + team.UUID + "_" + runtime.ID + ".txt").AsPath(), serverreport);
+            }
+
             byte[] iv;
-            byte[] ciphertext = Encryption.EncryptMessage(JsonConvert.SerializeObject(report), out iv, message.TeamUUID, message.RuntimeID);
+            byte[] ciphertext = Encryption.EncryptMessage(serialized, out iv, message.TeamUUID, message.RuntimeID);
 
             return new ObjectResult(new GenericEncryptedMessage(ciphertext, iv, "", message.TeamUUID, message.RuntimeID));
 

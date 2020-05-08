@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
-
 using SSECommon;
 using SSECommon.Types;
 using SSEService.Net;
-using SSEService.Types;
 
 namespace SSEService {
     static class Globals {
@@ -118,7 +116,7 @@ namespace SSEService {
             //    }
             //}
 
-            sessionConfig.Flush();
+            sessionConfig.Flush(Globals.CONFIG_SESSION);
             Console.WriteLine("Session Config flushed to disk.");
         }
 

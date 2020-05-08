@@ -1,0 +1,8 @@
+{
+  "Name": "User password expires",
+  "Description": "User calamity password expires",
+  "ScoreValue": 3,
+  "ScoreIfBool": true,
+  "BanOnInvalid": false,
+  "Type": 0
+}

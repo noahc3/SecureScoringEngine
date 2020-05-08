@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using ElectronNET.API;
+using System.Runtime.InteropServices;
 
 namespace SSEConfigurationTool {
     public class Program {

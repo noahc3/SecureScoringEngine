@@ -1,63 +1,407 @@
 ﻿@page "/exportclient"
+@using System.IO;
+@using SSECommon;
+@using SSECommon.Enums;
+@using ICSharpCode.SharpZipLib.Zip;
+@inject NavigationManager Nav;
 
-    <div class="contained-wide">
-        <h2>Export and Install</h2>
-        <p>
-            This page will export the scoring configuration as a set of scripts that are used by the scoring server.
-            Note that you cannot reimport an exported configuration back into this tool.
-            If you want to be able to edit the scoring configuration, you should make sure you save a draft!
-        </p>
+@if (!lockInterface) {
+    <div style="overflow-y:auto;height:100%">
+        <div class="contained-wide">
+            <h2 style="margin:0">Export and Install</h2>
+            <BSButton style="margin:1rem 0;" OnClick="@(() => Nav.NavigateTo("/configureclient"))">Go Back</BSButton>
+            <p>
+                This page will export the scoring configuration as a set of scripts that are used by the scoring server.
+                Note that you cannot reimport an exported configuration back into this tool.
+                If you want to be able to edit the scoring configuration, you should make sure you save a draft!
+            </p>
 
-        <p>
-            You have the option to install the client for online images or for offline images.
-            <ul>
-                <li>
-                    An online image is one that connects to a hosted scoring server.
-                    <ul>
-                        <li>This is the correct option if you want to make an image where teams will compete, or if security is a requirement</li>
-                        <li>Online images require Team UUIDs to be configured and delivered to competitors.</li>
-                    </ul>
-                </li>
-                <li>
-                    An offline image is one where the scoring server runs locally within the VM.
-                    <ul>
-                        <li>This is useful for creating practice images as you don't need to keep an external scoring server running.</li>
-                        <li>Offline images do not use Team UUIDs, and as such the scoring server scoreboard is disabled.</li>
-                    </ul>
-                </li>
-            </ul>
-        </p>
+            <p>
+                You have the option to install the client for online images or for offline images.
+                <ul>
+                    <li>
+                        An online image is one that connects to a hosted scoring server.
+                        <ul>
+                            <li>This is the correct option if you want to make an image where teams will compete, or if security is a requirement</li>
+                            <li>Online images require Team UUIDs to be configured and delivered to competitors.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        An offline image is one where the scoring server runs locally within the VM.
+                        <ul>
+                            <li>This is useful for creating practice images as you don't need to keep an external scoring server running.</li>
+                            <li>Offline images do not use Team UUIDs, and as such the scoring server scoreboard is disabled.</li>
+                        </ul>
+                    </li>
+                </ul>
+            </p>
 
-        <p>
-            If you are creating an online image, you can enable debug services on the scoring server and have the configuration pushed directly to the server.
-            This will setup the configuration on the scoring server without any additional input.
-        </p>
+            <p>
+                If you are creating an online image, you can enable debug services on the scoring server and have the configuration pushed directly to the server.
+                This will setup the configuration on the scoring server without any additional input.
+            </p>
 
-        <BSBasicForm>
-            <h4>Choose Image Type</h4>
-            <BSFormGroup IsCheck="true">
-                <BSBasicInput InputType="InputType.Radio" Id="onlineRadio" RadioValue="@("online")" @bind-Value="imageType" />
-                <BSLabel For="onlineRadio">Online Image</BSLabel>
-                <BSBasicInput InputType="InputType.Radio" Id="offlineRadio" RadioValue="@("offline")" @bind-Value="imageType" />
-                <BSLabel For="offlineRadio">Offline Image</BSLabel>
-                <BSBasicInput InputType="InputType.Radio" Id="exportRadio" RadioValue="@("export")" @bind-Value="imageType" />
-                <BSLabel For="exportRadio">Just Export Configuration</BSLabel>
-            </BSFormGroup>
-        </BSBasicForm>
+            <BSBasicForm>
+                <h4>Choose Image Type</h4>
+                <BSFormGroup IsCheck="true">
+                    <BSBasicInput InputType="InputType.Radio" Id="onlineRadio" RadioValue="@("online")" @bind-Value="imageType" />
+                    <BSLabel For="onlineRadio">Online Image</BSLabel>
+                    <BSBasicInput InputType="InputType.Radio" Id="offlineRadio" RadioValue="@("offline")" @bind-Value="imageType" />
+                    <BSLabel For="offlineRadio">Offline Image</BSLabel>
+                    <BSBasicInput InputType="InputType.Radio" Id="exportRadio" RadioValue="@("export")" @bind-Value="imageType" />
+                    <BSLabel For="exportRadio">Just Export Configuration</BSLabel>
+                </BSFormGroup>
+            </BSBasicForm>
 
-        @if(imageType == "export") {
-            <BSButton OnClick="Export">Generate and Save Configuration</BSButton>
-        } else if (imageType == "online") {
-            <i>Not yet implemented</i>
-        } else if (imageType == "offline") {
-            <i>Not yet implemented</i>
-        }
+            @if (imageType == "export") {
+
+                <BSBasicForm>
+                    <label>Export Format</label>
+                    <BSFormGroup IsCheck="true">
+                        <BSBasicInput InputType="InputType.Radio" Id="export-folder" RadioValue="@("folder")" @bind-Value="exportFormat" />
+                        <BSLabel For="export-folder">Folder</BSLabel>
+                        <BSBasicInput InputType="InputType.Radio" Id="export-zip" RadioValue="@("zip")" @bind-Value="exportFormat" />
+                        <BSLabel For="export-zip">Encrypted ZIP</BSLabel>
+                    </BSFormGroup>
+                </BSBasicForm>
+
+                @if (exportFormat == "folder") {
+                    <BSLabel For="input-export-path">Configuration Export Directory</BSLabel>
+                    <BSBasicForm IsInline="true">
+                        <BSFormGroup>
+                            <BSBasicInput id="input-export-path" InputType="InputType.Text" @bind-Value="configExportPath"></BSBasicInput>
+                            <BSButton id="browse-export-path" OnClick="@BrowseExportDirectory">Browse</BSButton>
+                        </BSFormGroup>
+                    </BSBasicForm>
+                } else if (exportFormat == "zip") {
+                    <BSLabel For="input-export-path">ZIP Export Path</BSLabel>
+                    <BSBasicForm IsInline="true">
+                        <BSFormGroup>
+                            <BSBasicInput id="input-export-path" InputType="InputType.Text" @bind-Value="zipExportPath"></BSBasicInput>
+                            <BSButton id="browse-export-path" OnClick="@BrowseExportPath">Browse</BSButton>
+                        </BSFormGroup>
+                    </BSBasicForm>
+                }
+
+
+
+                <BSButton style="margin-top:2rem" OnClick="Export">Generate and Save Configuration</BSButton>
+            } else if (imageType == "online") {
+                <BSLabel For="input-scoring-url">Scoring Server URL</BSLabel>
+                <BSBasicForm IsInline="true">
+                    <BSFormGroup>
+                        <BSBasicInput id="input-server-url" InputType="InputType.Text" @bind-Value="scoringServerUrl"></BSBasicInput>
+                    </BSFormGroup>
+                </BSBasicForm>
+
+                <BSLabel For="input-debug-team-uuid">Debug Team UUID</BSLabel>
+                <BSBasicForm IsInline="true">
+                    <BSFormGroup>
+                        <BSBasicInput id="input-debug-team-uuid" InputType="InputType.Text" @bind-Value="debugTeamId"></BSBasicInput>
+                    </BSFormGroup>
+                </BSBasicForm>
+
+                <BSLabel For="input-platform">Target Platform</BSLabel>
+                <BSBasicForm IsInline="true">
+                    <BSFormGroup>
+                        <BSBasicInput id="input-platform" InputType="InputType.Text" IsDisabled="true" Value="@Globals.TargetPlatform"></BSBasicInput>
+                    </BSFormGroup>
+                </BSBasicForm>
+
+                <BSLabel For="input-runtime-id">Runtime ID</BSLabel>
+                <BSBasicForm IsInline="true">
+                    <BSFormGroup>
+                        <BSBasicInput id="input-runtime-id" InputType="InputType.Text" @bind-Value="runtimeId"></BSBasicInput>
+                    </BSFormGroup>
+                </BSBasicForm>
+
+                <BSLabel For="input-desktop-path">Competitor Desktop Directory</BSLabel>
+                <BSBasicForm IsInline="true">
+                    <BSFormGroup>
+                        <BSBasicInput id="input-desktop-path" InputType="InputType.Text" @bind-Value="desktopPath"></BSBasicInput>
+                        <BSButton id="browse-desktop-path" OnClick="@BrowseDesktopDirectory">Browse</BSButton>
+                    </BSFormGroup>
+                </BSBasicForm>
+
+                <BSLabel For="input-readme-path">README File</BSLabel>
+                <BSBasicForm IsInline="true">
+                    <BSFormGroup>
+                        <BSBasicInput id="input-readme-path" InputType="InputType.Text" @bind-Value="readmePath"></BSBasicInput>
+                        <BSButton id="browse-readme-path" OnClick="@BrowseReadmePath">Browse</BSButton>
+                    </BSFormGroup>
+                </BSBasicForm>
+                <small class="form-text text-muted">The README file will be removed from this location during installation. Make sure you have a backup!</small><br />
+
+                <BSFormGroup IsCheck="true">
+                    <BSBasicInput InputType="InputType.Checkbox" Id="check-clear-logs" @bind-Value="clearLogs" />
+                    <BSLabel For="check-clear-logs">Clear Logs</BSLabel>
+                    @if (Environment.OSVersion.Platform == PlatformID.Unix) {
+                        <small class="form-text text-muted">This will remove all log files in /var/log, all .bash_history files in user's home directories, clear the competitor user trash bin, and clear the VMWare file transfer cache.</small>
+                    }
+                </BSFormGroup>
+
+                <BSFormGroup IsCheck="true">
+                    <BSBasicInput InputType="InputType.Checkbox" Id="check-remove-tool" @bind-Value="removeScoringTool" />
+                    <BSLabel For="check-remove-tool">Remove and exit scoring configuration tool once finished.</BSLabel>
+                    @if (removeScoringTool) {
+                        <small class="form-text text-muted">Scoring drafts will not be removed automatically. Make sure you remove them yourself before continuing!</small>
+                    }
+                </BSFormGroup>
+
+                if (removeScoringTool) {
+                    <BSFormGroup IsCheck="true">
+                        <BSBasicInput InputType="InputType.Checkbox" Id="check-shutdown" @bind-Value="shutdownOnFinish" />
+                        <BSLabel For="check-shutdown">Shutdown image after installation</BSLabel>
+                    </BSFormGroup>
+                }
+
+                <br />
+                <BSButton style="margin-top:2rem" OnClick="Export">Push Configuration to Server and Install Client for Online Image</BSButton>
+            } else if (imageType == "offline") {
+                <BSLabel For="input-platfomr">Target Platform</BSLabel>
+                <BSBasicForm IsInline="true">
+                    <BSFormGroup>
+                        <BSBasicInput id="input-platform" InputType="InputType.Text" IsDisabled="true" Value="@Globals.TargetPlatform"></BSBasicInput>
+                    </BSFormGroup>
+                </BSBasicForm>
+
+                <BSLabel For="input-desktop-path">Competitor Desktop Directory</BSLabel>
+                <BSBasicForm IsInline="true">
+                    <BSFormGroup>
+                        <BSBasicInput id="input-desktop-path" InputType="InputType.Text" @bind-Value="desktopPath"></BSBasicInput>
+                        <BSButton id="browse-desktop-path" OnClick="@BrowseDesktopDirectory">Browse</BSButton>
+                    </BSFormGroup>
+                </BSBasicForm>
+
+                <BSLabel For="input-readme-path">README File</BSLabel>
+                <BSBasicForm IsInline="true">
+                    <BSFormGroup>
+                        <BSBasicInput id="input-readme-path" InputType="InputType.Text" @bind-Value="readmePath"></BSBasicInput>
+                        <BSButton id="browse-readme-path" OnClick="@BrowseReadmePath">Browse</BSButton>
+                    </BSFormGroup>
+                </BSBasicForm>
+                <small class="form-text text-muted">The README file will be removed from this location during installation. Make sure you have a backup!</small><br />
+
+                <BSFormGroup IsCheck="true">
+                    <BSBasicInput InputType="InputType.Checkbox" Id="check-clear-logs" @bind-Value="clearLogs" />
+                    <BSLabel For="check-clear-logs">Clear Logs</BSLabel>
+                    @if (Environment.OSVersion.Platform == PlatformID.Unix) {
+                        <small class="form-text text-muted">This will remove all log files in /var/log, all .bash_history files in user's home directories, clear the competitor user trash bin, and clear the VMWare file transfer cache.</small>
+                    }
+                </BSFormGroup>
+
+                <BSFormGroup IsCheck="true">
+                    <BSBasicInput InputType="InputType.Checkbox" Id="check-remove-tool" @bind-Value="removeScoringTool" />
+                    <BSLabel For="check-remove-tool">Remove and exit scoring configuration tool once finished.</BSLabel>
+                    @if (removeScoringTool) {
+                        <small class="form-text text-muted">Scoring drafts will not be removed automatically. Make sure you remove them yourself before continuing!</small>
+                    }
+                </BSFormGroup>
+
+                if (removeScoringTool) {
+                    <BSFormGroup IsCheck="true">
+                        <BSBasicInput InputType="InputType.Checkbox" Id="check-shutdown" @bind-Value="shutdownOnFinish" />
+                        <BSLabel For="check-shutdown">Shutdown image after installation</BSLabel>
+                    </BSFormGroup>
+                }
+
+                <br />
+                <BSButton style="margin-top:2rem" OnClick="Export">Install Client and Server for Offline Image</BSButton>
+            }
+        </div>
     </div>
+} else {
+<div class="vertical-center">
+    <BSTable IsSmall="true" IsResponsive="true" IsBorderless="true" style="white-space:nowrap;width:1%;margin:auto">
+        <tbody>
+            @for(int _i = 0; _i < installProgress.Count; _i++) {
+                int i = _i;
+
+                <tr>
+                    <th scope="row">
+                        @if(i < installProgressPointer) { <span>&#10004;</span> }
+                        else if (i == installProgressPointer) { <span>&#x270e;</span> }
+                    </th>
+                    <td>@installProgress[i]</td>
+                </tr>
+            }
+        </tbody>
+    </BSTable>
+</div>
+}
+
 
 @code {
     private string imageType = "export";
 
-    private void Export() {
-        Utilities.ExportConfiguration("out/config/");
+    private string exportFormat = "folder";
+    private string configExportPath = "";
+    private string zipExportPath = "";
+    private string desktopPath = "";
+    private string readmePath = "";
+    private string runtimeId = "";
+    private string scoringServerUrl = "";
+    private string debugTeamId = "";
+    private bool clearLogs = false;
+    private bool removeScoringTool = false;
+    private bool shutdownOnFinish = false;
+
+    private bool lockInterface = false;
+
+    private int installProgressPointer = 0;
+    private List<string> installProgress;
+
+    private void BrowseExportDirectory() {
+        configExportPath = Utilities.PickDirectory("Select folder to export configuration to");
+    }
+
+    private void BrowseExportPath() {
+        zipExportPath = Utilities.PickFile("Select path to save configuration ZIP", "", true);
+        if (!zipExportPath.ToLower().EndsWith(".zip")) zipExportPath += ".zip";
+    }
+
+    private void BrowseDesktopDirectory() {
+        desktopPath = Utilities.PickDirectory("Select competitor desktop directory");
+    }
+
+    private void BrowseReadmePath() {
+        readmePath = Utilities.PickFile("Select README file to show competitors", "", true);
+    }
+
+    private async void Export() {
+        await Task.Run(new Action(() => {
+            lockInterface = true;
+            SetInstallProgressTrackers();
+            Console.WriteLine(Environment.CurrentDirectory);
+            if (imageType == "export") {
+                if (exportFormat == "folder") Utilities.ExportConfiguration(configExportPath);
+                else if (exportFormat == "zip") Utilities.ExportConfiguration(zipExportPath, true);
+                IncrementProgress();
+            } else if (imageType == "offline") {
+                Utilities.InstallOffline(Globals.TargetPlatform, desktopPath, readmePath, clearLogs);
+                IncrementProgress();
+                IncrementProgress();
+                if (removeScoringTool) {
+                    string delFolder = new DirectoryInfo(Environment.CurrentDirectory).Parent.Parent.FullName;
+                    if (Environment.OSVersion.Platform == PlatformID.Unix) {
+                        Directory.Delete(delFolder, true);
+                        IncrementProgress();
+                        if (shutdownOnFinish) {
+                            "shutdown now".ExecuteAsBash();
+                            IncrementProgress();
+                        }
+                    } else {
+                        if (shutdownOnFinish) {
+                            $"start /D C:\\Windows\\System32 cmd.exe \"/c timeout 3 && rmdir /s /q \"{delFolder}\" && shutdown /s /t 0\"".ExecuteAsCmdDetatched();
+                        } else {
+                            $"start /D C:\\Windows\\System32 cmd.exe \"/c timeout 3 && rmdir /s /q \"{delFolder}\"\"".ExecuteAsCmdDetatched();
+                        }
+                        ElectronNET.API.Electron.App.Quit();
+                        Environment.Exit(0);
+                    }
+                }
+            } else if (imageType == "online") {
+                Globals.DebugTeamUUID = debugTeamId;
+                Globals.SetScoringServerEndpoints(scoringServerUrl);
+
+                if (!ServerComms.CanReachScoringServer()) {
+                    Utilities.SendToastNotification("Installation Failed", "Failed to reach a scoring server at " + Globals.ENDPOINT_BASE_ADDRESS);
+                    lockInterface = false;
+                    return;
+                }
+                IncrementProgress();
+
+                if (!ServerComms.CheckDebugSvcStatus()) {
+                    Utilities.SendToastNotification("Installation Failed", "The scoring server does not have debug services enabled, or your team UUID is not a debug UUID.");
+                    lockInterface = false;
+                    return;
+                }
+                IncrementProgress();
+
+                DirectoryInfo output = Utilities.ExportRuntime(runtimeId, Environment.OSVersion.Platform == PlatformID.Win32NT ? RuntimeType.Windows : RuntimeType.Linux, readmePath);
+                IncrementProgress();
+
+                string tmpZip = Path.GetTempFileName();
+                FastZip fzip = new FastZip();
+                fzip.CreateZip(tmpZip, output.FullName, true, null, null);
+                byte[] zip = File.ReadAllBytes(tmpZip);
+                File.Delete(tmpZip);
+                output.Delete(true);
+                IncrementProgress();
+
+                if (!ServerComms.AddRuntime(runtimeId, zip)) {
+                    Utilities.SendToastNotification("Installation Failed", "The config tool failed to push the runtime configuration, check the server log.");
+                    lockInterface = false;
+                    return;
+                }
+                IncrementProgress();
+
+                if (!ServerComms.HotReload()) {
+                    Utilities.SendToastNotification("Installation Failed", "The scoring server failed to hotreload, check the server log.");
+                    lockInterface = false;
+                    return;
+                }
+                IncrementProgress();
+
+                Utilities.InstallOnline(Globals.TargetPlatform, desktopPath, scoringServerUrl, runtimeId, clearLogs);
+                IncrementProgress();
+
+                if (removeScoringTool) {
+                    string delFolder = new DirectoryInfo(Environment.CurrentDirectory).Parent.Parent.FullName;
+                    if (Environment.OSVersion.Platform == PlatformID.Unix) {
+                        Directory.Delete(delFolder, true);
+                        IncrementProgress();
+                        if (shutdownOnFinish) {
+                            "shutdown now".ExecuteAsBash();
+                            IncrementProgress();
+                        }
+                    } else {
+                        if (shutdownOnFinish) {
+                            $"start /D C:\\Windows\\System32 cmd.exe \"/c timeout 3 && rmdir /s /q \"{delFolder}\" && shutdown /s /t 0\"".ExecuteAsCmdDetatched();
+                        } else {
+                            $"start /D C:\\Windows\\System32 cmd.exe \"/c timeout 3 && rmdir /s /q \"{delFolder}\"\"".ExecuteAsCmdDetatched();
+                        }
+                        ElectronNET.API.Electron.App.Quit();
+                    }
+                }
+            }
+            lockInterface = false;
+        }));
+    }
+
+    private void IncrementProgress() {
+        installProgressPointer++;
+        if (installProgressPointer >= installProgress.Count) lockInterface = false;
+        InvokeAsync(new Action(() => { StateHasChanged(); }));
+    }
+
+    private void SetInstallProgressTrackers() {
+        installProgress = new List<string>();
+        if (imageType == "offline") {
+            installProgress.Add("Running offline install script" + (clearLogs ? " and clearing logs" : ""));
+            installProgress.Add("Exporting scoring configuration");
+        } else if (imageType == "online") {
+            installProgress.Add("Verifying connection to scoring server");
+            installProgress.Add("Verifying scoring server has debug services enabled");
+            installProgress.Add("Exporting runtime configuration");
+            installProgress.Add("Zipping runtime configuration");
+            installProgress.Add("Pushing runtime configuration to scoring server");
+            installProgress.Add("Reloading scoring server");
+            installProgress.Add("Running online install script" + (clearLogs ? " and clearing logs" : ""));
+        } else if (imageType == "export") {
+            installProgress.Add("Exporting scoring configuration");
+            installProgressPointer = 0;
+            InvokeAsync(new Action(() => { StateHasChanged(); }));
+        }
+
+        if (removeScoringTool) {
+            installProgress.Add("Removing scoring configuration tool");
+            if(shutdownOnFinish) {
+                installProgress.Add("Shutting down");
+            }
+        }
+
+        installProgressPointer = 0;
+        InvokeAsync(new Action(() => { StateHasChanged(); }));
     }
 }

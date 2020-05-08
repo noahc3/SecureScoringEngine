@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Http;
+using System.Runtime.InteropServices;
 
 namespace SSEBackend
 {
@@ -19,9 +20,6 @@ namespace SSEBackend
     {
         public Startup(IConfiguration configuration) {
             Configuration = configuration;
-
-            Globals.LoadData();
-            Globals.StartPassiveTasks();
         }
 
         public IConfiguration Configuration { get; }
@@ -51,8 +49,6 @@ namespace SSEBackend
                 routes.MapControllers();
                 routes.MapRazorPages();
             });
-
-            app.UseAuthorization();
 
             app.UseResponseCaching();
         }

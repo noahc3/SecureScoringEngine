@@ -1,17 +1,32 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 
 using System.Threading;
-
+using Microsoft.CodeAnalysis;
 using SSECommon.Types;
 using SSEService.Net;
 
 namespace SSEService {
+
     class Program {
         static void Main(string[] args) {
+            //On Windows we launch the service using Task Scheduler every minute. We want to make sure
+            //this exits if another copy of the process is already running.
+            Process current = Process.GetCurrentProcess();
+            if (Process.GetProcessesByName(current.ProcessName).Count() > 1) {
+                Console.WriteLine("Process already running, exiting.");
+                Environment.Exit(0);
+            }
 
-            
+#if (!DEBUG)
+            //On Windows, we cant run the application as a service, so run it as a normal program but get rid of the console window.
+            if (Environment.OSVersion.Platform == PlatformID.Win32NT) FreeConsole();
+#endif
+
             //fancy format stuff
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.WriteLine("==================================================");
@@ -56,7 +71,7 @@ namespace SSEService {
             //main logic loop
             while (true) {
                 if (!IsClientReadyForScoring()) {
-                    Thread.Sleep(5000);
+                    Thread.Sleep(10000);
                     Globals.LoadConfig();
                     continue;
                 }
@@ -101,14 +116,15 @@ namespace SSEService {
 
                     File.WriteAllText(Globals.SCORING_REPORT_LOCATION, reportTemplate);
 
-                    if (r.score > Globals.LastScore) {
+                    if (r.score > r.lastTotalScore) {
                         Globals.SendToastNotification(Globals.SSESERVICE_NOTIFICATION_TITLE, Globals.SSESERVICE_NOTIFICATION_GAINED_POINTS);
-                    } else if (r.score < Globals.LastScore) {
+                    } else if (r.score < r.lastTotalScore) {
                         Globals.SendToastNotification(Globals.SSESERVICE_NOTIFICATION_TITLE, Globals.SSESERVICE_NOTIFICATION_LOST_POINTS);
                     }
 
                     Globals.LastScore = r.score;
                 }
+                
                 Thread.Sleep(10000);
 
                 if (File.Exists("C:\\killswitch.bin")) {
@@ -169,6 +185,10 @@ namespace SSEService {
 
             return true;
         }
+
+        //This DllImport doesn't appear to break Linux.
+        [DllImport("kernel32.dll")]
+        public static extern bool FreeConsole();
 
 
     }

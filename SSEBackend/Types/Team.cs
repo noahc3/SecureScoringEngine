@@ -9,9 +9,9 @@ namespace SSEBackend.Types
 {
     public class Team
     {
-        public string UUID;
-        public string Name;
-        public List<string> ValidRuntimeIDs;
+        public string UUID = "";
+        public string Name = "";
+        public List<string> ValidRuntimeIDs = new List<string>();
         public Dictionary<string, ScoringProgressTracker> ScoringProgressTrackers;
         public Dictionary<string, int> RuntimeLastScores = new Dictionary<string, int>();
 

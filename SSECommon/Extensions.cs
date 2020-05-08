@@ -5,6 +5,7 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 using System.Runtime.InteropServices;
+using System.CodeDom.Compiler;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Emit;
@@ -22,6 +23,7 @@ namespace SSECommon {
                 return path.Replace("\\", "/").Replace("//", "/");
             }
         }
+
 
         public static byte[] FromHexToByteArray(this string hex) {
             return Enumerable.Range(0, hex.Length)
@@ -86,13 +88,25 @@ namespace SSECommon {
             p.StartInfo.Arguments = "/c " + cmd;
             p.StartInfo.UseShellExecute = false;
             p.StartInfo.RedirectStandardOutput = true;
+            p.StartInfo.RedirectStandardError = true;
+            p.StartInfo.CreateNoWindow = true;
 
             p.Start();
 
             string result = p.StandardOutput.ReadToEnd();
+            result += p.StandardError.ReadToEnd();
             p.WaitForExit();
 
             return result;
+        }
+
+        public static void ExecuteAsCmdDetatched(this string cmd) {
+            Process p = new Process();
+            p.StartInfo.FileName = "cmd.exe";
+            p.StartInfo.Arguments = "/c " + cmd;
+            p.StartInfo.UseShellExecute = false;
+
+            p.Start();
         }
     }
 
